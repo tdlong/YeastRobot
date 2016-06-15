@@ -30,7 +30,7 @@ import Settings as s
 import CellClass as C #cell object definition
 import Exceptions as e #exception class definitions for catching excptions
 import time #for pauses
-#import serial #for communicating to controllers through serial ports
+import serial #for communicating to controllers through serial ports
 import os #for file and directory reading
 import threading #for coordinating control between two controllers
 from multiprocessing import Process #for coordinating control between two controllers
@@ -46,6 +46,8 @@ version = s.version #this string is displayed in text UI, please update in setti
 VLMXserialPort = s.VLMXserialPort
 
 EZserialPort = s.EZserialPort
+EZ=''
+velmex=''
 
 '''---> EDIT SETTINGS IN SETTINGS.PY, NOT HERE!!<--- '''
 #Define Motors - string assignment 
@@ -199,7 +201,7 @@ def printDeck():
 			print(j,'  ',end='')
 		print()
 	print('\n\n')
-	myanswer = input('Is this the correct deck layout (y/n)')
+	myanswer = raw_input('Is this the correct deck layout (y/n)')
 	if (myanswer != 'y'):
 		print('You did not indicate the correct deck layout')
 		exit(1)
@@ -266,7 +268,7 @@ def home_EZ():
 
 	print('--------------------------------------------------------------------------------')
 	print('')
-	print('													 EZ: INTIALIZING/HOMING COMPLETE')
+	print('EZ: INTIALIZING/HOMING COMPLETE')
 	print('')
 	print('--------------------------------------------------------------------------------')
 
@@ -376,13 +378,13 @@ def homeMotors():
 	print('')
 	print('--------------------------------------------------------------------------------')
 	print('')
-	print('													 EZ: INTIALIZING; PLEASE WAIT')
+	print('EZ: INTIALIZING; PLEASE WAIT')
 	print('')
 	print('--------------------------------------------------------------------------------')
 	home_EZ()
 	print('--------------------------------------------------------------------------------')
 	print('')
-	print('													 VLMX: INTIALIZING; PLEASE WAIT')
+	print('VLMX: INTIALIZING; PLEASE WAIT')
 	print('')
 	print('--------------------------------------------------------------------------------')
 	home_velmex()
@@ -545,7 +547,6 @@ def position(row, col, position = 'UL'):
 	if verbose:
 		print('Positioning to ROW:' + str(row) + ' and COL:' + str(col))
 		updateCurrentPos(row, col)
-	printDeck(row, col) #print deck status
 	try:
 		if (position == None or matrix[row][col].sequence == None):
 			pass
@@ -677,9 +678,7 @@ def InitializeRobot():
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_GoTo_Coordinated_A(YMotor, 0, XMotor, 0)
-def retrieveTips():
-	global verbose
-	global CurrentTipPosition
+def retrieveTips(CurrentTipPosition):
 #	CurrentTipPosition = 2    # debug
 # get more tips if empty
 	if (CurrentTipPosition >24):
@@ -698,18 +697,17 @@ def retrieveTips():
 	offset = OffsetDict[tiplookuptable[CurrentTipPosition][1]]
 	row = BoxLocation[Box][0]
 	col = BoxLocation[Box][1]
-	if verbose:
-		print('Retrieving Tips - Offset: ' + str(offset))
-	else:
-		print('Retrieving Tips')
-		position(row, col, offset)
-		VLMX_SetSpeed(ZMotor, ZSpeedFast)
-		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
-		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
-		VLMX_SetSpeed(ZMotor, ZSpeedFast)
-		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-		CurrentTipPostion = CurrentTipPosition + 1
+	print('Retrieving Tips')
+	position(row, col, offset)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+	CurrentTipPostion = CurrentTipPosition + 1
+	return CurrentTipPosition
+		
 def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate
 	fixed = [['TBOXA','TBOXB'],['TBOXC','TBOXD'],['TBOXE','TBOXF'],['LWSTE','TDISP']] 
 	Deck = deck.split('\n')

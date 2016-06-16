@@ -709,6 +709,8 @@ def retrieveTips(CurrentTipPosition):
 	return CurrentTipPosition
 		
 def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate
+	global matrix
+	global DeckLayout
 	fixed = [['TBOXA','TBOXB'],['TBOXC','TBOXD'],['TBOXE','TBOXF'],['LWSTE','TDISP']] 
 	Deck = deck.split('\n')
 	for i in [0,1,2,3]:
@@ -731,7 +733,7 @@ def disposeTips():
 	print('Disposing Tips')
 	position(3, 1)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
-	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
+#	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
 	EZ_GoTo_A(7000, ezSlow)																						#Punch Out Tips
 	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 

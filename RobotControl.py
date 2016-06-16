@@ -769,8 +769,8 @@ def newplate(row=0,col=2):
 	VLMX_SetSpeed(XMotor, XSpeedSlow)
 	VLMX_SetSpeed(YMotor, YSpeedSlow)
 	currentZ = s.universalSafeHeight
-	currentX = C.PlateColumns[row]
-	currentY = C.PlateRows[col]
+	currentX = C.PlateColumns[col]
+	currentY = C.PlateRows[row]
 	VLMX_GoTo_A(ZMotor,currentZ)
 	VLMX_GoTo_A(XMotor,currentX)
 	VLMX_GoTo_A(YMotor,currentY)
@@ -790,7 +790,7 @@ def newplate(row=0,col=2):
 		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
 		currentX = currentX + guess
 		VLMX_GoTo_A(XMotor,currentX)
-	print ("X offset = ",currentX)
+	print ("X offset = ",currentX-C.PlateColumns[col])
 
 	print("Next the Y offset")
 	guess = 10.0
@@ -798,7 +798,7 @@ def newplate(row=0,col=2):
 		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 		currentY = currentY + guess
 		VLMX_GoTo_A(YMotor,currentY)
-	print ("Yoffset = ",currentY)
+	print ("Yoffset = ",currentY-C.PlateRows[row])
 
 	print("finally the max depth")
 	guess = 10.0
@@ -807,7 +807,8 @@ def newplate(row=0,col=2):
 		currentZ = currentZ + guess
 		VLMX_GoTo_A(ZMotor,currentZ)
 	print ("Maxdepth = ",currentZ)
-
+	
+	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	return
 	
 

@@ -70,8 +70,8 @@ plateInfo = {\
     'wellDist': 320,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'SW24P': \
-   {'x':460,\
-    'y':580,\
+   {'x':520,\
+    'y':475,\
     'alignmentDepth': 2300,\
     'surfDepth': 2900,\
     'safeDepth':universalSafeHeight,\

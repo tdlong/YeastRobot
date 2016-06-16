@@ -17,6 +17,21 @@ DW96P  SW24P  SW24P  SW24P  SW24P
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
 ##################################
 
+#################################
+###  Define Deck Layout
+#################################
+deck="""\
+DW24P  SW24P  SW24P  SW24P  SW24P
+DW24P  SW24P  SW24P  SW24P  SW24P
+DW24P  SW24P  SW24P  SW24P  SW24P
+DW24P  SW24P  SW24P  SW24P  SW24P
+"""
+#   2       3       4       5       6
+#   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
+##################################
+
+
+
 CurrentTipPosition = 1																	#  1 = UL of BoxA, 2 = UR of BoxA, 3 = LL of BoxA, etc.
 myvol = 100
 OffsetDict={1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
@@ -40,6 +55,7 @@ for row in [0,1,2,3]:
 		liquidDisposal()							    									# smart enough to goto liquid Waste and dispense the remain 50ul
 		disposeTips()																				# again smart enough to do this
 
+fast_home_velmex()
 ShutDownRobot()
 		
 

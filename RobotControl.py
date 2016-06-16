@@ -717,7 +717,7 @@ def retrieveTips(CurrentTipPosition):
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-	CurrentTipPostion = CurrentTipPosition + 1
+	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition
 		
 def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate

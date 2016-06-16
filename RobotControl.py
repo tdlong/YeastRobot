@@ -750,19 +750,27 @@ def disposeTips():
 	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 
-def newplate():
+def newplate(row=0,col=2):
 	# DO THIS AT POSITION --->>> 0,2
+	#
+	# if these positions are "off" for other plates, the problem is 
+	#   the "PlateColumns" and "PlateRows" in "Classes"
+	#	
 	# define surfaceDepth
 	# define X offset
 	# define Y offset
 	# define max depth
+	#
+	# use this to define the "UL" for 96 well plate
+	# "UL" for 24 well plates is their center
+	
 
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 	VLMX_SetSpeed(XMotor, XSpeedSlow)
 	VLMX_SetSpeed(YMotor, YSpeedSlow)
 	currentZ = s.universalSafeHeight
-	currentX = C.PlateColumns[2]
-	currentY = C.PlateRows[0]
+	currentX = C.PlateColumns[row]
+	currentY = C.PlateRows[col]
 	VLMX_GoTo_A(ZMotor,currentZ)
 	VLMX_GoTo_A(XMotor,currentX)
 	VLMX_GoTo_A(YMotor,currentY)

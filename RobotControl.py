@@ -750,6 +750,58 @@ def disposeTips():
 	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 
+def newplate():
+	# DO THIS AT POSITION --->>> 0,2
+	# define surfaceDepth
+	# define X offset
+	# define Y offset
+	# define max depth
+
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_SetSpeed(XMotor, XSpeedSlow)
+	VLMX_SetSpeed(YMotor, YSpeedSlow)
+	currentZ = s.universalSafeHeight
+	currentX = C.PlateColumns[2]
+	currentY = C.PlateRows[0]
+	VLMX_GoTo_A(ZMotor,currentZ)
+	VLMX_GoTo_A(XMotor,currentX)
+	VLMX_GoTo_A(YMotor,currentY)
+	
+	
+	print("Lets get the Surface Height first, this is the height of the top of the plate")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
+		currentZ = currentZ + guess
+		VLMX_GoTo_A(ZMotor,currentZ)
+	print ("SurfaceHeight = ",currentZ)
+
+	print("Now the X offset")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+		currentX = currentX + guess
+		VLMX_GoTo_A(XMotor,currentX)
+	print ("X offset = ",currentX)
+
+	print("Next the Y offset")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+		currentY = currentY + guess
+		VLMX_GoTo_A(YMotor,currentY)
+	print ("Yoffset = ",currentY)
+
+	print("finally the max depth")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
+		currentZ = currentZ + guess
+		VLMX_GoTo_A(ZMotor,currentZ)
+	print ("Maxdepth = ",currentZ)
+
+	return
+	
 
              			
 

@@ -2,6 +2,7 @@
 #Last Update Feb 29 2016 by Eric Huang: Remove superfluous functions, simplifying control code per P.Long's preference
 #Last Update Feb 19 2016 by Eric Huang
 #Last Update Feb 18 2016 by Eric Huang
+# June 16 == ADL edited plate definitions
 
 import Settings as s
 
@@ -37,56 +38,56 @@ universalSafeHeight = s.universalSafeHeight; #update to optimize speed, minimizi
 
 plateInfo = {\
 'DW96P': \
-   {'x':430,\
-    'y':330,\
+   {'x':440,\
+    'y':320,\
     'alignmentDepth': 2300,\
-    'surfDepth': 2900,\
+    'surfDepth': 2540,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 7000,\
+    'maxDepth': 8460,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': 320,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'DW24P': \
-   {'x':540,\
-    'y':530,\
+   {'x':580,\
+    'y':472,\
     'alignmentDepth': 2300,\
-    'surfDepth': 3200,\
+    'surfDepth': 2364,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 8000,\
+    'maxDepth': 8124,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None,\
     'readdress': None},\
 'SW96P': \
-   {'x':390,\
-    'y':360,\
+   {'x':460,\
+    'y':352,\
     'alignmentDepth': 2300,\
-    'surfDepth': 2900, \
+    'surfDepth': 3420, \
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 3200,\
+    'maxDepth': 4940,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': 320,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'SW24P': \
-   {'x':520,\
-    'y':475,\
+   {'x':620,\
+    'y':552,\
     'alignmentDepth': 2300,\
-    'surfDepth': 2900,\
+    'surfDepth': 2700,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 4200,\
+    'maxDepth': 5260,\
     'tipAttachDepth': None, \
     'ejectDepth': None, \
     'wellDist': None,\
     'readdress': None},\
 'RES41': \
-   {'x':0,\
-    'y':0,\
+   {'x':580,\
+    'y':475,\
     'alignmentDepth': 2300,\
-    'surfDepth': 2900,\
+    'surfDepth': 2364,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 5000,\
+    'maxDepth': 8120,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None, \

@@ -410,7 +410,7 @@ def aspirate(vol, depth = 100, speed = 100):
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
 	VLMX_GoTo_A(ZMotor, targetDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	#suck
@@ -421,7 +421,7 @@ def aspirate(vol, depth = 100, speed = 100):
 	EZ_GoTo_A(plungerLimit - (volume + airBuffer), ezSlow) 
 	#Update global variable for current syringe position
 	currentDisplacement = plungerLimit - (volume + airBuffer)
-def dispense(vol, depth = 100, speed = 100):
+def dispense(vol, depth = 100, speed = 100, blowout = 'N'):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -440,15 +440,20 @@ def dispense(vol, depth = 100, speed = 100):
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
 	VLMX_GoTo_A(ZMotor, targetDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	#dispense
-	EZ_GoTo_A((currentDisplacement+volume+airBuffer), targetSpeed)
+	if(blowout == 'Y'):
+		EZ_GoTo_A((currentDisplacement + volume + 4*airBuffer), targetSpeed)
+		currentDisplacement = currentDisplacement + volume + 4*airBuffer
+	else:
+		EZ_GoTo_A((currentDisplacement+volume+airBuffer), targetSpeed)
+		currentDisplacement = currentDisplacement+volume+airBuffer
+
 	#slow ascent
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#Update global variable for current syringe position
-	currentDisplacement = (currentDisplacement+volume+airBuffer)
 def moveAspirate(vol, staartdepth = 100, speed = 100):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
@@ -476,14 +481,14 @@ def moveAspirate(vol, staartdepth = 100, speed = 100):
 		VLMX_GoTo_A(ZMotor, int(targetDepth+i*stepsize))
 		#suck
 		EZ_GoTo_A(plungerLimit - int((i+1) * volume), targetSpeed) 
+	currentDisplacement = plungerLimit - int(nsteps * volume) - airBuffer
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#for safety draw some more air
 	EZ_GoTo_A(plungerLimit - int(nsteps * volume) - airBuffer, ezSlow) 
 	#Update global variable for current syringe position
-	currentDisplacement = plungerLimit - int(nsteps * volume) - airBuffer
-def moveDispense(vol, startdepth = 100, speed = 100):
+def moveDispense(vol, startdepth = 100, speed = 100, blowout = 'N'):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -510,13 +515,19 @@ def moveDispense(vol, startdepth = 100, speed = 100):
 		VLMX_GoTo_A(ZMotor, int(targetDepth+i*stepsize))
 		#suck
 		EZ_GoTo_A(currentDisplacement + airBuffer + int(nsteps*volume) - int(i * volume), targetSpeed) 
+	#dispense
+	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume)
+	if(blowout == 'Y'):
+		EZ_GoTo_A((currentDisplacement + 3*airBuffer), targetSpeed)
+		currentDisplacement = currentDisplacement + 3*airBuffer
+
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#for safety draw some more air
-	EZ_GoTo_A(currentDisplacement + airBuffer + int(nsteps*volume) - airBuffer, ezSlow) 
+	EZ_GoTo_A(currentDisplacement - airBuffer, ezSlow) 
 	#Update global variable for current syringe position
-	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume) - airBuffer
+	currentDisplacement = currentDisplacement - airBuffer
 
 def mix(vol,percentdown,percentspeed):
 	aspirate(vol,percentdown,percentspeed)

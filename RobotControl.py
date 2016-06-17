@@ -414,7 +414,8 @@ def aspirate(vol, depth = 100, speed = 100):
 	VLMX_GoTo_A(ZMotor, targetDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	#suck
-	EZ_GoTo_A(plungerLimit - (volume), targetSpeed) 
+	EZ_GoTo_A(plungerLimit - (volume), targetSpeed)
+	time.sleep(0.5)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#for safety draw some more air
@@ -452,16 +453,17 @@ def dispense(vol, depth = 100, speed = 100, blowout = 'N'):
 		currentDisplacement = currentDisplacement+volume+airBuffer
 
 	#slow ascent
+	time.sleep(0.5)
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#Update global variable for current syringe position
-def moveAspirate(vol, staartdepth = 100, speed = 100):
+def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
 	if verbose:
-		print('Aspirating: ' + str(vol) + 'ul' + ' at ' + str(depth) + 'percent depth and ' + str(speed) + 'percent speed.')
+		print('Aspirating: ' + str(vol) + 'ul' + ' at ' + str(startdepth) + 'percent depth and ' + str(speed) + 'percent speed.')
 	else:
 		print('Aspirating')
 
@@ -470,18 +472,20 @@ def moveAspirate(vol, staartdepth = 100, speed = 100):
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
 	maxDepth = matrix[currentx][currenty].maxDepth
 	safeDepth = matrix[currentx][currenty].safeDepth
-	targetDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * startdepth/100))
+	targetstartDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * startdepth/100))
+	targetendDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * enddepth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = vol * stepsPerUL / nsteps
-	stepsize = ((maxDepth - surfaceDepth) * startdepth/100)/nsteps
+	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	#Lower ZMotor so tip is at right height
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 	for i in list(range(nsteps)):
-		VLMX_GoTo_A(ZMotor, int(targetDepth+i*stepsize))
+		VLMX_GoTo_A(ZMotor, int(targetstartDepth+i*stepsize))
 		#suck
 		EZ_GoTo_A(plungerLimit - int((i+1) * volume), targetSpeed) 
 	currentDisplacement = plungerLimit - int(nsteps * volume) - airBuffer
+	time.sleep(0.5)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
@@ -495,7 +499,7 @@ def moveDispense(vol, startdepth = 100, speed = 100, blowout = 'N'):
 	global currentDisplacement
 
 	if verbose:
-		print('			 Dispensing: ' + str(vol) + 'ul' + ' at ' + str(depth) + 'percent depth and ' + str(speed) + 'percent speed.')
+		print('			 Dispensing: ' + str(vol) + 'ul' + ' at ' + str(startdepth) + 'percent depth and ' + str(speed) + 'percent speed.')
 	else:
 		print('			 Dispensing')
 	nsteps = 10
@@ -522,6 +526,7 @@ def moveDispense(vol, startdepth = 100, speed = 100, blowout = 'N'):
 		currentDisplacement = currentDisplacement + 3*airBuffer
 
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	time.sleep(0.5)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#for safety draw some more air
@@ -598,35 +603,35 @@ def terminateVelmex():
 
 ############################ COMMAND PORTALS ################################
 def SendToVelmex(command):
-	global verbose
-	if verbose:
-		print('VLMX CMD: ' + command)
-		velmex.write('C, V, R')
-		count = 0
-		while(True):
-			count += 1
-			returnstatus = velmex.read()
-			if ('R' in returnstatus or '^' in returnstatus or count >= 100):
-				break
+#	global verbose
+#	if verbose:
+#		print('VLMX CMD: ' + command)
+#		velmex.write('C, V, R')
+#		count = 0
+#		while(True):
+#			count += 1
+#			returnstatus = velmex.read()
+#			if ('R' in returnstatus or '^' in returnstatus or count >= 100):
+#				break
 	velmex.write('F') #Enable On-Line mode with echo "off"
 	velmex.write(command)
-	time.sleep(0.35)
 	data_raw = ''
 	while(True):
+		time.sleep(0.1)
 		bytesToRead = velmex.inWaiting()
 		data_raw += velmex.read()
 		if '^' in data_raw:
-			time.sleep(0.25)
 			break
 	return
 def SendToEZ(command):
-	global verbose
-	if verbose:
-		print('			EZ CMD: ' + command)
+#	global verbose
+#	if verbose:
+#		print('			EZ CMD: ' + command)
 	EZ.write(command)
+	time.sleep(0.2)
 	while('`' not in EZ.readline()):
 		EZ.write("/1QR<CR>\r")
-	time.sleep(0.25)
+		time.sleep(0.2)
 
 ########################### MISC. SUPPORT FUNCTIONS #########################
 def updateCurrentPos(row, col):

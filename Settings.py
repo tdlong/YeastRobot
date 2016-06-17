@@ -37,7 +37,7 @@ ezFast = 2000 #fast speed for EZ stepper
 #  the product is 1.96 is the controller 1/2 stepping ... actually the default is the 2 step
 #  so this means that perhaps the 4 steps per ul is accurate
 #  manual says /1j8R  would gives you 8X resolution etc.
-stepsPerUL = 4 #steps per microliliter for P AXIS
+stepsPerUL = 4.4 #steps per microliliter for P AXIS
 prate = 200 #steps per mm for P AXIS
 
 #XYZ step conversion

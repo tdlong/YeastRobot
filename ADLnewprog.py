@@ -33,7 +33,7 @@ DW24P  SW24P  SW24P  SW24P  SW24P
 
 
 CurrentTipPosition = 1																	#  1 = UL of BoxA, 2 = UR of BoxA, 3 = LL of BoxA, etc.
-myvol = 250
+myvol = 500
 OffsetDict={1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
 
 DefineDeck(deck)																				# read in deck		
@@ -49,10 +49,12 @@ for row in [0,1,2]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)																			# automatically gets next box/offset with tips
 																												# when all 6 boxes are empty, arm moves to side and asks user for more tips!
 		position(row,2,OffsetDict[col-2])    								# Goto(x,y,offset)
-		aspirate(myvol, 100, 50)							   								# Aspirate(volume,% to bottom,speed)
+#		aspirate(myvol, 100, 50)							   								# Aspirate(volume,% to bottom,speed)
+		moveAspirate(myvol, 50, 50)							   								# Aspirate(volume,% to bottom,speed)
 																												# after Aspirate return to safe height
 		position(row,col)																		# it knows the "offset" because it is a 24 well plate
-		dispense(myvol, 100, 50)																# Dispense(volume, %to bottom, speed)
+#		dispense(myvol, 100, 50,'Y')																# Dispense(volume, %to bottom, speed)
+		moveDispense(myvol, 50, 50,'Y')																# Dispense(volume, %to bottom, speed)
 																												# return to safe height
 		liquidDisposal()							    									# smart enough to goto liquid Waste and dispense the remain 50ul
 		disposeTips()																				# again smart enough to do this

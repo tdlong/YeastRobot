@@ -541,6 +541,23 @@ def mix(vol,percentdown,percentspeed):
 	dispense(vol,percentdown,percentspeed)
 	aspirate(vol,percentdown,percentspeed)
 	dispense(vol,percentdown,percentspeed)
+	
+def checkAlignment():
+	surfaceDepth = matrix[currentx][currenty].surfaceDepth
+	maxDepth = matrix[currentx][currenty].maxDepth
+	safeDepth = matrix[currentx][currenty].safeDepth
+	#Lower ZMotor so tip is at top of well
+	VLMX_GoTo_A(ZMotor, surfaceDepth)
+	enterToContinue()
+	# now go to bottom of well	
+	VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
+	VLMX_GoTo_A(ZMotor, maxDepth)
+	enterToContinue()
+	# now return to safe height
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, safeDepth)
+	#Update global variable for current syringe position
+
 
 ############################ Extreme Traverses ################################
 def ZUP():

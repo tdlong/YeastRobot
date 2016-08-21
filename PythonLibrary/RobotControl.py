@@ -124,6 +124,11 @@ availableTips = {'A': ['UL', 'UR', 'LL', 'LR'],'B': ['UL', 'UR', 'LL', 'LR'],\
 								 'E': ['UL', 'UR', 'LL', 'LR'],'F': ['UL', 'UR', 'LL', 'LR'],}
 
 
+availableTips = {'A': ['UL', 'UR', 'LL', 'LR'],'B': ['UL', 'UR', 'LL', 'LR'],\
+								 'C': ['UL', 'UR', 'LL', 'LR'],'D': ['UL', 'UR', 'LL', 'LR'],\
+								 'E': ['UL', 'UR', 'LL', 'LR'],'F': ['UL', 'UR', 'LL', 'LR'],}
+
+
 #######################################################################################
 #######################################################################################
 #######################################################################################
@@ -726,6 +731,43 @@ def InitializeRobot():
 def retrieveTips(CurrentTipPosition):
 #	CurrentTipPosition = 2    # debug
 # get more tips if empty
+	if (CurrentTipPosition >20):
+		CurrentTipPosition = 1
+		position(0,6)
+		print('NO MORE AVAILABLE TIPS!')
+		print('*******The head has been moved out of the way.*******')
+		print('***Please reload tip box holders before continuing.***')
+		print('***Press Enter to Continue ****')
+		enterToContinue()
+	BoxDict = {1:'A', 2:'B', 3:'C', 4:'D', 5:'E', 6:'F'}
+	OffsetDict = {1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
+	BoxLocation = {'A':[0,0],'B':[0,1],'C':[1,0],'D':[1,1],'E':[2,0],'F':[2,1]}
+	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[3,1],6:[3,2],7:[3,3],8:[3,4], 9:[4,1],10:[4,2],11:[4,3],12:[4,4], 13:[5,1],14:[5,2],15:[5,3],16:[5,4], 17:[7,1],18:[6,2],19:[6,3],20:[6,4]}
+	Box = BoxDict[tiplookuptable[CurrentTipPosition][0]]
+	offset = OffsetDict[tiplookuptable[CurrentTipPosition][1]]
+	row = BoxLocation[Box][0]
+	col = BoxLocation[Box][1]
+	print('Retrieving Tips')
+	position(row, col, offset)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+#  try to seat the tip in position B
+	position(0,1,'UL')
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipSeatDepth)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+	CurrentTipPosition = CurrentTipPosition + 1
+	return CurrentTipPosition
+		
+def OLDretrieveTips(CurrentTipPosition):
+#	CurrentTipPosition = 2    # debug
+# get more tips if empty
 	if (CurrentTipPosition >24):
 		CurrentTipPosition = 1
 		position(0,6)
@@ -752,7 +794,7 @@ def retrieveTips(CurrentTipPosition):
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition
-		
+
 def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate
 	global matrix
 	global DeckLayout

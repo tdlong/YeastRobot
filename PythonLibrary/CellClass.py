@@ -33,6 +33,7 @@ plateInfo Dictionary Guide - dict(dict())
 '''
 STDalignmentDepth = s.STDalignmentDepth
 STDtipAttach = s.STDtipAttach
+STDtipSeat = s.STDtipSeat
 universalSafeHeight = s.universalSafeHeight; #update to optimize speed, minimizing travel distance
 
 
@@ -194,7 +195,7 @@ plateInfo = {\
 }
 
 #plate positions
-PlateColumns = [0, 5558, 11525, 16791, 22077, 27363, 32649, 37935, 43221, 48507]
+PlateColumns = [125, 5683, 11650, 16916, 22202, 27488, 32774, 38060, 43346, 48632]
 PlateRows = [170, 3923, 7681, 11409]
 
 class Cell:

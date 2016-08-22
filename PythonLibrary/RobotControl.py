@@ -395,6 +395,41 @@ def homeMotors():
 	print('--------------------------------------------------------------------------------')
 	home_velmex()
 	return
+
+def testplate():
+	global currentDisplacement
+	surfaceDepth = matrix[currentx][currenty].surfaceDepth
+	safeDepth = matrix[currentx][currenty].safeDepth
+	#Lower ZMotor so tip is at right height
+	VLMX_GoTo_A(ZMotor, surfaceDepth)
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_SetSpeed(XMotor, XSpeedSlow)
+	VLMX_SetSpeed(YMotor, YSpeedSlow)
+
+	print("Now the X offset")
+	guess = 10.0
+	Guess = 0.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+		Guess = Guess + guess
+		VLMX_GoTo_A(XMotor,currentx+Guess)
+	print ("X offset = ",Guess)
+
+	print("Next the Y offset")
+	guess = 10.0
+	Guess
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+		Guess = Guess + guess
+		VLMX_GoTo_A(YMotor,currentx+Guess)
+	print ("Yoffset = ",Guess)
+
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_SetSpeed(XMotor, XSpeedFast)
+	VLMX_SetSpeed(YMotor, YSpeedFast)
+	#move head to safe depth
+	VLMX_GoTo_A(ZMotor, safeDepth)
+
 def aspirate(vol, depth = 100, speed = 100):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
@@ -751,19 +786,57 @@ def retrieveTips(CurrentTipPosition):
 	position(row, col, offset)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-	enterToContinue()
+
+	if True:
+	#################
+		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+		VLMX_SetSpeed(XMotor, XSpeedSlow)
+		VLMX_SetSpeed(YMotor, YSpeedSlow)
+		print("Now the X offset")
+		guess = 10.0
+		Guess = 0.0
+		while guess != 0.0:
+			guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+			Guess = Guess + guess
+			VLMX_GoTo_A(XMotor,currentx+Guess)
+		print ("X offset = ",Guess)
+
+		print("Next the Y offset")
+		guess = 10.0
+		Guess
+		while guess != 0.0:
+			guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+			Guess = Guess + guess
+			VLMX_GoTo_A(YMotor,currenty+Guess)
+		print ("Yoffset = ",Guess)
+
+		VLMX_SetSpeed(ZMotor, ZSpeedFast)
+		VLMX_SetSpeed(XMotor, XSpeedFast)
+		VLMX_SetSpeed(YMotor, YSpeedFast)
+
+		VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
+	###################
+	
+	return CurrentTipPosition
+
+	if False:
+	###################
+		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
+		VLMX_SetSpeed(ZMotor, ZSpeedFast)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+
+		enterToContinue()
 		
-#  try to seat the tip in position B
-	position(0,1,'UL')
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-	enterToContinue()
+	#  try to seat the tip in position B
+		position(0,1,'UL')
+		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
+		VLMX_SetSpeed(ZMotor, ZSpeedFast)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+
+		enterToContinue()
+	######################
 	
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition

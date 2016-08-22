@@ -755,13 +755,16 @@ def retrieveTips(CurrentTipPosition):
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+	enterToContinue()
+		
 #  try to seat the tip in position B
 	position(0,1,'UL')
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipSeatDepth)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+	enterToContinue()
+	
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition
 		
@@ -821,7 +824,7 @@ def disposeTips():
 	position(3, 1)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
 #	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
-	EZ_GoTo_A(7000, ezSlow)																						#Punch Out Tips
+	EZ_GoTo_A(6800, ezSlow)																						#Punch Out Tips
 	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 

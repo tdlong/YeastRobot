@@ -122,7 +122,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': STDtipAttach,\
+    'tipAttachDepth': 6060,\
     'ejectDepth': None,\
     'wellDist': 345, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\

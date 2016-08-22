@@ -47,7 +47,7 @@ zrate = 159 #steps per mm for Z AXIS
 
 ################Head Index Settings###############
 STDalignmentDepth = 1000 #standard depth for traversing close to plates for alignment
-STDtipAttach = 16350 #standard depth to seat tips (dont go too low)
+STDtipAttach = 17000 #standard depth to seat tips (dont go too low)
 STDtipSeat = 16350 #standard depth to seat tips (dont go too low)
 universalSafeHeight = 300 #height at which it is safe for the head to traverse in X/Y. This variable can be optimized for minimizing travel
 
@@ -59,7 +59,7 @@ universalSafeHeight = 300 #height at which it is safe for the head to traverse i
 airBuffer = 10
 
 #depth limit - when the plunger is at the very bottom of the syringe
-plungerLimit = 5000
+plungerLimit = 4800
 
 
 #########Stuff you shouldnt have to touch#########

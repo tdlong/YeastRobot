@@ -9,8 +9,8 @@ version = '1.0.8'
 
 
 #####################Serial IO####################
-VLMXserialPort = '/dev/ttyUSB1'
-EZserialPort = '/dev/ttyUSB0'
+VLMXserialPort = '/dev/ttyUSB-velmex'
+EZserialPort = '/dev/ttyUSB-ez'
 BR = 9600
 
 ##################Speed Settings##################

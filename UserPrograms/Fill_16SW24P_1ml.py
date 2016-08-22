@@ -1,6 +1,7 @@
 import sys
 #  where RobotControl.py, etc lives
 #sys.path.append('/path/to/application/app/folder')
+sys.path.append('/home/pi/Desktop/ADL/YeastRobot/PythonLibrary')
 from RobotControl import *
 
 #################################

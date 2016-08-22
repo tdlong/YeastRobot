@@ -417,7 +417,7 @@ def testplate():
 
 	print("Next the Y offset")
 	guess = 10.0
-	Guess
+	Guess = 0.0
 	while guess != 0.0:
 		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 		Guess = Guess + guess
@@ -763,6 +763,7 @@ def InitializeRobot():
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_GoTo_Coordinated_A(YMotor, 0, XMotor, 0)
+
 def retrieveTips(CurrentTipPosition):
 #	CurrentTipPosition = 2    # debug
 # get more tips if empty
@@ -803,7 +804,7 @@ def retrieveTips(CurrentTipPosition):
 
 		print("Next the Y offset")
 		guess = 10.0
-		Guess
+		Guess = 0.0
 		while guess != 0.0:
 			guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 			Guess = Guess + guess
@@ -817,17 +818,13 @@ def retrieveTips(CurrentTipPosition):
 		VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	###################
 	
-	return CurrentTipPosition
-
 	if False:
 	###################
 		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-
 		enterToContinue()
-		
 	#  try to seat the tip in position B
 		position(0,1,'UL')
 		VLMX_SetSpeed(ZMotor, ZSpeedSlow)

@@ -103,31 +103,11 @@ DeckLayout = [[],[],[],[]]
 #Deck Layout Options
 DeckLayoutIndex = dict()
 
-#Sequence of commands to be populated upon reading selected .pipet file
-CMDs = list()
-
 #depth when the plunger is at the very bottom of the syringe
 plungerLimit = s.plungerLimit
 
-#safety variable for send to ez func
-lastEZ_CMD = None
-
 #detailed output - toggle on/off
 verbose = True #true if you want to print out every single command that is sent
-
-#list of session selections
-sessionSelects = []
-
-#Currently Available Tips
-availableTips = {'A': ['UL', 'UR', 'LL', 'LR'],'B': ['UL', 'UR', 'LL', 'LR'],\
-								 'C': ['UL', 'UR', 'LL', 'LR'],'D': ['UL', 'UR', 'LL', 'LR'],\
-								 'E': ['UL', 'UR', 'LL', 'LR'],'F': ['UL', 'UR', 'LL', 'LR'],}
-
-
-availableTips = {'A': ['UL', 'UR', 'LL', 'LR'],'B': ['UL', 'UR', 'LL', 'LR'],\
-								 'C': ['UL', 'UR', 'LL', 'LR'],'D': ['UL', 'UR', 'LL', 'LR'],\
-								 'E': ['UL', 'UR', 'LL', 'LR'],'F': ['UL', 'UR', 'LL', 'LR'],}
-
 
 #######################################################################################
 #######################################################################################
@@ -137,29 +117,6 @@ availableTips = {'A': ['UL', 'UR', 'LL', 'LR'],'B': ['UL', 'UR', 'LL', 'LR'],\
 #######################################################################################
 #######################################################################################
 
-########################### TESTING FUNCTIONS ###############################
-def targetTest(): # for going to targeted plates
-	while(True):	
-		print('			 *Press "Enter" without input to exit.')
-		try:
-			dCOL = input('	Destination Col: ')
-			dROW = input('	Destination Row: ')
-		except Exception as e:
-			print(e)
-			print('			 Ending Program')
-			break
-		VLMX_GoTo_A(ZMotor, matrix[dROW][dCOL].safeDepth)
-		position(dROW, dCOL)
-		VLMX_GoTo_A(ZMotor, matrix[dROW][dCOL].alignmentDepth)
-def alignmentTest(): # for lining up edges
-	for i in range(deck_rows):
-		for j in range(deck_cols):
-			dROW = i
-			dCOL = j
-			position(i, j)
-			VLMX_GoTo_A(ZMotor, matrix[dROW][dCOL].alignmentDepth)
-			print('			 ALIGNMENT STOP AT TOP LEFT CORNER OF PLATE[' + str(i) + ', ' + str(j) + ']')
-			enterToContinue()
 			
 #############################################################################
 ##################### INITIAL CONFIGURATION FUNCTIONS #######################
@@ -181,6 +138,7 @@ def initializeSerial():
 		print('YEASTBOT ERROR: SERIAL PORTS ARE NOT ACCESSIBLE. PLEASE CHECK CONNECTIONS AND TRY AGAIN')
 		print(' terminating...')
 		terminate()
+
 def plateCheck(plate):
 	if (plate not in C.plateInfo.keys()):
 		print('')
@@ -191,11 +149,27 @@ def plateCheck(plate):
 		ShutDownRobot()
 	else:
 		pass
+		
+def InitializeRobot():
+	print('Starting up...\n')
+	print('Warning: If motor controller power has been interrupted')
+	print('  prior to this run, it is important to home the')
+	print('  motors. Failure to do so will result in posit-')
+	print('  -ing inaccuracies and plate crashes.\n')
+	print('Running motor initialization sequence.')
+	print('')
+	initializeSerial()
+	velmex.close()
+	velmex.open()
+	EZ.close()
+	EZ.open()
+	homeMotors()
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, 0)
+	VLMX_SetSpeed(XMotor, XSpeedFast)
+	VLMX_SetSpeed(YMotor, YSpeedFast)
+	VLMX_GoTo_Coordinated_A(YMotor, 0, XMotor, 0)
 			
-#############################################################################
-############################# PRINT FUNCTIONS ###############################
-#############################################################################
-
 def printDeck():
 	print('')
 	print('')
@@ -211,6 +185,28 @@ def printDeck():
 		print('You did not indicate the correct deck layout')
 		exit(1)
 
+def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate
+	global matrix
+	global DeckLayout
+	fixed = [['TBOXA','TBOXB'],['TBOXC','TBOXD'],['TBOXE','TBOXF'],['LWSTE','TDISP']] 
+	Deck = deck.split('\n')
+	for i in [0,1,2,3]:
+		rDeck = fixed[i]+ Deck[i].split()
+		cc = 0
+		for j in rDeck:
+			plateCheck(j)
+			matrix[i].append(C.Cell(j,i,cc))
+			DeckLayout[i].append(j)	
+			cc = cc + 1	
+
+	print('')
+	print('--------------------------------------------------------------------------------')
+	print('')
+	print('        Deck layout has been successfully configured.')
+	print('')
+	print('--------------------------------------------------------------------------------')
+	print('')	 
+
 ############################ HOMING FUNCTIONS ###############################
 def fast_home_velmex():
 	# Set to Fast
@@ -221,6 +217,7 @@ def fast_home_velmex():
 	absZero = '-0'
 	VLMX_GoTo(ZMotor, absZero)
 	VLMX_GoTo_Coordinated(XMotor, absZero, YMotor, absZero)
+
 def home_velmex():
 	#Go to Home Position (Fast)
 	fast_home_velmex()
@@ -256,6 +253,7 @@ def home_velmex():
 	print('													 VLMX: INTIALIZING/HOMING COMPLETE')
 	print('')
 	print('--------------------------------------------------------------------------------')
+
 def home_EZ():
 	#set torque to full
 	SendToEZ("/1m100<CR>\r")
@@ -278,107 +276,6 @@ def home_EZ():
 	print('')
 	print('--------------------------------------------------------------------------------')
 
-#############################################################################
-################### CONTROLLER COMMAND STRING GENERATORS ####################
-##################### * SPEED AND INDEXING FUNCTIONS * ######################
-#############################################################################
-
-def VLMX_SetSpeed(motor, speed):
-	#Receives list of motors to set to specified speed
-	SendToVelmex('C, S' + motor + 'M' + str(speed) + ', R')
-def VLMX_GoTo_Coordinated_A(motor1,	 index1, motor2,	index2):
-	global verbose
-	# two axes will be indexed silumtaneously (absolute)
-	if (int(motor1) < int(motor2)):
-		tempMotor = motor1
-		tempIndex = index1
-		motor1 = motor2
-		index1 = index2
-		motor2 = tempMotor
-		index2 = tempIndex
-	if verbose:
-		print(' Sending MOTOR[' + str(motor1) + '] to INDEX[' + str(index1) + ']')
-		print(' Sending MOTOR[' + str(motor2) + '] to INDEX[' + str(index2) + ']')
-	SendToVelmex('C, (IA' + str(motor1) + 'M' + str(index1) + ', IA' + str(motor2) + 'M' + str(index2) + ',) R')
-def VLMX_GoTo_Coordinated(motor1,	 index1, motor2,	index2):
-	global verbose
-	# two axes will be indexed silumtaneously (relative)
-	if (int(motor1) < int(motor2)):
-		tempMotor = motor1
-		tempIndex = index1
-		motor1 = motor2
-		index1 = index2
-		motor2 = tempMotor
-		index2 = tempIndex
-	if verbose:
-		print(' Sending MOTOR[' + str(motor1) + '] to INDEX[' + str(index1) + ']')
-		print(' Sending MOTOR[' + str(motor2) + '] to INDEX[' + str(index2) + ']')
-	SendToVelmex('C, (I' + str(motor1) + 'M' + str(index1) + ', I' + str(motor2) + 'M' + str(index2) + ',) R')
-def VLMX_GoTo_A(motor, index): #ABSOLUTE
-	global verbose
-	#Receives list of commands of motors to set to specified distances 
-	# index = '-0' indexes to zero motor position
-	# index = 'x' indexes positive x index
-	# index = '-x' indexes negative x index
-	SendToVelmex('C, IA' + str(motor) + 'M' + str(index) + ', R')
-	if verbose:
-		print(' Sending MOTOR[' + str(motor) + '] to INDEX[' + str(index) + ']')
-def VLMX_GoTo_AC(motor, index): #ABSOLUTE (send command with no wait)
-	global verbose
-	#Receives list of commands of motors to set to specified distances 
-	# index = '-0' indexes to zero motor position
-	# index = 'x' indexes positive x index
-	# index = '-x' indexes negative x index
-	SendToVelmex_fast('C, IA' + str(motor) + 'M' + str(index) + ', R')
-	if verbose:
-		print(' Sending MOTOR[' + str(motor) + '] to INDEX[' + str(index) + ']')
-def VLMX_GoTo(motor, index): #RELATIVE
-	global verbose
-	#Receives list of commands of motors to set to specified distances
-	# index = '-0' indexes to zero motor position
-	# index = 'x' indexes positive x index
-	# index = '-x' indexes negative x index
-	SendToVelmex('C, I' + str(motor) + 'M' + str(index) + ', R')
-	if verbose:
-		print(' Sending MOTOR[' + str(motor) + '] to INDEX[' + str(index) + ']')
-def EZ_GoTo(index): #Relative
-	#Example: EZ.write('/1P10000R\r') moves 10000 relative positive steps
-	#Example EZ.write('/1D10000R\r') moves 10000 negative relative steps (command will not input if the number of steps will move beyond -0)
-	if (index < 0): #if negative index
-		SendToEZ('/1D' + str(index*-1) + 'R<CR>\r')
-	else:
-		SendToEZ('/1P' + str(index) + 'R<CR>\r')
-def EZ_GoTo_A(index, speed): #Absolute with speed 
-	global verbose
-	#example: EZ.write('/1A10000R\r') moves to absolute position of 10000
-	SendToEZ('/1V' + str(speed) + 'A' + str(index) + 'R<CR>\r')
-def EZ_GoTo_AT(index, speed):
-#Absolute with speed 
-#terminates velmex operation when pipetting motor is done indexing
-	global verbose
-	SendToEZ('/1V' + str(speed) + 'A' + str(index) + 'R<CR>\r')
-	if verbose:
-		print('Terminating VLMX Z axis indexing...',end = '')
-	velmex.write('F') #Enable On-Line mode with echo "off"
-	velmex.write('C, D, R')
-	time.sleep(3)
-	data_raw = ''
-	count = 0
-	while(True):
-		count += 1
-		bytesToRead = velmex.inWaiting()
-		data_raw += velmex.read()
-		if '^' in data_raw or 'R' in data_raw or count >= 100:
-			time.sleep(0.25)
-			if verbose:
-				print('SUCCESSFUL')
-			break
-	return
-
-#############################################################################
-##################### ROBOT ACTUATION/ACTION FUNCTIONS ######################
-#############################################################################
-
 def homeMotors():
 	#Initialize to home
 	print('')
@@ -395,6 +292,82 @@ def homeMotors():
 	print('--------------------------------------------------------------------------------')
 	home_velmex()
 	return
+
+
+#############################################################################
+################### CONTROLLER COMMAND STRING GENERATORS ####################
+##################### * SPEED AND INDEXING FUNCTIONS * ######################
+#############################################################################
+
+def VLMX_SetSpeed(motor, speed):
+	#Receives list of motors to set to specified speed
+	SendToVelmex('C, S' + motor + 'M' + str(speed) + ', R')
+
+def VLMX_GoTo_Coordinated_A(motor1,	 index1, motor2,	index2):
+	global verbose
+	# two axes will be indexed silumtaneously (absolute)
+	if (int(motor1) < int(motor2)):
+		tempMotor = motor1
+		tempIndex = index1
+		motor1 = motor2
+		index1 = index2
+		motor2 = tempMotor
+		index2 = tempIndex
+	if verbose:
+		print(' Sending MOTOR[' + str(motor1) + '] to INDEX[' + str(index1) + ']')
+		print(' Sending MOTOR[' + str(motor2) + '] to INDEX[' + str(index2) + ']')
+	SendToVelmex('C, (IA' + str(motor1) + 'M' + str(index1) + ', IA' + str(motor2) + 'M' + str(index2) + ',) R')
+
+def VLMX_GoTo_A(motor, index): #ABSOLUTE
+	global verbose
+	#Receives list of commands of motors to set to specified distances 
+	# index = '-0' indexes to zero motor position
+	# index = 'x' indexes positive x index
+	# index = '-x' indexes negative x index
+	SendToVelmex('C, IA' + str(motor) + 'M' + str(index) + ', R')
+	if verbose:
+		print(' Sending MOTOR[' + str(motor) + '] to INDEX[' + str(index) + ']')
+
+def EZ_GoTo_A(index, speed): #Absolute with speed 
+	global verbose
+	#example: EZ.write('/1A10000R\r') moves to absolute position of 10000
+	SendToEZ('/1V' + str(speed) + 'A' + str(index) + 'R<CR>\r')
+
+def SendToVelmex(command):
+#	global verbose
+#	if verbose:
+#		print('VLMX CMD: ' + command)
+#		velmex.write('C, V, R')
+#		count = 0
+#		while(True):
+#			count += 1
+#			returnstatus = velmex.read()
+#			if ('R' in returnstatus or '^' in returnstatus or count >= 100):
+#				break
+	velmex.write('F') #Enable On-Line mode with echo "off"
+	velmex.write(command)
+	data_raw = ''
+	while(True):
+		time.sleep(0.1)
+		bytesToRead = velmex.inWaiting()
+		data_raw += velmex.read()
+		if '^' in data_raw:
+			break
+	return
+
+def SendToEZ(command):
+#	global verbose
+#	if verbose:
+#		print('			EZ CMD: ' + command)
+	EZ.write(command)
+	time.sleep(0.2)
+	while('`' not in EZ.readline()):
+		EZ.write("/1QR<CR>\r")
+		time.sleep(0.2)
+
+#############################################################################
+##################### ROBOT ACTUATION/ACTION FUNCTIONS ######################
+#############################################################################
 
 def testplate():
 	global currentDisplacement
@@ -462,6 +435,7 @@ def aspirate(vol, depth = 100, speed = 100):
 	EZ_GoTo_A(plungerLimit - (volume + airBuffer), ezSlow) 
 	#Update global variable for current syringe position
 	currentDisplacement = plungerLimit - (volume + airBuffer)
+
 def dispense(vol, depth = 100, speed = 100, blowout = 'N'):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
@@ -496,6 +470,7 @@ def dispense(vol, depth = 100, speed = 100, blowout = 'N'):
 	time.sleep(0.5)
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#Update global variable for current syringe position
+
 def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
@@ -532,6 +507,7 @@ def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	#for safety draw some more air
 	EZ_GoTo_A(plungerLimit - int(nsteps * volume) - airBuffer, ezSlow) 
 	#Update global variable for current syringe position
+
 def moveDispense(vol, startdepth = 100, speed = 100, blowout = 'N'):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
@@ -581,57 +557,31 @@ def mix(vol,percentdown,percentspeed):
 	dispense(vol,percentdown,percentspeed)
 	aspirate(vol,percentdown,percentspeed)
 	dispense(vol,percentdown,percentspeed)
-	
-def checkAlignment():
-	surfaceDepth = matrix[currentx][currenty].surfaceDepth
-	maxDepth = matrix[currentx][currenty].maxDepth
-	safeDepth = matrix[currentx][currenty].safeDepth
-	#Lower ZMotor so tip is at top of well
-	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	enterToContinue()
-	# now go to bottom of well	
-	VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, maxDepth)
-	enterToContinue()
-	# now return to safe height
+
+def liquidDisposal():
+	print('Disposing Liquid')
+	position(3, 0)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, safeDepth)
-	#Update global variable for current syringe position
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth)
+	EZ_GoTo_A(plungerLimit+200, ezSlow)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+
+def disposeTips():
+	print('Disposing Tips')
+	position(3, 1)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
+#	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
+	EZ_GoTo_A(6800, ezSlow)																						#Punch Out Tips
+	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 
 
-############################ Extreme Traverses ################################
-def ZUP():
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, 0)
-def ZDOWN():
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, 3200)
-def XLEFT():
-	VLMX_SetSpeed(XMotor, XSpeedFast)
-	VLMX_GoTo_A(XMotor, 0)
-def XRIGHT():
-	VLMX_SetSpeed(XMotor, XSpeedFast)
-	VLMX_GoTo_A(XMotor, 48500)
-def YAWAY():
-	VLMX_SetSpeed(YMotor, YSpeedFast)
-	VLMX_GoTo_A(YMotor, 0)
-def YNEAR():
-	VLMX_SetSpeed(YMotor, YSpeedFast)
-	VLMX_GoTo_A(YMotor, 11500)
-def PUP():
-	EZ_GoTo_A(0, 2400)
-def PDOWN():
-	EZ_GoTo_A(plungerLimit, 2400)
+########################### MISC. SUPPORT FUNCTIONS #########################
 def position(row, col, position = 'UL'):
 	global verbose
 	global currentx
 	global currenty
-	#Moves in X/Y to COL/ROW target position centered over wells
-	#Accepts reposition parameter, default to UL
-	#If temporary slow indexing required, set slow == True
-	if verbose:
-		print('Positioning to ROW:' + str(row) + ' and COL:' + str(col))
-		updateCurrentPos(row, col)
+	updateCurrentPos(row,col)
 	try:
 		if (position == None or matrix[row][col].sequence == None):
 			pass
@@ -645,6 +595,7 @@ def position(row, col, position = 'UL'):
 				terminate()
 		#go to plate position
 		VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x)
+	
 	except Exception as e:
 		print(e)
 		print('			 ****WARNING[position()]: INVALID PIPETTING COMMAND - consider revising .pipet file!')
@@ -655,56 +606,19 @@ def position(row, col, position = 'UL'):
 		
 		print('			 ****Confirm that current plate address can be safely bypassed.')
 		enterToContinue()
-def terminateVelmex():
-	SendToVelmex('C,D,R')
 
-############################ COMMAND PORTALS ################################
-def SendToVelmex(command):
-#	global verbose
-#	if verbose:
-#		print('VLMX CMD: ' + command)
-#		velmex.write('C, V, R')
-#		count = 0
-#		while(True):
-#			count += 1
-#			returnstatus = velmex.read()
-#			if ('R' in returnstatus or '^' in returnstatus or count >= 100):
-#				break
-	velmex.write('F') #Enable On-Line mode with echo "off"
-	velmex.write(command)
-	data_raw = ''
-	while(True):
-		time.sleep(0.1)
-		bytesToRead = velmex.inWaiting()
-		data_raw += velmex.read()
-		if '^' in data_raw:
-			break
-	return
-def SendToEZ(command):
-#	global verbose
-#	if verbose:
-#		print('			EZ CMD: ' + command)
-	EZ.write(command)
-	time.sleep(0.2)
-	while('`' not in EZ.readline()):
-		EZ.write("/1QR<CR>\r")
-		time.sleep(0.2)
-
-########################### MISC. SUPPORT FUNCTIONS #########################
 def updateCurrentPos(row, col):
 	global currentx
 	global currenty
 	currentx = row
 	currenty = col
+
 def enterToContinue():
 	print('-> Press Enter to Continue')
 	try:
 		input= raw_input()
 	except NameError:
 		pass
-def updateStepsPerUL(spul):
-	global stepsPerUL
-	stepsPerUL = spul
 	
 ############################# SHUT DOWN FUNCTIONS ###########################
 def ShutDownRobot():
@@ -719,52 +633,13 @@ def ShutDownRobot():
 	EZ.close()
 	print('Good Bye!')
 	sys.exit(0)
-def terminate(): #abrupt shutdown, no movement
-	print('**********************************************************')
-	print('***********!!!!!!!TERMINATING FOR SAFETY!!!!!!!***********')
-	print('**********************************************************')
-	print('')
-	print('		The robot will remain in its current position.')
-	print('		Please manually toggle controller jogging buttons to')
-	print('		move the head to safety. Then rerun the program.')
-	print('')
-	print('**********************************************************')
-	print('***********!!!!!!!TERMINATING FOR SAFETY!!!!!!!***********')
-	print('**********************************************************')
-	#SHUT'ER DOWN
-	EZ.close()
-	velmex.close()
-	sys.exit(0)
 
 ############################# ADL re-writes #################################
-def liquidDisposal():
-	print('Disposing Liquid')
-	position(3, 0)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth)
-	EZ_GoTo_A(plungerLimit+200, ezSlow)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-def InitializeRobot():
-	print('Starting up...\n')
-	print('Warning: If motor controller power has been interrupted')
-	print('  prior to this run, it is important to home the')
-	print('  motors. Failure to do so will result in posit-')
-	print('  -ing inaccuracies and plate crashes.\n')
-	print('Running motor initialization sequence.')
-	print('')
-	initializeSerial()
-	velmex.close()
-	velmex.open()
-	EZ.close()
-	EZ.open()
-	homeMotors()
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, 0)
-	VLMX_SetSpeed(XMotor, XSpeedFast)
-	VLMX_SetSpeed(YMotor, YSpeedFast)
-	VLMX_GoTo_Coordinated_A(YMotor, 0, XMotor, 0)
-
+	
 def retrieveTips(CurrentTipPosition):
+	global verbose
+	global currentx
+	global currenty
 #	CurrentTipPosition = 2    # debug
 # get more tips if empty
 	if (CurrentTipPosition >20):
@@ -787,6 +662,19 @@ def retrieveTips(CurrentTipPosition):
 	position(row, col, offset)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
+	try:
+		if (position == None or matrix[row][col].sequence == None):
+			pass
+		else:
+			try:
+				matrix[row][col].reconfig(position)
+			except Exception as e:
+				print('Error - perhaps readdress is not permitted for this plate')
+				print(e)
+				traceback.print_exc(file=sys.stdout)
+				terminate()
+		#go to plate position
+		VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x)
 
 	if True:
 	#################
@@ -795,21 +683,21 @@ def retrieveTips(CurrentTipPosition):
 		VLMX_SetSpeed(YMotor, YSpeedSlow)
 		print("Now the X offset")
 		guess = 10.0
-		Guess = 0.0
+		XGuess = 0.0
 		while guess != 0.0:
 			guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
-			Guess = Guess + guess
-			VLMX_GoTo_A(XMotor,currentx+Guess)
-		print ("X offset = ",Guess)
+			XGuess = XGuess + guess
+			VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x + XGuess)
+		print ("X offset = ",XGuess)
 
 		print("Next the Y offset")
 		guess = 10.0
-		Guess = 0.0
+		YGuess = 0.0
 		while guess != 0.0:
 			guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
-			Guess = Guess + guess
-			VLMX_GoTo_A(YMotor,currenty+Guess)
-		print ("Yoffset = ",Guess)
+			YGuess = YGuess + guess
+			VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y + YGuess, XMotor, matrix[row][col].x + XGuess)
+		print ("Yoffset = ",YGuess)
 
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_SetSpeed(XMotor, XSpeedFast)
@@ -867,36 +755,6 @@ def OLDretrieveTips(CurrentTipPosition):
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition
-
-def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate
-	global matrix
-	global DeckLayout
-	fixed = [['TBOXA','TBOXB'],['TBOXC','TBOXD'],['TBOXE','TBOXF'],['LWSTE','TDISP']] 
-	Deck = deck.split('\n')
-	for i in [0,1,2,3]:
-		rDeck = fixed[i]+ Deck[i].split()
-		cc = 0
-		for j in rDeck:
-			plateCheck(j)
-			matrix[i].append(C.Cell(j,i,cc))
-			DeckLayout[i].append(j)	
-			cc = cc + 1	
-
-	print('')
-	print('--------------------------------------------------------------------------------')
-	print('')
-	print('        Deck layout has been successfully configured.')
-	print('')
-	print('--------------------------------------------------------------------------------')
-	print('')	 
-def disposeTips():
-	print('Disposing Tips')
-	position(3, 1)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
-#	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
-	EZ_GoTo_A(6800, ezSlow)																						#Punch Out Tips
-	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 
 def newplate(row=0,col=2):
 	# DO THIS AT POSITION --->>> 0,2

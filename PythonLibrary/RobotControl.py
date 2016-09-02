@@ -215,8 +215,8 @@ def fast_home_velmex():
 	VLMX_SetSpeed(XMotor, int(0.5*XSpeedFast))
 	VLMX_SetSpeed(YMotor, int(0.5*YSpeedFast))
 	absZero = '-0'
-	VLMX_GoTo(ZMotor, absZero)
-	VLMX_GoTo_Coordinated(XMotor, absZero, YMotor, absZero)
+	VLMX_GoTo_A(ZMotor, absZero)
+	VLMX_GoTo_Coordinated_A(XMotor, absZero, YMotor, absZero)
 
 def home_velmex():
 	#Go to Home Position (Fast)
@@ -394,7 +394,7 @@ def testplate():
 	while guess != 0.0:
 		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 		Guess = Guess + guess
-		VLMX_GoTo_A(YMotor,currentx+Guess)
+		VLMX_GoTo_A(YMotor,currenty+Guess)
 	print ("Yoffset = ",Guess)
 
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
@@ -653,7 +653,7 @@ def retrieveTips(CurrentTipPosition):
 	BoxDict = {1:'A', 2:'B', 3:'C', 4:'D', 5:'E', 6:'F'}
 	OffsetDict = {1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
 	BoxLocation = {'A':[0,0],'B':[0,1],'C':[1,0],'D':[1,1],'E':[2,0],'F':[2,1]}
-	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[3,1],6:[3,2],7:[3,3],8:[3,4], 9:[4,1],10:[4,2],11:[4,3],12:[4,4], 13:[5,1],14:[5,2],15:[5,3],16:[5,4], 17:[7,1],18:[6,2],19:[6,3],20:[6,4]}
+	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[3,1],6:[3,2],7:[3,3],8:[3,4], 9:[4,1],10:[4,2],11:[4,3],12:[4,4], 13:[5,1],14:[5,2],15:[5,3],16:[5,4], 17:[6,1],18:[6,2],19:[6,3],20:[6,4]}
 	Box = BoxDict[tiplookuptable[CurrentTipPosition][0]]
 	offset = OffsetDict[tiplookuptable[CurrentTipPosition][1]]
 	row = BoxLocation[Box][0]
@@ -662,19 +662,6 @@ def retrieveTips(CurrentTipPosition):
 	position(row, col, offset)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
-	try:
-		if (position == None or matrix[row][col].sequence == None):
-			pass
-		else:
-			try:
-				matrix[row][col].reconfig(position)
-			except Exception as e:
-				print('Error - perhaps readdress is not permitted for this plate')
-				print(e)
-				traceback.print_exc(file=sys.stdout)
-				terminate()
-		#go to plate position
-		VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x)
 
 	if True:
 	#################

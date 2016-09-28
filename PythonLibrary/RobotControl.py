@@ -219,20 +219,10 @@ def fast_home_velmex():
 	VLMX_GoTo_Coordinated_A(XMotor, absZero, YMotor, absZero)
 
 def home_velmex():
-	#Go to Home Position (Fast)
-	fast_home_velmex()
-
-	#Clear, Index to negative Limit, Set speed to slow speed, Zero motor position, Run
-	SendToVelmex('C, I' + ZMotor + 'M' + str(ZSpeedSlow) + ', IA' + ZMotor + 'M-0, R')
-	SendToVelmex('C, I' + XMotor + 'M' + str(XSpeedSlow) + ', IA' + XMotor + 'M-0, R')
-	SendToVelmex('C, I' + YMotor + 'M' + str(YSpeedSlow) + ', IA' + YMotor + 'M-0, R')
-	#Index to absolute '100' positions
-	SendToVelmex('C,(IA' + YMotor + 'M' + '100' + ',IA' + XMotor + 'M' + '100' + ',IA' + ZMotor + 'M' + '100' + ',)R')
-	
 	# Set to Slow
-	VLMX_SetSpeed(ZMotor, str(ZSpeedSlow))
-	VLMX_SetSpeed(XMotor, str(XSpeedSlow))
-	VLMX_SetSpeed(YMotor, str(YSpeedSlow))
+	VLMX_SetSpeed(ZMotor, str(2*ZSpeedSlow))
+	VLMX_SetSpeed(XMotor, str(2*XSpeedSlow))
+	VLMX_SetSpeed(YMotor, str(2*YSpeedSlow))
 	
 	#Go to Home Position (Slow)
 	#Clear, index to negative limit, set speed to 200steps/sec, zero motor position, run
@@ -250,7 +240,7 @@ def home_velmex():
 				
 	print('--------------------------------------------------------------------------------')
 	print('')
-	print('													 VLMX: INTIALIZING/HOMING COMPLETE')
+	print('	 VLMX: INTIALIZING/HOMING COMPLETE')
 	print('')
 	print('--------------------------------------------------------------------------------')
 
@@ -263,12 +253,6 @@ def home_EZ():
 	SendToEZ("/1v1500" + "Z10000R<CR>\r")
 	SendToEZ("/1v1500" + "Z100R<CR>\r")
 	SendToEZ("/1v1500" + "Z10000R<CR>\r")
-	#SendToEZ("/1v" + str(ezFast) + "Z1000R<CR>\r")
-
-	#SendToEZ("/1v" + str(ezFast) + "Z10000R<CR>\r") #either goes 10000 steps or until hits kill switch
-
-	#EZ_GoTo_A(500, ezSlow)
-	#EZ_GoTo_A(0, ezSlow)
 
 	print('--------------------------------------------------------------------------------')
 	print('')
@@ -571,7 +555,7 @@ def disposeTips():
 	position(3, 1)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
 #	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
-	EZ_GoTo_A(6800, ezSlow)																						#Punch Out Tips
+	EZ_GoTo_A(6000, ezSlow)	    # 6800 to 6500 = -2mm ADL Sept 20  to 5500 + 7mm																					#Punch Out Tips
 	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 
@@ -636,13 +620,13 @@ def ShutDownRobot():
 
 ############################# ADL re-writes #################################
 	
-def retrieveTips(CurrentTipPosition):
+def retrieveTips(CurrentTipPosition, align="False"):
 	global verbose
 	global currentx
 	global currenty
 #	CurrentTipPosition = 2    # debug
 # get more tips if empty
-	if (CurrentTipPosition >20):
+	if (CurrentTipPosition >24):
 		CurrentTipPosition = 1
 		position(0,6)
 		print('NO MORE AVAILABLE TIPS!')
@@ -653,7 +637,7 @@ def retrieveTips(CurrentTipPosition):
 	BoxDict = {1:'A', 2:'B', 3:'C', 4:'D', 5:'E', 6:'F'}
 	OffsetDict = {1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
 	BoxLocation = {'A':[0,0],'B':[0,1],'C':[1,0],'D':[1,1],'E':[2,0],'F':[2,1]}
-	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[3,1],6:[3,2],7:[3,3],8:[3,4], 9:[4,1],10:[4,2],11:[4,3],12:[4,4], 13:[5,1],14:[5,2],15:[5,3],16:[5,4], 17:[6,1],18:[6,2],19:[6,3],20:[6,4]}
+	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[2,1],6:[2,2],7:[2,3],8:[2,4], 9:[3,1],10:[3,2],11:[3,3],12:[3,4], 13:[4,1],14:[4,2],15:[4,3],16:[4,4], 17:[5,1],18:[5,2],19:[5,3],20:[5,4], 21:[6,1],22:[6,2],23:[6,3],24:[6,4]}
 	Box = BoxDict[tiplookuptable[CurrentTipPosition][0]]
 	offset = OffsetDict[tiplookuptable[CurrentTipPosition][1]]
 	row = BoxLocation[Box][0]
@@ -663,8 +647,7 @@ def retrieveTips(CurrentTipPosition):
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
 
-	if True:
-	#################
+	if align=="True":
 		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 		VLMX_SetSpeed(XMotor, XSpeedSlow)
 		VLMX_SetSpeed(YMotor, YSpeedSlow)
@@ -685,30 +668,28 @@ def retrieveTips(CurrentTipPosition):
 			YGuess = YGuess + guess
 			VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y + YGuess, XMotor, matrix[row][col].x + XGuess)
 		print ("Yoffset = ",YGuess)
-
+		
+		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+		print("Next the Z offset")
+		guess = 10.0
+		ZGuess = 0.0
+		while guess != 0.0:
+			guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
+			ZGuess = ZGuess + guess
+			VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth + ZGuess)
+		print ("Zoffset = ",ZGuess)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 		VLMX_SetSpeed(XMotor, XSpeedFast)
 		VLMX_SetSpeed(YMotor, YSpeedFast)
-
 		VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
-	###################
 	
-	if False:
-	###################
+	else:
 		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 		enterToContinue()
-	#  try to seat the tip in position B
-		position(0,1,'UL')
-		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
-		VLMX_SetSpeed(ZMotor, ZSpeedFast)
-		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-
-		enterToContinue()
-	######################
 	
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition

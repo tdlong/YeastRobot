@@ -35,7 +35,7 @@ STDalignmentDepth = s.STDalignmentDepth
 STDtipAttach = s.STDtipAttach
 STDtipSeat = s.STDtipSeat
 universalSafeHeight = s.universalSafeHeight; #update to optimize speed, minimizing travel distance
-
+wellDist = 350
 
 plateInfo = {\
 'DW96P': \
@@ -47,7 +47,7 @@ plateInfo = {\
     'maxDepth': 8460,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
-    'wellDist': 320,\
+    'wellDist': wellDist,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'DW24P': \
    {'x':580,\
@@ -69,7 +69,7 @@ plateInfo = {\
     'maxDepth': 4940,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
-    'wellDist': 320,\
+    'wellDist': wellDist,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'SW24P': \
    {'x':620,\
@@ -105,70 +105,70 @@ plateInfo = {\
     'wellDist': None, \
     'readdress': None},\
 'TBOXA': \
-   {'x':-45,\
-    'y':865,\
+   {'x':56,\
+    'y':996,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
     'tipAttachDepth': STDtipAttach,\
     'ejectDepth': None,\
-    'wellDist': 345, \
+    'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXB': \
-   {'x':40,\
-    'y':865, \
+   {'x':204,\
+    'y':984, \
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 6060,\
+    'tipAttachDepth': STDtipAttach,\
     'ejectDepth': None,\
-    'wellDist': 345, \
+    'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXC': \
-   {'x':-40,\
-    'y':1110,\
+   {'x':-8,\
+    'y':1206,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
     'tipAttachDepth': STDtipAttach,\
     'ejectDepth': None,\
-    'wellDist': 320, \
+    'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXD': \
-   {'x':110,\
-    'y':1275,\
+   {'x':179,\
+    'y':1222,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
     'tipAttachDepth': STDtipAttach,\
     'ejectDepth': None,\
-    'wellDist': 320, \
+    'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXE': \
-   {'x':5,\
-    'y':1430,\
+   {'x':-30,\
+    'y':1454,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': STDtipAttach-50,\
+    'tipAttachDepth': STDtipAttach,\
     'ejectDepth': None,\
-    'wellDist': 320, \
+    'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXF': \
-   {'x':110,\
-    'y':1588,\
+   {'x':162,\
+    'y':1472,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': STDtipAttach-50,\
+    'tipAttachDepth': STDtipAttach,\
     'ejectDepth': None,\
-    'wellDist': 320, \
+    'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TDISP': \
    {'x':400,\
@@ -178,7 +178,7 @@ plateInfo = {\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
     'tipAttachDepth': None, \
-    'ejectDepth': 5500, \
+    'ejectDepth': 5000, \
     'wellDist': None,\
     'readdress': None},\
 'LWSTE': \

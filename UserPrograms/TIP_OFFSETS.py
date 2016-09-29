@@ -23,17 +23,16 @@ OffsetDict={1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
 DefineDeck(deck)																				
 printDeck()
 InitializeRobot()		# initialize motors, home, etc.
-
+position(1,2)
+enterToContinue()
 
 for row in [1]:
 	for col in [3,4,5,6]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition) + 3
 		position(1,2)																		
 		aspirate(myvol, 75, 7)				# Aspirate(volume,% to bottom,speed)
-		#enterToContinue()
 		position(row,col)																		
 		dispense(myvol, 95, 7, 'Y')			# Dispense(volume, %to bottom, speed, blowout)
-		enterToContinue()
 		disposeTips()
 
 

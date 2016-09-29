@@ -33,7 +33,6 @@ plateInfo Dictionary Guide - dict(dict())
 '''
 STDalignmentDepth = s.STDalignmentDepth
 STDtipAttach = s.STDtipAttach
-STDtipSeat = s.STDtipSeat
 universalSafeHeight = s.universalSafeHeight; #update to optimize speed, minimizing travel distance
 wellDist = 350
 

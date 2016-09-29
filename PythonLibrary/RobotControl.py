@@ -387,7 +387,7 @@ def testplate():
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
 
-def aspirate(vol, depth = 100, speed = 100):
+def aspirate(vol, depth = 100, speed = 100, test="False"):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -407,9 +407,12 @@ def aspirate(vol, depth = 100, speed = 100):
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, targetDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	if test=="True":
+		VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
+		VLMX_GoTo_A(ZMotor, targetDepth)
+		VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	else:
+		VLMX_GoTo_A(ZMotor, targetDepth)	
 	#suck
 	EZ_GoTo_A(plungerLimit - (volume), targetSpeed)
 	time.sleep(0.5)
@@ -420,7 +423,7 @@ def aspirate(vol, depth = 100, speed = 100):
 	#Update global variable for current syringe position
 	currentDisplacement = plungerLimit - (volume + airBuffer)
 
-def dispense(vol, depth = 100, speed = 100, blowout = 'N'):
+def dispense(vol, depth = 100, speed = 100, blowout = 'N', test="False"):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -439,9 +442,12 @@ def dispense(vol, depth = 100, speed = 100, blowout = 'N'):
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, targetDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	if test=="True":
+		VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
+		VLMX_GoTo_A(ZMotor, targetDepth)
+		VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	else:
+		VLMX_GoTo_A(ZMotor, targetDepth)
 	#dispense
 	if(blowout == 'Y'):
 		EZ_GoTo_A((currentDisplacement + volume + 4*airBuffer), targetSpeed)
@@ -554,9 +560,8 @@ def disposeTips():
 	print('Disposing Tips')
 	position(3, 1)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
-#	SendToEZ("/1m100<CR>\r")																					# what does this do ... it seems like a strange thing to change in this function ... it should happen at the initialization
 	EZ_GoTo_A(6000, ezSlow)	    # 6800 to 6500 = -2mm ADL Sept 20  to 5500 + 7mm																					#Punch Out Tips
-	EZ_GoTo_A(plungerLimit, ezFast) 																	#go up
+	EZ_GoTo_A(plungerLimit, ezFast) 	#go up
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
 
 
@@ -689,7 +694,6 @@ def retrieveTips(CurrentTipPosition, align="False"):
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-		enterToContinue()
 	
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition

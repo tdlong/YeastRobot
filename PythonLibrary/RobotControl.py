@@ -465,6 +465,7 @@ def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
+	# 0 is top and 100 bottom
 	global currentDisplacement
 
 	if verbose:

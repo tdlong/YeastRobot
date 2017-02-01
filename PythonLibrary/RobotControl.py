@@ -1,30 +1,3 @@
-############################################
-############### UPDATE LOG #################
-############################################
-#Last Update Jun 11 2016 by Eric Huang: Addition of new verification functions and exception classes
-#Last Update Jun 11 2016 by Eric Huang: Format cleanup, indentation corrections for python3 compatibility
-#Last Update Jun 10 2016 by Eric Huang: Mdispense and Maspirate implementation
-#Last Update Jun 03 2016 by Eric Huang: UI Refresh
-#Last Update Jun 01 2016 by Eric Huang: MAJOR UPDATE - .pipet file scanning method
-#Last Update May 24 2016 by Eric Huang: capability to Enable/Disable verbose output
-#Last Update May 24 2016 by Eric Huang: Change aspirate/dispense volume input units to microliters. 
-#Last Update May 24 2016 by Eric Huang: Perform preflight check (after a program is selected) to make sure all pipet volumes are in a valid range
-#Last Update Apr 13 2016 by Eric Huang: +1 version; Add 'tipBoxGenerator()' function, fix SendToEZ bug, modify multithreading code
-#Last Update Mar 31 2016 by Derek Gladstone: Modified SendToEZ function. Fixed EZ stepper bug. Now working with protocol.
-#Last Update Mar 31 2016 by Eric Huang: Fix Tip Retrieval Bug (positioning update issue)
-#Last Update Mar 08 2016 by Eric Huang: Fix testing protocols
-#Last Update Feb 29 2016 by Eric Huang: Added Eric Hernandez's and Derek's EZ stepper functions, modified position function, remove reposition function
-#Last Update Feb 24 2016 by Eric Huang: Add directory scanning/indexing and external script file functionality. UI refresh. 
-#Last Update Feb 19 2016 by Eric Huang
-#Last Update Feb 18 2016 by Eric Huang
-#Last Update Feb 04 2016 by Eric Huang: Add test configuration option, determine positioning for 24 well and 96 well with derek
-#Last Update Feb 02 2016 by Derek Gladstone
-#Last Update Feb 01 2016 by Eric Huang: convert from test code
-#Last Update Jan 28 2016 by Eric Huang: [ALL EZ STEPPER INTERACTION IS TEMPORARILY REMOVED] test implementation of matrix data structure (list of dict of dict) for plate positioning
-#Last Update Jan 27 2016 by Derek Gladstone: MoveToDeck needed "off" argument
-#Last Update Jan 21 2016 by Derek Gladstone
-#Last Update Jan 19 2016 by Eric Huang
-
 from __future__ import print_function
 import Settings as s
 import CellClass as C #cell object definition
@@ -44,7 +17,6 @@ version = s.version #this string is displayed in text UI, please update in setti
 ######################################################
 '''---> EDIT SETTINGS IN SETTINGS.PY, NOT HERE!!<--- '''
 VLMXserialPort = s.VLMXserialPort
-
 EZserialPort = s.EZserialPort
 EZ=''
 velmex=''
@@ -164,11 +136,6 @@ def InitializeRobot():
 	EZ.close()
 	EZ.open()
 	homeMotors()
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, 0)
-	VLMX_SetSpeed(XMotor, XSpeedFast)
-	VLMX_SetSpeed(YMotor, YSpeedFast)
-	VLMX_GoTo_Coordinated_A(YMotor, 0, XMotor, 0)
 			
 def printDeck():
 	print('')
@@ -208,36 +175,19 @@ def DefineDeck(deck): #assigns plate to each position, sets up objects for each 
 	print('')	 
 
 ############################ HOMING FUNCTIONS ###############################
-def fast_home_velmex():
-	# Set to Fast
-	# I slowed these down because they were hitting the limit pretty hard
-	VLMX_SetSpeed(ZMotor, int(0.5*ZSpeedFast))
-	VLMX_SetSpeed(XMotor, int(0.5*XSpeedFast))
-	VLMX_SetSpeed(YMotor, int(0.5*YSpeedFast))
-	absZero = '-0'
-	VLMX_GoTo_A(ZMotor, absZero)
-	VLMX_GoTo_Coordinated_A(XMotor, absZero, YMotor, absZero)
 
 def home_velmex():
-	# Set to Slow
-	VLMX_SetSpeed(ZMotor, str(2*ZSpeedSlow))
-	VLMX_SetSpeed(XMotor, str(2*XSpeedSlow))
-	VLMX_SetSpeed(YMotor, str(2*YSpeedSlow))
-	
 	#Go to Home Position (Slow)
 	#Clear, index to negative limit, set speed to 200steps/sec, zero motor position, run
 	SendToVelmex('C, I' + ZMotor + 'M-0, I' + ZMotor + 'M' + str(ZSpeedSlow) + ', IA' + ZMotor + 'M-0, R')
-	SendToVelmex('C, I' + XMotor + 'M-0, I' + XMotor + 'M' + str(XSpeedSlow) + ', IA' + XMotor + 'M-0, R')
 	SendToVelmex('C, I' + YMotor + 'M-0, I' + YMotor + 'M' + str(YSpeedSlow) + ', IA' + YMotor + 'M-0, R')
+	SendToVelmex('C, I' + XMotor + 'M-0, I' + XMotor + 'M' + str(XSpeedSlow) + ', IA' + XMotor + 'M-0, R')
 	
 	#Initialize to fast speed (vlmx)
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 
-	#send plunger to bottom
-	EZ_GoTo_A(plungerLimit, 2000)
-				
 	print('--------------------------------------------------------------------------------')
 	print('')
 	print('	 VLMX: INTIALIZING/HOMING COMPLETE')
@@ -275,6 +225,9 @@ def homeMotors():
 	print('')
 	print('--------------------------------------------------------------------------------')
 	home_velmex()
+	
+	#send plunger to bottom
+	EZ_GoTo_A(plungerLimit, 2000)
 	return
 
 
@@ -311,6 +264,14 @@ def VLMX_GoTo_A(motor, index): #ABSOLUTE
 	SendToVelmex('C, IA' + str(motor) + 'M' + str(index) + ', R')
 	if verbose:
 		print(' Sending MOTOR[' + str(motor) + '] to INDEX[' + str(index) + ']')
+
+def VLMX_GoTo_R(motor, distance):
+	#relative indexing
+	#used only for tip ejection
+	global verbose
+	SendToVelmex('C, I' + str(motor) + 'M' + str(index) + ', R')
+	if verbose:
+		print(' Sending MOTOR[' + str(motor) + '] this many steps --> [' + str(distance) + ']')
 
 def EZ_GoTo_A(index, speed): #Absolute with speed 
 	global verbose
@@ -423,7 +384,7 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 	#Update global variable for current syringe position
 	currentDisplacement = plungerLimit - (volume + airBuffer)
 
-def dispense(vol, depth = 100, speed = 100, blowout = 'N', test="False"):
+def dispense(vol, depth = 100, speed = 100, test="False"):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -448,13 +409,8 @@ def dispense(vol, depth = 100, speed = 100, blowout = 'N', test="False"):
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	else:
 		VLMX_GoTo_A(ZMotor, targetDepth)
-	#dispense
-	if(blowout == 'Y'):
-		EZ_GoTo_A((currentDisplacement + volume + 4*airBuffer), targetSpeed)
-		currentDisplacement = currentDisplacement + volume + 4*airBuffer
-	else:
-		EZ_GoTo_A((currentDisplacement+volume+airBuffer), targetSpeed)
-		currentDisplacement = currentDisplacement+volume+airBuffer
+	EZ_GoTo_A((currentDisplacement+volume+airBuffer), targetSpeed)
+	currentDisplacement = currentDisplacement+volume+airBuffer
 
 	#slow ascent
 	time.sleep(0.5)
@@ -499,7 +455,7 @@ def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	EZ_GoTo_A(plungerLimit - int(nsteps * volume) - airBuffer, ezSlow) 
 	#Update global variable for current syringe position
 
-def moveDispense(vol, startdepth = 100, speed = 100, blowout = 'N'):
+def moveDispense(vol, startdepth = 100, speed = 100):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -528,10 +484,6 @@ def moveDispense(vol, startdepth = 100, speed = 100, blowout = 'N'):
 		EZ_GoTo_A(currentDisplacement + airBuffer + int(nsteps*volume) - int(i * volume), targetSpeed) 
 	#dispense
 	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume)
-	if(blowout == 'Y'):
-		EZ_GoTo_A((currentDisplacement + 3*airBuffer), targetSpeed)
-		currentDisplacement = currentDisplacement + 3*airBuffer
-
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	time.sleep(0.5)
 	#move head to safe depth
@@ -551,23 +503,59 @@ def mix(vol,percentdown,percentspeed):
 
 def liquidDisposal():
 	print('Disposing Liquid')
-	position(3, 0)
+	position(3, 1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth)
 	EZ_GoTo_A(plungerLimit+200, ezSlow)
+	EZ_GoTo_A(plungerLimit, ezSlow)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 
 def disposeTips():
 	print('Disposing Tips')
-	position(3, 1)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
-	EZ_GoTo_A(6000, ezSlow)	    # 6800 to 6500 = -2mm ADL Sept 20  to 5500 + 7mm																					#Punch Out Tips
-	EZ_GoTo_A(plungerLimit, ezFast) 	#go up
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth) 
+??	distance = ???    (#mm to move * 39.5 steps/mm)
+	# height of hook entrance = hookEntrance
+	# height of tip dispense = tipDispenseDepth
+	position(2, 0)
+	position_internal(3, 0)
+	
+	VLMX_SetSpeed(XMotor, XSpeedSlow)
+	VLMX_SetSpeed(YMotor, YSpeedSlow)
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
+		
+	print('Testing that we are Ideally positioned ready to enter the hook {enter}')
+	enterToContinue()
+	
+#	VLMX_GoTo_R(YMotor, distance)
+#	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
+#	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
+#	VLMX_GoTo_R(YMotor, -distance)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+	EZ_GoTo_A(plungerLimit, ezSlow)
+	
+	VLMX_SetSpeed(XMotor, XSpeedFast)
+	VLMX_SetSpeed(YMotor, YSpeedFast)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 
 
 ########################### MISC. SUPPORT FUNCTIONS #########################
+
 def position(row, col, position = 'UL'):
+	global verbose
+	global currentx
+	global currenty
+	destrow = row
+	destcol = col
+	currrow = currentx
+	currcol = currenty
+	if destrow == 3 and currcol == 0:
+		position_internal(destrow, 1)
+	if currrow == 3 and destcol == 0:
+		position_internal(2, destcol)
+	position_internal(destrow, destcol, position)
+
+def position_internal(row, col, position = 'UL'):
 	global verbose
 	global currentx
 	global currenty
@@ -751,9 +739,7 @@ def newplate(row=0,col=2):
 	currentX = C.PlateColumns[col]
 	currentY = C.PlateRows[row]
 	VLMX_GoTo_A(ZMotor,currentZ)
-	VLMX_GoTo_A(XMotor,currentX)
-	VLMX_GoTo_A(YMotor,currentY)
-	
+	position(row,col)
 	
 	print("Lets get the Surface Height first, this is the height of the top of the plate")
 	guess = 10.0

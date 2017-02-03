@@ -94,22 +94,34 @@ verbose = True #true if you want to print out every single command that is sent
 ##################### INITIAL CONFIGURATION FUNCTIONS #######################
 #############################################################################
 
-def initializeSerial():
+def initializeVelmexSerial():
 	print("			 Initializing Serial Objects")
 	#Setup Controller Communication
 	BR = s.BR #serial baud rate
 	global velmex
 	global VLMXserialPort
+	#Create and initialize Velmex control object
+	try:
+		velmex = serial.Serial(port= VLMXserialPort, baudrate = BR, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
+	except:
+		print('YEASTBOT ERROR: SERIAL PORTS ARE NOT ACCESSIBLE. PLEASE CHECK CONNECTIONS AND TRY AGAIN')
+		print(' terminating...')
+		terminate()
+
+def initializeEZSerial():
+	print("			 Initializing Serial Objects")
+	#Setup Controller Communication
+	BR = s.BR #serial baud rate
 	global EZ
 	global EZserialPort
 	#Create and initialize Velmex control object
 	try:
-		velmex = serial.Serial(port= VLMXserialPort, baudrate = BR, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
 		EZ = serial.Serial(port= EZserialPort, baudrate=BR, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
 	except:
 		print('YEASTBOT ERROR: SERIAL PORTS ARE NOT ACCESSIBLE. PLEASE CHECK CONNECTIONS AND TRY AGAIN')
 		print(' terminating...')
 		terminate()
+
 
 def plateCheck(plate):
 	if (plate not in C.plateInfo.keys()):
@@ -122,7 +134,7 @@ def plateCheck(plate):
 	else:
 		pass
 		
-def InitializeRobot():
+def InitializeRobot(velmex=True, EZ=True):
 	print('Starting up...\n')
 	print('Warning: If motor controller power has been interrupted')
 	print('  prior to this run, it is important to home the')
@@ -130,12 +142,17 @@ def InitializeRobot():
 	print('  -ing inaccuracies and plate crashes.\n')
 	print('Running motor initialization sequence.')
 	print('')
-	initializeSerial()
-	velmex.close()
-	velmex.open()
-	EZ.close()
-	EZ.open()
-	homeMotors()
+	if(velmex):
+		initializeVelmexSerial()
+		velmex.close()
+		velmex.open()
+		home_Velmex()
+	if(EZ):
+		initializeEZSerial()
+		EZ.close()
+		EZ.open()
+		home_EZ()
+	return
 			
 def printDeck():
 	print('')
@@ -176,7 +193,7 @@ def DefineDeck(deck): #assigns plate to each position, sets up objects for each 
 
 ############################ HOMING FUNCTIONS ###############################
 
-def home_velmex():
+def home_Velmex():
 	#Go to Home Position (Slow)
 	#Clear, index to negative limit, set speed to 200steps/sec, zero motor position, run
 	SendToVelmex('C, I' + ZMotor + 'M-0, I' + ZMotor + 'M' + str(ZSpeedSlow) + ', IA' + ZMotor + 'M-0, R')
@@ -209,26 +226,9 @@ def home_EZ():
 	print('EZ: INTIALIZING/HOMING COMPLETE')
 	print('')
 	print('--------------------------------------------------------------------------------')
-
-def homeMotors():
-	#Initialize to home
-	print('')
-	print('--------------------------------------------------------------------------------')
-	print('')
-	print('EZ: INTIALIZING; PLEASE WAIT')
-	print('')
-	print('--------------------------------------------------------------------------------')
-	home_EZ()
-	print('--------------------------------------------------------------------------------')
-	print('')
-	print('VLMX: INTIALIZING; PLEASE WAIT')
-	print('')
-	print('--------------------------------------------------------------------------------')
-	home_velmex()
-	
-	#send plunger to bottom
 	EZ_GoTo_A(plungerLimit, 2000)
 	return
+
 
 
 #############################################################################
@@ -279,16 +279,6 @@ def EZ_GoTo_A(index, speed): #Absolute with speed
 	SendToEZ('/1V' + str(speed) + 'A' + str(index) + 'R<CR>\r')
 
 def SendToVelmex(command):
-#	global verbose
-#	if verbose:
-#		print('VLMX CMD: ' + command)
-#		velmex.write('C, V, R')
-#		count = 0
-#		while(True):
-#			count += 1
-#			returnstatus = velmex.read()
-#			if ('R' in returnstatus or '^' in returnstatus or count >= 100):
-#				break
 	velmex.write('F') #Enable On-Line mode with echo "off"
 	velmex.write(command)
 	data_raw = ''
@@ -506,13 +496,13 @@ def liquidDisposal():
 	position(3, 1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth)
-	EZ_GoTo_A(plungerLimit+200, ezSlow)
-	EZ_GoTo_A(plungerLimit, ezSlow)
+#	EZ_GoTo_A(plungerLimit+airBuffer, ezSlow)
+#	EZ_GoTo_A(plungerLimit, ezSlow)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 
 def disposeTips():
 	print('Disposing Tips')
-??	distance = ???    (#mm to move * 39.5 steps/mm)
+# distance = ???    (#mm to move * 39.5 steps/mm)
 	# height of hook entrance = hookEntrance
 	# height of tip dispense = tipDispenseDepth
 	position(2, 0)
@@ -527,12 +517,19 @@ def disposeTips():
 	print('Testing that we are Ideally positioned ready to enter the hook {enter}')
 	enterToContinue()
 	
+####  the idea is to get this working in steps... enter hook first, then slide into gap, then up and down
 #	VLMX_GoTo_R(YMotor, distance)
+#	print('Testing that we are Ideally positioned inside the hook {enter}')
+#	enterToContinue()
 #	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
+#	print('Testing that we are Ideally positioned at the correct ejection height {enter}')
+#	enterToContinue()
 #	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
 #	VLMX_GoTo_R(YMotor, -distance)
+
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-	EZ_GoTo_A(plungerLimit, ezSlow)
+
+#	EZ_GoTo_A(plungerLimit, ezSlow)
 	
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
@@ -599,16 +596,15 @@ def enterToContinue():
 		pass
 	
 ############################# SHUT DOWN FUNCTIONS ###########################
-def ShutDownRobot():
-	print('End of Task - Returning to home position. Please Wait')
-	#go fast home
-	print('Homing to safety')
-	home_EZ()
-	fast_home_velmex()
-	#Close serial connections
-	print('Closing serial connections')
-	velmex.close()
-	EZ.close()
+def ShutDownRobot(velmex=True,EZ=True):
+	print('Initiating shutdown - Returning to home position. Please Wait')
+	if(velmex):
+		print('Homing to safety')
+		home_Velmex()
+		velmex.close()
+	if(EZ):
+		home_EZ()
+		EZ.close()
 	print('Good Bye!')
 	sys.exit(0)
 
@@ -687,36 +683,6 @@ def retrieveTips(CurrentTipPosition, align="False"):
 	CurrentTipPosition = CurrentTipPosition + 1
 	return CurrentTipPosition
 		
-def OLDretrieveTips(CurrentTipPosition):
-#	CurrentTipPosition = 2    # debug
-# get more tips if empty
-	if (CurrentTipPosition >24):
-		CurrentTipPosition = 1
-		position(0,6)
-		print('NO MORE AVAILABLE TIPS!')
-		print('*******The head has been moved out of the way.*******')
-		print('***Please reload tip box holders before continuing.***')
-		print('***Press Enter to Continue ****')
-		enterToContinue()
-	BoxDict = {1:'A', 2:'B', 3:'C', 4:'D', 5:'E', 6:'F'}
-	OffsetDict = {1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
-	BoxLocation = {'A':[0,0],'B':[0,1],'C':[1,0],'D':[1,1],'E':[2,0],'F':[2,1]}
-	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[2,1],6:[2,2],7:[2,3],8:[2,4], 9:[3,1],10:[3,2],11:[3,3],12:[3,4], 13:[4,1],14:[4,2],15:[4,3],16:[4,4], 17:[5,1],18:[5,2],19:[5,3],20:[5,4], 21:[7,1],22:[6,2],23:[6,3],24:[6,4]}
-	Box = BoxDict[tiplookuptable[CurrentTipPosition][0]]
-	offset = OffsetDict[tiplookuptable[CurrentTipPosition][1]]
-	row = BoxLocation[Box][0]
-	col = BoxLocation[Box][1]
-	print('Retrieving Tips')
-	position(row, col, offset)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-	CurrentTipPosition = CurrentTipPosition + 1
-	return CurrentTipPosition
-
 def newplate(row=0,col=2):
 	# DO THIS AT POSITION --->>> 0,2
 	#

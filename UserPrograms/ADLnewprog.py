@@ -40,7 +40,7 @@ DefineDeck(deck)																				# read in deck
 																												# define first tip offset
 																												# check plates, etc. -> output deck back to user
 printDeck()
-InitializeRobot()																				# initialize motors, home, etc.
+InitializeRobot(EZ=False)																# initialize motors, home, etc.
 
 #for row in [0,1,2,3]:
 for row in [0,1,2]:
@@ -59,5 +59,5 @@ for row in [0,1,2]:
 		liquidDisposal()							    									# smart enough to goto liquid Waste and dispense the remain 50ul
 		disposeTips()																				# again smart enough to do this
 
-fast_home_velmex()
-ShutDownRobot()
+position(0,0)
+ShutDownRobot(EZ=False)

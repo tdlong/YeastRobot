@@ -1,6 +1,6 @@
 import sys
 #  where RobotControl.py, etc lives
-#sys.path.append('/path/to/application/app/folder')
+sys.path.append('/home/pi/Desktop/ADL/YeastRobot/PythonLibrary')
 from RobotControl import *
 
 
@@ -24,31 +24,33 @@ OffsetDict={1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
 # read in deck, etc
 DefineDeck(deck)
 printDeck()
-InitializeRobot(EZ=False)
+
+InitializeRobot(DOEZ=False)
 
 # test movement
-position(0,0)
-position(0,4)
-position(3,4)
-position(3,3)
-position(2,0)
-position(0,2)
+#position(0,0)
+#position(0,4)
+#position(3,4)
+#position(3,3)
+#position(2,0)
+#position(3,2)
 
 # plates
-new_plate(0,2)
-new_plate(0,3)
+#newplate(0,2)
+#newplate(0,3)
+#newplate(3,0)   # tip eject
 # etc
 
 # tips
-retrieveTips(1, align="True"):
-retrieveTips(5, align="True"):
+#retrieveTips(1, align="True"):
+#retrieveTips(5, align="True"):
 # etc
 
 # liquid disposal (no EZ)
-liquidDisposal()
+#liquidDisposal()
 
 # dispose Tips
 disposeTips()
 
 position(0,0)
-ShutDownRobot(EZ=False)
+ShutDownRobot(DOEZ=False)

@@ -134,7 +134,7 @@ def plateCheck(plate):
 	else:
 		pass
 		
-def InitializeRobot(velmex=True, EZ=True):
+def InitializeRobot(DOvelmex=True, DOEZ=True):
 	print('Starting up...\n')
 	print('Warning: If motor controller power has been interrupted')
 	print('  prior to this run, it is important to home the')
@@ -142,12 +142,12 @@ def InitializeRobot(velmex=True, EZ=True):
 	print('  -ing inaccuracies and plate crashes.\n')
 	print('Running motor initialization sequence.')
 	print('')
-	if(velmex):
+	if(DOvelmex):
 		initializeVelmexSerial()
 		velmex.close()
 		velmex.open()
 		home_Velmex()
-	if(EZ):
+	if(DOEZ):
 		initializeEZSerial()
 		EZ.close()
 		EZ.open()
@@ -172,7 +172,7 @@ def printDeck():
 def DefineDeck(deck): #assigns plate to each position, sets up objects for each cell/plate
 	global matrix
 	global DeckLayout
-	fixed = [['TBOXA','TBOXB'],['TBOXC','TBOXD'],['TBOXE','TBOXF'],['LWSTE','TDISP']] 
+	fixed = [['TBOXA','TBOXB'],['TBOXC','TBOXD'],['TBOXE','TBOXF'],['TDISP','LWSTE']] 
 	Deck = deck.split('\n')
 	for i in [0,1,2,3]:
 		rDeck = fixed[i]+ Deck[i].split()
@@ -502,31 +502,34 @@ def liquidDisposal():
 
 def disposeTips():
 	print('Disposing Tips')
-# distance = ???    (#mm to move * 39.5 steps/mm)
+	distance = 780    
+	# #mm to move * 39.5 steps/mm
 	# height of hook entrance = hookEntrance
 	# height of tip dispense = tipDispenseDepth
+	
 	position(2, 0)
-	position_internal(3, 0)
+	position_internal(3, 0)		
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
 	
 	VLMX_SetSpeed(XMotor, XSpeedSlow)
 	VLMX_SetSpeed(YMotor, YSpeedSlow)
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
 		
-	print('Testing that we are Ideally positioned ready to enter the hook {enter}')
-	enterToContinue()
 	
 ####  the idea is to get this working in steps... enter hook first, then slide into gap, then up and down
-#	VLMX_GoTo_R(YMotor, distance)
+
+	currentYIndex = matrix[currentx][currenty].y
+	VLMX_GoTo_A(YMotor, currentYIndex + distance)	
 #	print('Testing that we are Ideally positioned inside the hook {enter}')
 #	enterToContinue()
-#	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
+	
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
 #	print('Testing that we are Ideally positioned at the correct ejection height {enter}')
 #	enterToContinue()
-#	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
-#	VLMX_GoTo_R(YMotor, -distance)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
 
+
+	VLMX_GoTo_A(YMotor, currentYIndex)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 
 #	EZ_GoTo_A(plungerLimit, ezSlow)
@@ -547,9 +550,9 @@ def position(row, col, position = 'UL'):
 	currrow = currentx
 	currcol = currenty
 	if destrow == 3 and currcol == 0:
-		position_internal(destrow, 1)
+		position_internal(currrow, 1)
 	if currrow == 3 and destcol == 0:
-		position_internal(2, destcol)
+		position_internal(2, currcol)
 	position_internal(destrow, destcol, position)
 
 def position_internal(row, col, position = 'UL'):
@@ -596,13 +599,13 @@ def enterToContinue():
 		pass
 	
 ############################# SHUT DOWN FUNCTIONS ###########################
-def ShutDownRobot(velmex=True,EZ=True):
+def ShutDownRobot(DOvelmex=True,DOEZ=True):
 	print('Initiating shutdown - Returning to home position. Please Wait')
-	if(velmex):
+	if(DOvelmex):
 		print('Homing to safety')
 		home_Velmex()
 		velmex.close()
-	if(EZ):
+	if(DOEZ):
 		home_EZ()
 		EZ.close()
 	print('Good Bye!')

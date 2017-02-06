@@ -170,21 +170,17 @@ plateInfo = {\
     'wellDist': wellDist, \
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TDISP': \
-   {'x':400,\
-    'y':2500,\
+   {'x':8,\
+    'y':2100,\
     'alignmentDepth': 2300,\
     'surfDepth': 3800,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': None,\
+    'maxDepth': 10140,\
     'tipAttachDepth': None, \
-    'ejectDepth': 5000, \
+    'ejectDepth': 8400, \
     'wellDist': None,\
     'readdress': None},\
-    
-#  maxDepth should be the height of the entrance to the hook
-#  ejectDepth should be height of the entrance LESS distance to move up to achieve ejection
-#  so maxDepth - [0.4" + 0.2" = ~2400]    
-    
+        
 'LWSTE': \
    {'x':-100,\
     'y':3300, \

@@ -58,6 +58,7 @@ airBuffer = s.airBuffer
 '''---> EDIT SETTINGS IN SETTINGS.PY, NOT HERE!!<--- '''
 #pipetting step conversion
 stepsPerUL = s.stepsPerUL
+maxUL = s.maxUL
 
 ################Runtime Variables (dynamically updated/accessed)####################
 
@@ -196,6 +197,23 @@ def DefineDeck(deck): #assigns plate to each position, sets up objects for each 
 def home_Velmex():
 	#Go to Home Position (Slow)
 	#Clear, index to negative limit, set speed to 200steps/sec, zero motor position, run
+	
+	#Initialize to fast speed (vlmx)
+	VLMX_SetSpeed(XMotor, XSpeedSlowP)
+	VLMX_SetSpeed(YMotor, YSpeedSlowP)
+	VLMX_SetSpeed(ZMotor, ZSpeedSlowP)
+
+	SendToVelmex('C, I' + ZMotor + 'M-0, I' + ZMotor + 'M' + str(ZSpeedSlow) + ', IA' + ZMotor + 'M-0, R')
+	SendToVelmex('C, I' + YMotor + 'M-0, I' + YMotor + 'M' + str(YSpeedSlow) + ', IA' + YMotor + 'M-0, R')
+	SendToVelmex('C, I' + XMotor + 'M-0, I' + XMotor + 'M' + str(XSpeedSlow) + ', IA' + XMotor + 'M-0, R')
+	
+	#Initialize to fast speed (vlmx)
+	VLMX_SetSpeed(XMotor, XSpeedSlow)
+	VLMX_SetSpeed(YMotor, YSpeedSlow)
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+
+	#Go to Home Position (Slow)
+	#Clear, index to negative limit, set speed to 200steps/sec, zero motor position, run
 	SendToVelmex('C, I' + ZMotor + 'M-0, I' + ZMotor + 'M' + str(ZSpeedSlow) + ', IA' + ZMotor + 'M-0, R')
 	SendToVelmex('C, I' + YMotor + 'M-0, I' + YMotor + 'M' + str(YSpeedSlow) + ', IA' + YMotor + 'M-0, R')
 	SendToVelmex('C, I' + XMotor + 'M-0, I' + XMotor + 'M' + str(XSpeedSlow) + ', IA' + XMotor + 'M-0, R')
@@ -220,6 +238,14 @@ def home_EZ():
 	SendToEZ("/1v1500" + "Z10000R<CR>\r")
 	SendToEZ("/1v1500" + "Z100R<CR>\r")
 	SendToEZ("/1v1500" + "Z10000R<CR>\r")
+	
+	# do it very slow
+	# ADL June 14
+	SendToEZ("/1v200" + "Z10000R<CR>\r")
+	SendToEZ("/1v200" + "Z100R<CR>\r")
+	SendToEZ("/1v200" + "Z10000R<CR>\r")
+	
+	
 
 	print('--------------------------------------------------------------------------------')
 	print('')
@@ -344,12 +370,16 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
+	vol = float(vol)
+	if(vol > maxUL):
+		print("max volumn exceeded\n")
+		exit()
+
 	if verbose:
 		print('Aspirating: ' + str(vol) + 'ul' + ' at ' + str(depth) + 'percent depth and ' + str(speed) + 'percent speed.')
 	else:
 		print('Aspirating')
 
-	vol = float(vol)
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
 	maxDepth = matrix[currentx][currenty].maxDepth
 	safeDepth = matrix[currentx][currenty].safeDepth
@@ -380,11 +410,15 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
+	vol = float(vol)
+	if(vol > maxUL):
+		print("max volumn exceeded\n")
+		exit()
+
 	if verbose:
 		print('			 Dispensing: ' + str(vol) + 'ul' + ' at ' + str(depth) + 'percent depth and ' + str(speed) + 'percent speed.')
 	else:
 		print('			 Dispensing')
-	vol = float(vol)
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
 	maxDepth = matrix[currentx][currenty].maxDepth
 	safeDepth = matrix[currentx][currenty].safeDepth
@@ -414,13 +448,17 @@ def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	# 0 is top and 100 bottom
 	global currentDisplacement
 
+	vol = float(vol)
+	if(vol > maxUL):
+		print("max volumn exceeded\n")
+		exit()
+
 	if verbose:
 		print('Aspirating: ' + str(vol) + 'ul' + ' at ' + str(startdepth) + 'percent depth and ' + str(speed) + 'percent speed.')
 	else:
 		print('Aspirating')
 
 	nsteps = 10
-	vol = float(vol)
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
 	maxDepth = matrix[currentx][currenty].maxDepth
 	safeDepth = matrix[currentx][currenty].safeDepth
@@ -451,12 +489,16 @@ def moveDispense(vol, startdepth = 100, speed = 100):
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
+	vol = float(vol)
+	if(vol > maxUL):
+		print("max volumn exceeded\n")
+		exit()
+		
 	if verbose:
 		print('			 Dispensing: ' + str(vol) + 'ul' + ' at ' + str(startdepth) + 'percent depth and ' + str(speed) + 'percent speed.')
 	else:
 		print('			 Dispensing')
 	nsteps = 10
-	vol = float(vol)
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
 	maxDepth = matrix[currentx][currenty].maxDepth
 	safeDepth = matrix[currentx][currenty].safeDepth
@@ -484,6 +526,12 @@ def moveDispense(vol, startdepth = 100, speed = 100):
 	currentDisplacement = currentDisplacement - airBuffer
 
 def mix(vol,percentdown,percentspeed):
+	
+	vol = float(vol)
+	if(vol > maxUL):
+		print("max volumn exceeded\n")
+		exit()
+	
 	aspirate(vol,percentdown,percentspeed)
 	dispense(vol,percentdown,percentspeed)
 	aspirate(vol,percentdown,percentspeed)
@@ -496,8 +544,8 @@ def liquidDisposal():
 	position(3, 1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth)
-#	EZ_GoTo_A(plungerLimit+airBuffer, ezSlow)
-#	EZ_GoTo_A(plungerLimit, ezSlow)
+	EZ_GoTo_A(plungerLimit, ezSlow)
+	EZ_GoTo_A(plungerLimit, ezSlow)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 
 def disposeTips():
@@ -508,27 +556,29 @@ def disposeTips():
 	# height of tip dispense = tipDispenseDepth
 	
 	position(2, 0)
-	position_internal(3, 0)		
-	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
-	
-	VLMX_SetSpeed(XMotor, XSpeedSlow)
-	VLMX_SetSpeed(YMotor, YSpeedSlow)
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	position_internal(3, 0)	
 		
+	VLMX_SetSpeed(XMotor, XSpeedFast)
+	VLMX_SetSpeed(YMotor, YSpeedFast)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	
-####  the idea is to get this working in steps... enter hook first, then slide into gap, then up and down
+		
+#	VLMX_SetSpeed(XMotor, XSpeedSlow)
+#	VLMX_SetSpeed(YMotor, YSpeedSlow)
+#	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 
+
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)		
+	
 	currentYIndex = matrix[currentx][currenty].y
 	VLMX_GoTo_A(YMotor, currentYIndex + distance)	
-#	print('Testing that we are Ideally positioned inside the hook {enter}')
-#	enterToContinue()
 	
+#	VLMX_SetSpeed(XMotor, XSpeedSlow)
+#	VLMX_SetSpeed(YMotor, YSpeedSlow)
+#	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
-#	print('Testing that we are Ideally positioned at the correct ejection height {enter}')
-#	enterToContinue()
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
-
-
 	VLMX_GoTo_A(YMotor, currentYIndex)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 
@@ -537,6 +587,8 @@ def disposeTips():
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	
+	position(2,0)
 
 
 ########################### MISC. SUPPORT FUNCTIONS #########################

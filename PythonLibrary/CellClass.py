@@ -105,7 +105,7 @@ plateInfo = {\
     'readdress': None},\
 'TBOXA': \
    {'x':56,\
-    'y':996,\
+    'y':944,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
@@ -177,7 +177,7 @@ plateInfo = {\
     'safeDepth':universalSafeHeight,\
     'maxDepth': 10140,\
     'tipAttachDepth': None, \
-    'ejectDepth': 8400, \
+    'ejectDepth': 7500, \
     'wellDist': None,\
     'readdress': None},\
         

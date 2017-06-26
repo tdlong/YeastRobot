@@ -25,7 +25,9 @@ OffsetDict={1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
 DefineDeck(deck)
 printDeck()
 
-InitializeRobot(DOEZ=False)
+# InitializeRobot(DOEZ=False)
+
+InitializeRobot()
 
 # test movement
 #position(0,0)
@@ -50,7 +52,14 @@ InitializeRobot(DOEZ=False)
 #liquidDisposal()
 
 # dispose Tips
-disposeTips()
+# retrieveTips(1, align="True")
 
+InitializeRobot()
+retrieveTips(1)
+position(0,3)
+aspirate(200,depth=90,speed=50)
+position(0,4)
+dispense(200,depth=90,speed=50)
+disposeTips()
 position(0,0)
 ShutDownRobot(DOEZ=False)

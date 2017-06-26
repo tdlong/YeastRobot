@@ -330,39 +330,6 @@ def SendToEZ(command):
 ##################### ROBOT ACTUATION/ACTION FUNCTIONS ######################
 #############################################################################
 
-def testplate():
-	global currentDisplacement
-	surfaceDepth = matrix[currentx][currenty].surfaceDepth
-	safeDepth = matrix[currentx][currenty].safeDepth
-	#Lower ZMotor so tip is at right height
-	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	VLMX_SetSpeed(XMotor, XSpeedSlow)
-	VLMX_SetSpeed(YMotor, YSpeedSlow)
-
-	print("Now the X offset")
-	guess = 10.0
-	Guess = 0.0
-	while guess != 0.0:
-		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
-		Guess = Guess + guess
-		VLMX_GoTo_A(XMotor,currentx+Guess)
-	print ("X offset = ",Guess)
-
-	print("Next the Y offset")
-	guess = 10.0
-	Guess = 0.0
-	while guess != 0.0:
-		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
-		Guess = Guess + guess
-		VLMX_GoTo_A(YMotor,currenty+Guess)
-	print ("Yoffset = ",Guess)
-
-	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	VLMX_SetSpeed(XMotor, XSpeedFast)
-	VLMX_SetSpeed(YMotor, YSpeedFast)
-	#move head to safe depth
-	VLMX_GoTo_A(ZMotor, safeDepth)
 
 def aspirate(vol, depth = 100, speed = 100, test="False"):
 	global verbose
@@ -696,33 +663,37 @@ def retrieveTips(CurrentTipPosition, align="False"):
 		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 		VLMX_SetSpeed(XMotor, XSpeedSlow)
 		VLMX_SetSpeed(YMotor, YSpeedSlow)
-		print("Now the X offset")
-		guess = 10.0
-		XGuess = 0.0
-		while guess != 0.0:
-			guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
-			XGuess = XGuess + guess
-			VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x + XGuess)
-		print ("X offset = ",XGuess)
+		answer=="N"
+		while answer == "N":
+			print("Now the X offset")
+			guess = 10.0
+			XGuess = 0.0
+			while guess != 0.0:
+				guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+				XGuess = XGuess + guess
+				VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x + XGuess)
+			print ("X offset = ",XGuess)
 
-		print("Next the Y offset")
-		guess = 10.0
-		YGuess = 0.0
-		while guess != 0.0:
-			guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
-			YGuess = YGuess + guess
-			VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y + YGuess, XMotor, matrix[row][col].x + XGuess)
-		print ("Yoffset = ",YGuess)
+			print("Next the Y offset")
+			guess = 10.0
+			YGuess = 0.0
+			while guess != 0.0:
+				guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+				YGuess = YGuess + guess
+				VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y + YGuess, XMotor, matrix[row][col].x + XGuess)
+			print ("Yoffset = ",YGuess)
 		
-		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-		print("Next the Z offset")
-		guess = 10.0
-		ZGuess = 0.0
-		while guess != 0.0:
-			guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
-			ZGuess = ZGuess + guess
-			VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth + ZGuess)
-		print ("Zoffset = ",ZGuess)
+			VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+			print("Next the Z offset")
+			guess = 10.0
+			ZGuess = 0.0
+			while guess != 0.0:
+				guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
+				ZGuess = ZGuess + guess
+				VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth + ZGuess)
+			print ("Zoffset = ",ZGuess)
+			answer = raw_input("Would you like to fine tune X,Y,Z (Y or N)?")
+
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 		VLMX_SetSpeed(XMotor, XSpeedFast)
@@ -751,6 +722,9 @@ def newplate(row=0,col=2):
 	#
 	# use this to define the "UL" for 96 well plate
 	# "UL" for 24 well plates is their center
+	
+	#  this routine is for define the center of a new plate sitting at position 0,2
+	#  all the other plates should then be OK ... provides the corners of the plates are correctly defined.
 	
 
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
@@ -798,7 +772,74 @@ def newplate(row=0,col=2):
 	return
 	
 
-             			
+###  not sure what this routine does.  
+def testplate():
+	global currentDisplacement
+	surfaceDepth = matrix[currentx][currenty].surfaceDepth
+	safeDepth = matrix[currentx][currenty].safeDepth
+	#Lower ZMotor so tip is at right height
+	VLMX_GoTo_A(ZMotor, surfaceDepth)
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_SetSpeed(XMotor, XSpeedSlow)
+	VLMX_SetSpeed(YMotor, YSpeedSlow)
+
+	print("Now the X offset")
+	guess = 10.0
+	Guess = 0.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+		Guess = Guess + guess
+		VLMX_GoTo_A(XMotor,currentx+Guess)
+	print ("X offset = ",Guess)
+
+	print("Next the Y offset")
+	guess = 10.0
+	Guess = 0.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+		Guess = Guess + guess
+		VLMX_GoTo_A(YMotor,currenty+Guess)
+	print ("Yoffset = ",Guess)
+
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_SetSpeed(XMotor, XSpeedFast)
+	VLMX_SetSpeed(YMotor, YSpeedFast)
+	#move head to safe depth
+	VLMX_GoTo_A(ZMotor, safeDepth)
+           			
+def defineCornersOf24WellPlates(row=0,col=2):
+	# Cycle through all position and define the upper left corner of each plate
+	# DO this with a "BLANK" plate definition at each position
+	
+
+	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	VLMX_SetSpeed(XMotor, XSpeedSlow)
+	VLMX_SetSpeed(YMotor, YSpeedSlow)
+	currentX = C.PlateColumns[col]
+	currentY = C.PlateRows[row]
+	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
+	position(row,col)
+	surfaceDepth = matrix[currentx][currenty].surfaceDepth
+	VLMX_GoTo_A(ZMotor,surfaceDepth)
+	
+	print("Now the X offset")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+		currentX = currentX + guess
+		VLMX_GoTo_A(XMotor,currentX)
+	print ("X offset = ",currentX-C.PlateColumns[col])
+
+	print("Next the Y offset")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+		currentY = currentY + guess
+		VLMX_GoTo_A(YMotor,currentY)
+	print ("Yoffset = ",currentY-C.PlateRows[row])
+	
+	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
+	return
 
 
 

@@ -663,36 +663,41 @@ def retrieveTips(CurrentTipPosition, align="False"):
 		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 		VLMX_SetSpeed(XMotor, XSpeedSlow)
 		VLMX_SetSpeed(YMotor, YSpeedSlow)
-		answer=="N"
-		while answer == "N":
+		answer="Y"
+		XGuess = 0.0
+		YGuess = 0.0
+		ZGuess = 0.0
+		while answer == "Y":
 			print("Now the X offset")
 			guess = 10.0
-			XGuess = 0.0
 			while guess != 0.0:
 				guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
 				XGuess = XGuess + guess
 				VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y, XMotor, matrix[row][col].x + XGuess)
-			print ("X offset = ",XGuess)
 
 			print("Next the Y offset")
 			guess = 10.0
-			YGuess = 0.0
 			while guess != 0.0:
 				guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 				YGuess = YGuess + guess
 				VLMX_GoTo_Coordinated_A(YMotor, matrix[row][col].y + YGuess, XMotor, matrix[row][col].x + XGuess)
-			print ("Yoffset = ",YGuess)
 		
 			VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 			print("Next the Z offset")
 			guess = 10.0
-			ZGuess = 0.0
 			while guess != 0.0:
 				guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
 				ZGuess = ZGuess + guess
 				VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth + ZGuess)
 			print ("Zoffset = ",ZGuess)
+			
 			answer = raw_input("Would you like to fine tune X,Y,Z (Y or N)?")
+			
+		print ("X offset = ",XGuess)
+		print ("Y offset = ",YGuess)
+		print ("Z offset = ",ZGuess)
+		print ("Z position = ",matrix[currentx][currenty].surfaceDepth + ZGuess)
+
 
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)

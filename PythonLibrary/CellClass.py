@@ -198,6 +198,21 @@ plateInfo = {\
 PlateColumns = [125, 5683, 11650, 16916, 22202, 27488, 32774, 38060, 43346, 48632]
 PlateRows = [170, 3923, 7681, 11409]
 
+####  *Positions index the X and Y positions as a function of all positive 40 offsets
+XPositions = [[125, 5683, 11650, 16916, 22202, 27488, 32774, 38060, 43346, 48632],
+								[125, 5683, 11650, 16916, 22202, 27488, 32774, 38060, 43346, 48632],
+								[125, 5683, 11650, 16916, 22202, 27488, 32774, 38060, 43346, 48632],
+								[125, 5683, 11650, 16916, 22202, 27488, 32774, 38060, 43346, 48632]]
+YPositions = [[170, 170, 178, 170, 170, 190, 182, 186, 178, 178],
+								[3923, 3923, 3927, 3927, 3974, 3951, 3947, 3935, 3943, 3931],
+								[7681, 7681, 7685, 7681, 7681, 7701, 7697, 7705, 7681, 7693],
+								[11409, 11409, 11433, 11449, 11437, 11445, 11445, 11449, 11445, 11441]]
+								
+ZPositions = [[0,0,0,0,0,0,0,0,0,0],
+						[0,0,0,0,0,0,0,0,0,0],
+						[0,0,0,0,0,0,0,0,0,0],
+						[0,0,0,0,0,0,0,0,0,0]]
+
 class Cell:
 	#all the positioning data and manipulation for each cell
 	def __init__(self, plate_type, addressROW, addressCOL):
@@ -205,18 +220,29 @@ class Cell:
 		self.plateType = plate_type #ie 'DW96P'
 		self.row = addressROW
 		self.col = addressCOL
+
 		#dynamic coordinates (in the case of readdressing)
-		self.x = PlateColumns[self.col] + plateInfo[self.plateType]['x']
-		self.y = PlateRows[self.row] + plateInfo[self.plateType]['y']
+#		self.x = PlateColumns[self.col] + plateInfo[self.plateType]['x']
+#		self.y = PlateRows[self.row] + plateInfo[self.plateType]['y']
+		self.x = XPositions[self.row][self.col] + plateInfo[self.plateType]['x']
+		self.y = YPositions[self.row][self.col] + plateInfo[self.plateType]['y']
+
 		#static coordinates for permanent reference
 		self.xP = self.x
 		self.yP = self.y
+
 		#precision position data
 		self.wellSpacing = plateInfo[self.plateType]['wellDist']
 		self.alignmentDepth = plateInfo[self.plateType]['alignmentDepth']
 		self.safeDepth = plateInfo[self.plateType]['safeDepth']
-		self.maxDepth = plateInfo[self.plateType]['maxDepth']
-		self.surfaceDepth = plateInfo[self.plateType]['surfDepth']
+
+#####  These can include a height correction for each position, to account for variation in the deck
+#		self.maxDepth = plateInfo[self.plateType]['maxDepth']
+#		self.surfaceDepth = plateInfo[self.plateType]['surfDepth']
+		self.maxDepth = plateInfo[self.plateType]['maxDepth'] + ZPositions[self.row][self.col]
+		self.surfaceDepth = plateInfo[self.plateType]['surfDepth'] + ZPositions[self.row][self.col]
+####
+
 		self.ejectDepth = plateInfo[self.plateType]['ejectDepth']
 		self.tipAttachDepth = plateInfo[self.plateType]['tipAttachDepth']
         #readress sequence

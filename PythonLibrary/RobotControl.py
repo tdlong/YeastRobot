@@ -731,8 +731,8 @@ def newplate(row=0,col=2):
 	VLMX_SetSpeed(XMotor, XSpeedSlow)
 	VLMX_SetSpeed(YMotor, YSpeedSlow)
 	currentZ = s.universalSafeHeight
-	currentX = C.PlateColumns[col]
-	currentY = C.PlateRows[row]
+	currentX = C.XPositions[row][col]
+	currentY = C.YPositions[row][col]
 	VLMX_GoTo_A(ZMotor,currentZ)
 	position(row,col)
 	
@@ -750,7 +750,7 @@ def newplate(row=0,col=2):
 		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
 		currentX = currentX + guess
 		VLMX_GoTo_A(XMotor,currentX)
-	print ("X offset = ",currentX-C.PlateColumns[col])
+	print ("X offset = ",currentX-C.XPositions[row][col])
 
 	print("Next the Y offset")
 	guess = 10.0
@@ -758,7 +758,7 @@ def newplate(row=0,col=2):
 		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 		currentY = currentY + guess
 		VLMX_GoTo_A(YMotor,currentY)
-	print ("Yoffset = ",currentY-C.PlateRows[row])
+	print ("Yoffset = ",currentY-C.YPositions[row][col])
 
 	print("finally the max depth")
 	guess = 10.0
@@ -813,22 +813,31 @@ def defineCornersOf24WellPlates(row=0,col=2):
 	
 
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	VLMX_SetSpeed(XMotor, XSpeedSlow)
-	VLMX_SetSpeed(YMotor, YSpeedSlow)
-	currentX = C.PlateColumns[col]
-	currentY = C.PlateRows[row]
+	VLMX_SetSpeed(XMotor, 5*XSpeedSlow)
+	VLMX_SetSpeed(YMotor, 5*YSpeedSlow)
+	currentX = C.XPositions[row][col]
+	currentY = C.YPositions[row][col]
 	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	position(row,col)
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
+	currentZ = surfaceDepth
 	VLMX_GoTo_A(ZMotor,surfaceDepth)
 	
+	print("Lets get the Surface Height first, this is the height of the top of the plate")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 160.0*float(raw_input("number of mm DOWN (+tv) or UP (-tv) or 0 exits ?"))
+		currentZ = currentZ + guess
+		VLMX_GoTo_A(ZMotor,currentZ)
+	print ("HeightCorrection = ",currentZ-surfaceDepth)
+
 	print("Now the X offset")
 	guess = 10.0
 	while guess != 0.0:
 		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
 		currentX = currentX + guess
 		VLMX_GoTo_A(XMotor,currentX)
-	print ("X offset = ",currentX-C.PlateColumns[col])
+	print ("X offset = ",currentX-C.XPositions[row][col])
 
 	print("Next the Y offset")
 	guess = 10.0
@@ -836,7 +845,7 @@ def defineCornersOf24WellPlates(row=0,col=2):
 		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
 		currentY = currentY + guess
 		VLMX_GoTo_A(YMotor,currentY)
-	print ("Yoffset = ",currentY-C.PlateRows[row])
+	print ("Yoffset = ",currentY-C.YPositions[row][col])
 	
 	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	return

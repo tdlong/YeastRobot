@@ -44,7 +44,7 @@ InitializeRobot()
 # etc
 
 # tips
-#retrieveTips(1, align="True"):
+retrieveTips(1, align="True"):
 #retrieveTips(5, align="True"):
 # etc
 

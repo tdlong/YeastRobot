@@ -239,8 +239,14 @@ class Cell:
 #####  These can include a height correction for each position, to account for variation in the deck
 #		self.maxDepth = plateInfo[self.plateType]['maxDepth']
 #		self.surfaceDepth = plateInfo[self.plateType]['surfDepth']
-		self.maxDepth = plateInfo[self.plateType]['maxDepth'] + ZPositions[self.row][self.col]
-		self.surfaceDepth = plateInfo[self.plateType]['surfDepth'] + ZPositions[self.row][self.col]
+		if plateInfo[self.plateType]['maxDepth'] is not None:
+			self.maxDepth = plateInfo[self.plateType]['maxDepth'] + ZPositions[self.row][self.col]
+		else:
+			self.maxDepth = None
+		if plateInfo[self.plateType]['surfDepth'] is not None:
+			self.surfaceDepth = plateInfo[self.plateType]['surfDepth'] + ZPositions[self.row][self.col]
+		else:
+			self.surfaceDepth = None
 ####
 
 		self.ejectDepth = plateInfo[self.plateType]['ejectDepth']

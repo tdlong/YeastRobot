@@ -521,42 +521,31 @@ def disposeTips():
 	# #mm to move * 39.5 steps/mm
 	# height of hook entrance = hookEntrance
 	# height of tip dispense = tipDispenseDepth
-	
 	position(2, 0)
 	position_internal(3, 0)	
 		
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	
-		
 #	VLMX_SetSpeed(XMotor, XSpeedSlow)
 #	VLMX_SetSpeed(YMotor, YSpeedSlow)
 #	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-
-
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)		
-	
 	currentYIndex = matrix[currentx][currenty].y
 	VLMX_GoTo_A(YMotor, currentYIndex + distance)	
-	
 #	VLMX_SetSpeed(XMotor, XSpeedSlow)
 #	VLMX_SetSpeed(YMotor, YSpeedSlow)
 #	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].ejectDepth)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].maxDepth)
 	VLMX_GoTo_A(YMotor, currentYIndex)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
-
 #	EZ_GoTo_A(plungerLimit, ezSlow)
-	
 	VLMX_SetSpeed(XMotor, XSpeedFast)
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	
 	position(2,0)
-
 
 ########################### MISC. SUPPORT FUNCTIONS #########################
 

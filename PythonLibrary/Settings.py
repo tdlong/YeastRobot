@@ -28,19 +28,6 @@ ZSpeedPipet = 300 #slow speeds for velmex pipetting action on z motor
 ezSlow = 500 #slow speed for EZ stepper
 ezFast = 2000 #fast speed for EZ stepper
 
-
-###########Steps to Distance Conversion###########
-#pipetting step conversion
-#  ADL June 14, I calculate closer to 1.96 steps/ul
-#  motor is 0.0079 steps/mm = 126.5823 steps/mm
-#  syringe is 31mm = 2000ul -> 0.0155 mm/ul
-#  the product is 1.96 is the controller 1/2 stepping ... actually the default is the 2 step
-#  so this means that perhaps the 4 steps per ul is accurate
-#  manual says /1j8R  would gives you 8X resolution etc.
-stepsPerUL = 10.2 #steps per microliliter for P AXIS
-prate = 200 #steps per mm for P AXIS
-maxUL = 450
-
 #XYZ step conversion
 xrate = 39.5 #steps per mm for X AXIS
 yrate = 39.5 #steps per mm for Y AXIS
@@ -52,15 +39,24 @@ STDtipAttach = 17200      #standard depth to seat tips (dont go too low)
 universalSafeHeight = 300 #height at which it is safe for the head to traverse in X/Y. This variable can be optimized for minimizing travel
 
 
-################Pipetting Settings################
+###########Steps to Distance Conversion###########
+#pipetting step conversion
+#  ADL June 14, I calculate closer to 1.96 steps/ul
+#  motor is 0.0079 steps/mm = 126.5823 steps/mm
+#  syringe is 31mm = 2000ul -> 0.0155 mm/ul
+#  the product is 1.96 is the controller 1/2 stepping ... actually the default is the 2 step
+#  so this means that perhaps the 4 steps per ul is accurate
+#  manual says /1j8R  would gives you 8X resolution etc.
+stepsPerUL = 13.6 #steps per microliliter for P AXIS
+prate = 200 #steps per mm for P AXIS
+
 # if you changed the resolution of the stepper ... these would change
-#Air buffer (extra air that is aspirated for safety and sample retention)
-# in theory 2.5 ul
+#Air buffer (extra air that is aspirated for safety and sample retention) in theory 2.5 ul
 airBuffer = 10
 
 #depth limit - when the plunger is at the very bottom of the syringe
 plungerLimit = 5000
-
+maxUL = plungerLimit/stepsPerUL - 5
 
 #########Stuff you shouldnt have to touch#########
 

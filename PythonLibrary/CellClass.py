@@ -47,6 +47,7 @@ plateInfo = {\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': wellDist,\
+    'deepWellOffset':True,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'DW24P': \
    {'x':580,\
@@ -58,6 +59,7 @@ plateInfo = {\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None,\
+    'deepWellOffset':True,\
     'readdress': None},\
 'SW96P': \
    {'x':460,\
@@ -69,6 +71,7 @@ plateInfo = {\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': wellDist,\
+    'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'SW24P': \
    {'x':640,\
@@ -80,6 +83,7 @@ plateInfo = {\
     'tipAttachDepth': None, \
     'ejectDepth': None, \
     'wellDist': None,\
+    'deepWellOffset':False,\
     'readdress': None},\
 'RES41': \
    {'x':580,\
@@ -91,6 +95,7 @@ plateInfo = {\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None, \
+    'deepWellOffset':True,\
     'readdress': None},\
 'BLANK': \
    {'x':0, \
@@ -102,6 +107,7 @@ plateInfo = {\
     'tipAttachDepth': None,\
     'ejectDepth': None, \
     'wellDist': None, \
+    'deepWellOffset':False,\
     'readdress': None},\
 'TBOXA': \
    {'x':88,\
@@ -113,7 +119,8 @@ plateInfo = {\
     'tipAttachDepth': 17160,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
-    'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
+    'deepWellOffset':False,\
+   'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXB': \
    {'x':244,\
     'y':984, \
@@ -124,6 +131,7 @@ plateInfo = {\
     'tipAttachDepth': 17224,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
+    'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXC': \
    {'x':56,\
@@ -135,6 +143,7 @@ plateInfo = {\
     'tipAttachDepth': 17016,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
+    'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXD': \
    {'x':219,\
@@ -146,6 +155,7 @@ plateInfo = {\
     'tipAttachDepth': 17096,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
+    'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXE': \
    {'x':18,\
@@ -157,6 +167,7 @@ plateInfo = {\
     'tipAttachDepth': 16920,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
+    'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXF': \
    {'x':210,\
@@ -168,6 +179,7 @@ plateInfo = {\
     'tipAttachDepth': 16936,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
+    'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TDISP': \
    {'x':8,\
@@ -179,7 +191,8 @@ plateInfo = {\
     'tipAttachDepth': None, \
     'ejectDepth': 7600, \
     'wellDist': None,\
-    'readdress': None},\
+    'deepWellOffset':False,\
+   'readdress': None},\
         
 'LWSTE': \
    {'x':-100,\
@@ -191,6 +204,7 @@ plateInfo = {\
     'tipAttachDepth': None, \
     'ejectDepth': None, \
     'wellDist': None, \
+    'deepWellOffset':False,\
     'readdress': None}\
 }
 
@@ -212,6 +226,11 @@ ZPositions = [[0,0,64,208,112,-80,0,64,64,0],
 						[0,0,32,0,-48,-112,0,0,-64,-32],
 						[0,0,-112,0,-192,-192,0,0,-144,-96],
 						[0,0,-272,-160,-256,-240,-64,-112,-192,-160]]
+						
+lowZPositions = [[0,0,0,-160,0,128,0,0,0,80],
+								[0,0,-80,0,0,0,0,0,32,0],
+								[0,0,-80,-40,0,0,-80,-80,0,-80],
+								[0,0,-208,-208,0,0,-80,-80,0,0]]
 
 class Cell:
 	#all the positioning data and manipulation for each cell
@@ -241,10 +260,14 @@ class Cell:
 #		self.surfaceDepth = plateInfo[self.plateType]['surfDepth']
 		if plateInfo[self.plateType]['maxDepth'] is not None:
 			self.maxDepth = plateInfo[self.plateType]['maxDepth'] + ZPositions[self.row][self.col]
+			if plateInfo[self.plateType]['deepWellOffset']:
+				self.maxDepth = self.maxDepth + lowZPositions[self.row][self.col]
 		else:
 			self.maxDepth = None
 		if plateInfo[self.plateType]['surfDepth'] is not None:
 			self.surfaceDepth = plateInfo[self.plateType]['surfDepth'] + ZPositions[self.row][self.col]
+			if plateInfo[self.plateType]['deepWellOffset']:
+				self.surfaceDepth = self.surfaceDepth + lowZPositions[self.row][self.col]
 		else:
 			self.surfaceDepth = None
 ####

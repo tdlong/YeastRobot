@@ -355,6 +355,8 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
+	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
+
 	if test=="True":
 		VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, targetDepth)
@@ -362,14 +364,13 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 	else:
 		VLMX_GoTo_A(ZMotor, targetDepth)	
 	#suck
-	EZ_GoTo_A(plungerLimit - (volume), targetSpeed)
+	EZ_GoTo_A(plungerLimit - airBuffer - volume, targetSpeed)
 	time.sleep(0.5)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#for safety draw some more air
-	EZ_GoTo_A(plungerLimit - (volume + airBuffer), ezSlow) 
 	#Update global variable for current syringe position
-	currentDisplacement = plungerLimit - (volume + airBuffer)
+	currentDisplacement = plungerLimit - airBuffer - volume
 
 def dispense(vol, depth = 100, speed = 100, test="False"):
 	global verbose
@@ -400,9 +401,8 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	else:
 		VLMX_GoTo_A(ZMotor, targetDepth)
-	EZ_GoTo_A((currentDisplacement+volume+airBuffer), targetSpeed)
-	currentDisplacement = currentDisplacement+volume+airBuffer
-
+	EZ_GoTo_A(currentDisplacement + volume + airBuffer, targetSpeed)
+	currentDisplacement = currentDisplacement + volume + airBuffer
 	#slow ascent
 	time.sleep(0.5)
 	VLMX_GoTo_A(ZMotor, safeDepth)

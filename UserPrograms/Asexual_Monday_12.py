@@ -29,23 +29,23 @@ InitializeRobot()
 for(col in 2:4):
 	for(row in 0:3):
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
-		# SW24P with media
+		# From SW24P to SW24P with media
 		position(row,col)
 		aspirate(myvol,depth=80,speed=50)
 		position(row,col+3)
 		dispense(myvol,depth=80,speed=50)
 		
-		# SW96 empty
+		# From SW24 to SW96 empty
 		position(row,col)
 		aspirate(2*myvol,depth=80,speed=50)
 		position(col-2,8,position = OffsetDict[row])
-		dispense(2*myvol,depth=80,speed=50)
+		dispense(2*myvol, depth=90, speed=50)
 		
-		# SW96 with 140ul of glycerol
+		# From SW24 to SW96 with 140ul of glycerol
 		position(row,col)
 		aspirate(myvol,depth=80,speed=50)
 		position(col-2,9,position = OffsetDict[row])
-		dispense(myvol,depth=80,speed=50)
+		dispense(myvol, depth=90, speed=50)
 		
 		disposeTips()
 		

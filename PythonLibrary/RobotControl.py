@@ -408,7 +408,7 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	#Update global variable for current syringe position
 
-def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
+def moveAspirate(vol, startdepth = 20, enddepth = 80, speed = 50):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -435,22 +435,20 @@ def moveAspirate(vol, startdepth = 100, enddepth = 100, speed = 100):
 	volume = vol * stepsPerUL / nsteps
 	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	#Lower ZMotor so tip is at right height
+
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
 	for i in list(range(nsteps)):
-		VLMX_GoTo_A(ZMotor, int(targetstartDepth+i*stepsize))
+		VLMX_GoTo_A(ZMotor, int(targetstartDepth + i*stepsize))
 		#suck
-		EZ_GoTo_A(plungerLimit - int((i+1) * volume), targetSpeed) 
-	currentDisplacement = plungerLimit - int(nsteps * volume) - airBuffer
-	time.sleep(0.5)
+		EZ_GoTo_A(plungerLimit - airBuffer - int((i+1) * volume), targetSpeed) 
+	time.sleep(0.1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
-	#for safety draw some more air
-	EZ_GoTo_A(plungerLimit - int(nsteps * volume) - airBuffer, ezSlow) 
-	#Update global variable for current syringe position
+	currentDisplacement = plungerLimit - airBuffer - int(nsteps * volume)
 
-def moveDispense(vol, startdepth = 100, speed = 100):
+def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -469,28 +467,23 @@ def moveDispense(vol, startdepth = 100, speed = 100):
 	surfaceDepth = matrix[currentx][currenty].surfaceDepth
 	maxDepth = matrix[currentx][currenty].maxDepth
 	safeDepth = matrix[currentx][currenty].safeDepth
-	targetDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * startdepth/100))
+	targetstartDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * startdepth/100))
+	targetendDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * enddepth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = vol * stepsPerUL / nsteps
-	stepsize = ((maxDepth - surfaceDepth) * startdepth/100)/nsteps
-	#Lower ZMotor so tip is at right height
-	#Lower ZMotor so tip is at right height
+	stepsize = (targetendDepth - targetstartDepth)/nsteps
+	
 	VLMX_GoTo_A(ZMotor, surfaceDepth)
 	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
-	for i in list(reversed(range(nsteps))):
-		VLMX_GoTo_A(ZMotor, int(targetDepth+i*stepsize))
-		#suck
-		EZ_GoTo_A(currentDisplacement + airBuffer + int(nsteps*volume) - int(i * volume), targetSpeed) 
-	#dispense
-	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume)
+	for i in list(range(nsteps)):
+		VLMX_GoTo_A(ZMotor, int(targetstartDepth - i*stepsize))
+		#blow
+		EZ_GoTo_A(currentDisplacement + int((i+1) * volume), targetSpeed) 
+	EZ_GoTo_A(currentDisplacement + int((i+1) * volume + airBuffer), targetSpeed) 	
+	time.sleep(0.1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
-	time.sleep(0.5)
-	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
-	#for safety draw some more air
-	EZ_GoTo_A(currentDisplacement - airBuffer, ezSlow) 
-	#Update global variable for current syringe position
-	currentDisplacement = currentDisplacement - airBuffer
+	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume)
 
 def mix(vol,percentdown,percentspeed):
 	
@@ -625,6 +618,7 @@ def retrieveTips(CurrentTipPosition, align="False"):
 	global verbose
 	global currentx
 	global currenty
+	global currentDisplacement
 #	CurrentTipPosition = 2    # debug
 # get more tips if empty
 	if (CurrentTipPosition >24):
@@ -645,6 +639,8 @@ def retrieveTips(CurrentTipPosition, align="False"):
 	col = BoxLocation[Box][1]
 	print('Retrieving Tips')
 	position(row, col, offset)
+	EZ_GoTo_A(plungerLimit, targetSpeed) 
+	currentDisplacement = plungerLimit
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down
 

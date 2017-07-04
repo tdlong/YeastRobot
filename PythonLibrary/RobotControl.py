@@ -639,7 +639,7 @@ def retrieveTips(CurrentTipPosition, align="False"):
 	col = BoxLocation[Box][1]
 	print('Retrieving Tips')
 	position(row, col, offset)
-	EZ_GoTo_A(plungerLimit, targetSpeed) 
+	EZ_GoTo_A(plungerLimit, ezFast) 
 	currentDisplacement = plungerLimit
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth) #depth to go before slowing down

@@ -26,8 +26,8 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 
-for(col in 2:5):
-	for(row in 0:3):
+for col in [2,3,4,5]:
+	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		position(row,col)
 		aspirate(myvol,depth=80,speed=50)

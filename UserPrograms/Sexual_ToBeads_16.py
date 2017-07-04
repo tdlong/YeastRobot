@@ -25,11 +25,11 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 
-for(col in 2:4):
-	for(row in 0:3):
+for col in [2,3,4]:
+	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		# from SW24 to DW96 loaded with beads
-		for(i in 1:2):
+		for i in [1,2]:
 			position(row,col)
 			aspirate(myvol,depth=90,speed=50)
 			position(col-2,6,position = OffsetDict[row])

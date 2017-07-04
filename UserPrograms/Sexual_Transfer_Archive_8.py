@@ -25,8 +25,8 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 
-for(col in 2:3):
-	for(row in 0:3):
+for col in [2,3]:
+	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		# from DW24 to SW24
 		position(row,col)

@@ -25,21 +25,21 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 
-for(col in 6:9):
-	for(row in 0:3):
+for col in [6,7,8,9]:
+	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		# from DW96 to DW24
 		position(col-4,2,OffestDict[row])
 		moveAspirate(myvol, startdepth=20, enddepth=40, speed=50)
 		position(col,row)
 		dispense(myvol,depth=80, speed=50)
-		for(i in 0:1):
-			position(col-4,3,OffestDict[row])
+		for i in [0,1]:
+			position(col-4,3,OffsetDict[row])
 			moveAspirate(myvol, startdepth=(50 + (i*10)), enddepth=(80 + (i*10), speed=50)
-			position(col-4,2,OffestDict[row])
+			position(col-4,2,OffsetDict[row])
 			moveDispense(myvol,startdepth=50, enddepth=80, speed=50)
 			time.sleep(3)     # wait 3 seconds
-			position(col-4,2,OffestDict[row])
+			position(col-4,2,OffsetDict[row])
 			moveAspirate(myvol, startdepth=20, enddepth=40, speed=50)
 			position(col,row)
 			dispense(myvol,depth=80, speed=50)

@@ -26,8 +26,8 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 
-for(col in 2:3):
-	for(row in 0:3):
+for col in [2,3]:
+	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
 		# from SW24 to SW96 empty
@@ -41,7 +41,7 @@ for(col in 2:3):
 		position(col-2,6,position = OffsetDict[row])
 		dispense(myvol, depth=90, speed=50)
 		# from SW24 to DW24  X4
-		for(i in 1:4):
+		for i in [1,2,3,4]:
 			position(row,col)
 			aspirate(myvol*2.35,depth=90,speed=50)
 			position(row,col+5,position = OffsetDict[row])

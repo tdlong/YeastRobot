@@ -49,25 +49,37 @@ plateInfo = {\
     'wellDist': wellDist,\
     'deepWellOffset':True,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
-'DW24P': \
-   {'x':580,\
-    'y':472,\
+'DW96W': \
+   {'x':476,\
+    'y':344,\
     'alignmentDepth': 2300,\
-    'surfDepth': 2364,\
+    'surfDepth': 2460,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 8124,\
+    'maxDepth': 9180,\
+    'tipAttachDepth': None,\
+    'ejectDepth': None,\
+    'wellDist': wellDist,\
+    'deepWellOffset':True,\
+    'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
+'DW24P': \
+   {'x':640,\
+    'y':520,\
+    'alignmentDepth': 2300,\
+    'surfDepth': 2540,\
+    'safeDepth':universalSafeHeight,\
+    'maxDepth': 8780,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None,\
     'deepWellOffset':True,\
     'readdress': None},\
 'SW96P': \
-   {'x':460,\
-    'y':352,\
+   {'x':520,\
+    'y':300,\
     'alignmentDepth': 2300,\
-    'surfDepth': 3420, \
+    'surfDepth': 3600, \
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 4940,\
+    'maxDepth': 5452,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': wellDist,\
@@ -86,12 +98,12 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress': None},\
 'RES41': \
-   {'x':580,\
-    'y':475,\
+   {'x':480,\
+    'y':480,\
     'alignmentDepth': 2300,\
-    'surfDepth': 2364,\
+    'surfDepth': 2860,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 8120,\
+    'maxDepth': 9148,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None, \

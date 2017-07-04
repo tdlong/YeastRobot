@@ -26,7 +26,6 @@ DefineDeck(deck)
 printDeck()
 
 # InitializeRobot(DOEZ=False)
-
 InitializeRobot()
 
 # test movement
@@ -34,8 +33,6 @@ InitializeRobot()
 #position(0,4)
 #position(3,4)
 #position(3,3)
-#position(2,0)
-#position(3,2)
 
 # plates
 #newplate(0,2)
@@ -45,15 +42,8 @@ InitializeRobot()
 
 # tips
 retrieveTips(1, align="True")
-#retrieveTips(5, align="True"):
-# etc
-
-# liquid disposal (no EZ)
-#liquidDisposal()
 
 # dispose Tips
-# retrieveTips(1, align="True")
-
 InitializeRobot()
 retrieveTips(1)
 position(0,3)

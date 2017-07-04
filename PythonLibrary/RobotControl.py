@@ -758,6 +758,22 @@ def newplate(row=0,col=2):
 		VLMX_GoTo_A(ZMotor,currentZ)
 	print ("Maxdepth = ",currentZ)
 	
+	print("Finetune the X offset")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm RIGHT (+tv) or LEFT (-tv) or 0 exits ?"))
+		currentX = currentX + guess
+		VLMX_GoTo_A(XMotor,currentX)
+	print ("X offset = ",currentX-C.XPositions[row][col])
+
+	print("Finetune the Y offset")
+	guess = 10.0
+	while guess != 0.0:
+		guess = 40.0*float(raw_input("number of mm FORWARD (+tv) or BACKWARD (-tv) or 0 exits ?"))
+		currentY = currentY + guess
+		VLMX_GoTo_A(YMotor,currentY)
+	print ("Yoffset = ",currentY-C.YPositions[row][col])
+	
 	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	return
 	

@@ -354,10 +354,10 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 	targetSpeed = int(ezFast * speed/100)
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
-	VLMX_GoTo_A(ZMotor, surfaceDepth)
 	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
 
 	if test=="True":
+		VLMX_GoTo_A(ZMotor, surfaceDepth)
 		VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, targetDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
@@ -394,8 +394,8 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 	targetSpeed = int(ezFast * speed/100)
 	volume = int(vol * stepsPerUL)
 	#Lower ZMotor so tip is at right height
-	VLMX_GoTo_A(ZMotor, surfaceDepth)
 	if test=="True":
+		VLMX_GoTo_A(ZMotor, surfaceDepth)
 		VLMX_SetSpeed(ZMotor, 2*ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, targetDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
@@ -435,10 +435,10 @@ def moveAspirate(vol, startdepth = 20, enddepth = 80, speed = 50):
 	volume = vol * stepsPerUL / nsteps
 	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	#Lower ZMotor so tip is at right height
-
-	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
+
+#	VLMX_GoTo_A(ZMotor, surfaceDepth)
+#	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 	for i in list(range(nsteps)):
 		VLMX_GoTo_A(ZMotor, int(targetstartDepth + i*stepsize))
 		#suck
@@ -473,8 +473,8 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	volume = vol * stepsPerUL / nsteps
 	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	
-	VLMX_GoTo_A(ZMotor, surfaceDepth)
-	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+#	VLMX_GoTo_A(ZMotor, surfaceDepth)
+#	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 	for i in list(range(nsteps)):
 		VLMX_GoTo_A(ZMotor, int(targetstartDepth - i*stepsize))
 		#blow
@@ -678,6 +678,7 @@ def retrieveTips(CurrentTipPosition, align="False"):
 			
 			answer = raw_input("Would you like to fine tune X,Y,Z (Y or N)?")
 			
+		#  these positions are relative to old settings
 		print ("X offset = ",XGuess)
 		print ("Y offset = ",YGuess)
 		print ("Z offset = ",ZGuess)
@@ -691,7 +692,7 @@ def retrieveTips(CurrentTipPosition, align="False"):
 		VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	
 	else:
-		VLMX_SetSpeed(ZMotor, ZSpeedSlow)
+		VLMX_SetSpeed(ZMotor, 4*ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)

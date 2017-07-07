@@ -27,7 +27,9 @@ printDeck()
 InitializeRobot()
 
 # ...Plate(row,column)
-defineCornersOf24WellPlates(0,2)
+disposeTips()
+retrieveTips(1)
+
 defineCornersOf24WellPlates(0,3)
 
 position(0,0)

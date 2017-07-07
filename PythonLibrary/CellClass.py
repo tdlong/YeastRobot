@@ -122,8 +122,8 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress': None},\
 'TBOXA': \
-   {'x':88,\
-    'y':968,\
+   {'x':34,\
+    'y':976,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
@@ -134,7 +134,7 @@ plateInfo = {\
     'deepWellOffset':False,\
    'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXB': \
-   {'x':244,\
+   {'x':212,\
     'y':984, \
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
@@ -146,7 +146,7 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXC': \
-   {'x':56,\
+   {'x':4,\
     'y':1218,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
@@ -158,8 +158,8 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXD': \
-   {'x':219,\
-    'y':1216,\
+   {'x':181,\
+    'y':1236,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
@@ -170,8 +170,8 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXE': \
-   {'x':18,\
-    'y':1478,\
+   {'x':-22,\
+    'y':1472,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
@@ -182,8 +182,8 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXF': \
-   {'x':210,\
-    'y':1440,\
+   {'x':162,\
+    'y':1472,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
@@ -194,7 +194,7 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TDISP': \
-   {'x':8,\
+   {'x':75,\
     'y':2100,\
     'alignmentDepth': 2300,\
     'surfDepth': 3800,\

@@ -153,6 +153,7 @@ def InitializeRobot(DOvelmex=True, DOEZ=True):
 		EZ.close()
 		EZ.open()
 		home_EZ()
+	loadTips()
 	return
 			
 def printDeck():
@@ -337,6 +338,7 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
+	userPause()
 	vol = float(vol)
 	if(vol > maxUL):
 		print("max volumn exceeded\n")
@@ -378,6 +380,7 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
+	userPause()
 	vol = float(vol)
 	if(vol > maxUL):
 		print("max volumn exceeded\n")
@@ -415,6 +418,7 @@ def moveAspirate(vol, startdepth = 20, enddepth = 80, speed = 50):
 	# 0 is top and 100 bottom
 	global currentDisplacement
 
+	userPause()
 	vol = float(vol)
 	if(vol > maxUL):
 		print("max volumn exceeded\n")
@@ -454,6 +458,7 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
 	global currentDisplacement
 
+	userPause()
 	vol = float(vol)
 	if(vol > maxUL):
 		print("max volumn exceeded\n")
@@ -487,6 +492,7 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 
 def mix(vol,percentdown,percentspeed):
 	
+	userPause()
 	vol = float(vol)
 	if(vol > maxUL):
 		print("max volumn exceeded\n")
@@ -500,6 +506,7 @@ def mix(vol,percentdown,percentspeed):
 	dispense(vol,percentdown,percentspeed)
 
 def liquidDisposal():
+	userPause()
 	print('Disposing Liquid')
 	position(3, 1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
@@ -509,6 +516,7 @@ def liquidDisposal():
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 
 def disposeTips():
+	userPause()
 	print('Disposing Tips')
 	distance = 780    
 	# #mm to move * 39.5 steps/mm
@@ -543,6 +551,7 @@ def disposeTips():
 ########################### MISC. SUPPORT FUNCTIONS #########################
 
 def position(row, col, position = 'UL'):
+	userPause()
 	global verbose
 	global currentx
 	global currenty
@@ -614,7 +623,20 @@ def ShutDownRobot(DOvelmex=True,DOEZ=True):
 
 ############################# ADL re-writes #################################
 	
+def loadTips():
+	userPause()
+	global verbose
+	global currentx
+	global currenty
+	guess = raw_input("Do you need to load tips (y/n)?")
+	if guess == "y":
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
+		position(0,6)
+		print('***Press Enter to Continue ****')
+		enterToContinue()
+
 def retrieveTips(CurrentTipPosition, align="False"):
+	userPause()
 	global verbose
 	global currentx
 	global currenty
@@ -856,6 +878,17 @@ def defineCornersOf24WellPlates(row=0,col=2):
 	
 	VLMX_GoTo_A(ZMotor,s.universalSafeHeight)
 	return
+	
+def userPause():
+# if the user hits the return key during program execution
+# the program will pause at the start of the next step
+  i,o,e = select.select([sys.stdin],[],[],0.0001)
+  for s in i:
+    if s == sys.stdin:
+      input = sys.stdin.readline()
+      print('The program has detected a USER pause')
+      myraw = raw_input('press <ENTER> to continue')
+
 
 
 

@@ -4,6 +4,12 @@
 #Last Update Feb 18 2016 by Eric Huang
 # June 16 == ADL edited plate definitions
 
+#XYZ step conversion
+# xrate = 39.5 #steps per mm for X AXIS
+# yrate = 39.5 #steps per mm for Y AXIS
+# zrate = 159 #steps per mm for Z AXIS
+
+
 import Settings as s
 
 '''
@@ -122,73 +128,73 @@ plateInfo = {\
     'deepWellOffset':False,\
     'readdress': None},\
 'TBOXA': \
-   {'x':34,\
+   {'x':58,\
     'y':976,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17160,\
+    'tipAttachDepth': 16950,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
    'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXB': \
-   {'x':212,\
-    'y':984, \
+   {'x':252,\
+    'y':1000, \
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17224,\
+    'tipAttachDepth': 17110,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXC': \
-   {'x':4,\
+   {'x':20,\
     'y':1218,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17016,\
+    'tipAttachDepth': 16840,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXD': \
-   {'x':181,\
-    'y':1236,\
+   {'x':213,\
+    'y':1228,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17096,\
+    'tipAttachDepth': 17000,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXE': \
-   {'x':-22,\
+   {'x':22,\
     'y':1472,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16920,\
+    'tipAttachDepth': 16730,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TBOXF': \
-   {'x':162,\
-    'y':1472,\
+   {'x':186,\
+    'y':1466,\
     'alignmentDepth': STDalignmentDepth,\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16936,\
+    'tipAttachDepth': 16774,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -201,7 +207,7 @@ plateInfo = {\
     'safeDepth':universalSafeHeight,\
     'maxDepth': 10140,\
     'tipAttachDepth': None, \
-    'ejectDepth': 7600, \
+    'ejectDepth': 7630, \
     'wellDist': None,\
     'deepWellOffset':False,\
    'readdress': None},\

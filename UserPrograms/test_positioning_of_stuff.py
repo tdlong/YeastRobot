@@ -42,6 +42,9 @@ InitializeRobot()
 
 # tips
 retrieveTips(1, align="True")
+disposeTips()
+position(0,3)
+
 
 # dispose Tips
 InitializeRobot()

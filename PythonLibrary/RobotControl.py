@@ -9,6 +9,7 @@ import threading #for coordinating control between two controllers
 from multiprocessing import Process #for coordinating control between two controllers
 import sys #for emergency terminate
 import traceback #for exception reporting
+import select
 
 version = s.version #this string is displayed in text UI, please update in settings.py as you go
 
@@ -332,7 +333,7 @@ def SendToEZ(command):
 #############################################################################
 
 
-def aspirate(vol, depth = 100, speed = 100, test="False"):
+def aspirate(vol, depth = 100, speed = 100, test="False", mix=0):
 	global verbose
 	#INPUT VOLUME IN MICROLITERS
 	# depth and speed are specified in percentages (max 100) INT! speeds and depths default to 100
@@ -365,8 +366,14 @@ def aspirate(vol, depth = 100, speed = 100, test="False"):
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	else:
 		VLMX_GoTo_A(ZMotor, targetDepth)	
-	#suck
+
+	# mix
+	for i in range(mix):
+		EZ_GoTo_A(plungerLimit - volume, targetSpeed)
+		EZ_GoTo_A(plungerLimit, targetSpeed)
+	# suck
 	EZ_GoTo_A(plungerLimit - airBuffer - volume, targetSpeed)
+	
 	time.sleep(0.5)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
@@ -490,20 +497,35 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	VLMX_GoTo_A(ZMotor, safeDepth)
 	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume)
 
-def mix(vol,percentdown,percentspeed):
+def mix(vol,depth,speed,mixcycles):
 	
-	userPause()
+	global currentDisplacement
 	vol = float(vol)
 	if(vol > maxUL):
 		print("max volumn exceeded\n")
 		exit()
 	
-	aspirate(vol,percentdown,percentspeed)
-	dispense(vol,percentdown,percentspeed)
-	aspirate(vol,percentdown,percentspeed)
-	dispense(vol,percentdown,percentspeed)
-	aspirate(vol,percentdown,percentspeed)
-	dispense(vol,percentdown,percentspeed)
+	surfaceDepth = matrix[currentx][currenty].surfaceDepth
+	maxDepth = matrix[currentx][currenty].maxDepth
+	safeDepth = matrix[currentx][currenty].safeDepth
+	targetDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * depth/100))
+	targetSpeed = int(ezFast * speed/100)
+	volume = int(vol * stepsPerUL)
+	#Lower ZMotor so tip is at right height
+	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
+	VLMX_GoTo_A(ZMotor, targetDepth)	
+
+	# mix
+	for i in range(mixcycles):
+		EZ_GoTo_A(plungerLimit - volume - airBuffer, targetSpeed)
+		EZ_GoTo_A(plungerLimit - airBuffer, targetSpeed)
+
+	time.sleep(0.5)
+	#move head to safe depth
+	VLMX_GoTo_A(ZMotor, safeDepth)
+	#for safety draw some more air
+	#Update global variable for current syringe position
+	currentDisplacement = plungerLimit - volume
 
 def liquidDisposal():
 	userPause()

@@ -17,17 +17,20 @@ DW96P  DW96W  BLANK  BLANK  DW24P  DW24P  DW24P  DW24P
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
 ##################################
 
-CurrentTipPosition = 1																	
 myvol = 330
 OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 #  read in deck, etc
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
+CurrentTipPosition = 1
 
 for col in [6,7,8,9]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		
+		# no mixing step, as DW96 plates have beads
+		
 		# from DW96 to DW24
 		position(col-6,2,OffsetDict[row])
 		moveAspirate(myvol, startdepth=20, enddepth=40, speed=50)

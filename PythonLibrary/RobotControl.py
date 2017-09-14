@@ -81,7 +81,7 @@ DeckLayoutIndex = dict()
 plungerLimit = s.plungerLimit
 
 #detailed output - toggle on/off
-verbose = True #true if you want to print out every single command that is sent
+verbose = False #true if you want to print out every single command that is sent
 
 #######################################################################################
 #######################################################################################
@@ -572,7 +572,7 @@ def disposeTips():
 
 ########################### MISC. SUPPORT FUNCTIONS #########################
 
-def position(row, col, position = 'UL'):
+def oldposition(row, col, position = 'UL'):
 	userPause()
 	global verbose
 	global currentx
@@ -586,6 +586,22 @@ def position(row, col, position = 'UL'):
 	if currrow == 3 and destcol == 0:
 		position_internal(2, currcol)
 	position_internal(destrow, destcol, position)
+
+def position(row, col, position = 'UL'):
+	userPause()
+	global verbose
+	global currentx
+	global currenty
+	destrow = row
+	destcol = col
+	currrow = currentx
+	currcol = currenty
+	if currrow == 3:
+		position_internal(2, currcol)
+	if destrow == 3:
+		position_internal(2, destcol)
+	position_internal(destrow, destcol, position)
+
 
 def position_internal(row, col, position = 'UL'):
 	global verbose

@@ -29,11 +29,12 @@ CurrentTipPosition = 1
 for col in [2,3,4]:
 	for row in [0,1,2,3]:
 
+		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+
 		# initial mix
 		position(row,col)
 		mix(300,90,100,25)
 
-		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		position(row,col)
 		aspirate(myvol,depth=80,speed=50, mix=3)
 		position(row,col+3)

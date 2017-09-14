@@ -1,0 +1,3 @@
+SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", KERNELS=="1-1.4", SYMLINK+="velmex"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", KERNELS=="1-1.5", SYMLINK+="ez"
+

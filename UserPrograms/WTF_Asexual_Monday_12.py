@@ -17,7 +17,7 @@ SW24P  SW24P  SW24P  SW24P  SW24P  SW24P  BLANK  BLANK
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
 ##################################
 
-myvol = 140
+myvol = 0.0
 #  1 = UL of BoxA, 2 = UR of BoxA, 3 = LL of BoxA, etc.
 OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 #  read in deck, etc
@@ -28,7 +28,7 @@ CurrentTipPosition = 1
 
 for col in [2,3,4]:
 	for row in [0,1,2,3]:
-		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+#		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
 		# initial mix
 #		position(row,col)
@@ -36,23 +36,23 @@ for col in [2,3,4]:
 		
 		# From SW24P to SW24P with media
 		position(row,col)
-		aspirate(myvol,depth=80,speed=50,mix=3)
+		aspirate(myvol,depth=1,speed=50)
 		position(row,col+3)
-		dispense(myvol,depth=80,speed=50)
+		dispense(myvol,depth=1,speed=50)
 		
 		# From SW24 to SW96 empty
 		position(row,col)
-		aspirate(2*myvol,depth=80,speed=50, mix=3)
+		aspirate(2*myvol,depth=1,speed=50)
 		position(col-2,8,position = OffsetDict[row])
-		dispense(2*myvol, depth=90, speed=50)
+		dispense(2*myvol, depth=1, speed=50)
 		
 		# From SW24 to SW96 with 140ul of glycerol
 		position(row,col)
-		aspirate(myvol,depth=80,speed=50, mix=3)
+		aspirate(myvol,depth=1,speed=50)
 		position(col-2,9,position = OffsetDict[row])
-		dispense(myvol, depth=90, speed=50)
+		dispense(myvol, depth=1, speed=50)
 		
-		disposeTips()
+#		disposeTips()
 		
 position(0,0)
 ShutDownRobot()

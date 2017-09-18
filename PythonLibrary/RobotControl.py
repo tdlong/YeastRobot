@@ -247,7 +247,8 @@ def home_EZ():
 	SendToEZ("/1v200" + "Z100R<CR>\r")
 	SendToEZ("/1v200" + "Z10000R<CR>\r")
 	
-	
+#	xx = raw_input("wait to grease, hit enter")
+
 
 	print('--------------------------------------------------------------------------------')
 	print('')
@@ -356,6 +357,7 @@ def aspirate(vol, depth = 100, speed = 100, test="False", mix=0):
 	targetDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * depth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = int(vol * stepsPerUL)
+	airgap = int(10 * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
 
@@ -377,9 +379,10 @@ def aspirate(vol, depth = 100, speed = 100, test="False", mix=0):
 	time.sleep(0.5)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
+	EZ_GoTo_A(plungerLimit - airBuffer - volume - airgap, targetSpeed)
 	#for safety draw some more air
 	#Update global variable for current syringe position
-	currentDisplacement = plungerLimit - airBuffer - volume
+	currentDisplacement = plungerLimit - airBuffer - volume - airgap
 
 def dispense(vol, depth = 100, speed = 100, test="False"):
 	global verbose
@@ -403,6 +406,7 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 	targetDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * depth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = int(vol * stepsPerUL)
+	airgap = int(10 * stepsPerUL)
 	#Lower ZMotor so tip is at right height
 	if test=="True":
 		VLMX_GoTo_A(ZMotor, surfaceDepth)
@@ -411,8 +415,8 @@ def dispense(vol, depth = 100, speed = 100, test="False"):
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	else:
 		VLMX_GoTo_A(ZMotor, targetDepth)
-	EZ_GoTo_A(currentDisplacement + volume + airBuffer, targetSpeed)
-	currentDisplacement = currentDisplacement + volume + airBuffer
+	EZ_GoTo_A(currentDisplacement + volume + airBuffer + airgap, targetSpeed)
+	currentDisplacement = currentDisplacement + volume + airBuffer + airgap
 	#slow ascent
 	time.sleep(0.5)
 	VLMX_GoTo_A(ZMotor, safeDepth)
@@ -444,6 +448,7 @@ def moveAspirate(vol, startdepth = 20, enddepth = 80, speed = 50):
 	targetendDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * enddepth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = vol * stepsPerUL / nsteps
+	airgap = int(10 * stepsPerUL)
 	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	#Lower ZMotor so tip is at right height
 	EZ_GoTo_A(plungerLimit - airBuffer, ezFast)
@@ -457,7 +462,8 @@ def moveAspirate(vol, startdepth = 20, enddepth = 80, speed = 50):
 	time.sleep(0.1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, safeDepth)
-	currentDisplacement = plungerLimit - airBuffer - int(nsteps * volume)
+	EZ_GoTo_A(plungerLimit - airBuffer - int((i+1) * volume) - airgap, targetSpeed)
+	currentDisplacement = plungerLimit - airBuffer - int(nsteps * volume) - airgap
 
 def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	global verbose
@@ -483,6 +489,7 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	targetendDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * enddepth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = vol * stepsPerUL / nsteps
+	airgap = int(3 * stepsPerUL)
 	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	
 #	VLMX_GoTo_A(ZMotor, surfaceDepth)
@@ -491,11 +498,11 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 		VLMX_GoTo_A(ZMotor, int(targetstartDepth - i*stepsize))
 		#blow
 		EZ_GoTo_A(currentDisplacement + int((i+1) * volume), targetSpeed) 
-	EZ_GoTo_A(currentDisplacement + int((i+1) * volume + airBuffer), targetSpeed) 	
+	EZ_GoTo_A(currentDisplacement + int((i+1) * volume + airBuffer) + airgap, targetSpeed) 	
 	time.sleep(0.1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, safeDepth)
-	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume)
+	currentDisplacement = currentDisplacement + airBuffer + int(nsteps*volume) + airgap
 
 def mix(vol,depth,speed,mixcycles):
 	
@@ -596,10 +603,11 @@ def position(row, col, position = 'UL'):
 	destcol = col
 	currrow = currentx
 	currcol = currenty
-	if currrow == 3:
-		position_internal(2, currcol)
-	if destrow == 3:
-		position_internal(2, destcol)
+	if not (currrow == destrow and currcol == destcol):
+		if currrow == 3:
+			position_internal(2, currcol)
+		if destrow == 3:
+			position_internal(2, destcol)
 	position_internal(destrow, destcol, position)
 
 

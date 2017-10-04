@@ -25,22 +25,8 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 CurrentTipPosition = 1																	
-
-for col in [2,3,4]:
-	for row in [0,1,2,3]:
-
-		CurrentTipPosition = retrieveTips(CurrentTipPosition)
-
-		# initial mix
-		position(row,col)
-		mix(300,90,100,5)
-
-		position(row,col)
-		aspirate(myvol,depth=90,speed=50, mix=3)
-		position(row,col+3)
-		dispense(myvol,depth=90,speed=50)
-		disposeTips()
-		
+position(0,2)
+enterToContinue()
 position(0,0)
 ShutDownRobot()
 quit()

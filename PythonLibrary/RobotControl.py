@@ -308,11 +308,17 @@ def EZ_GoTo_A(index, speed): #Absolute with speed
 	SendToEZ('/1V' + str(speed) + 'A' + str(index) + 'R<CR>\r')
 
 def SendToVelmex(command):
+	# an attempt to make sure there is not a caret in the serial buffer
+	velmex.flushInput()
+	time.sleep(0.05)
+	velmex.flushOutput()
+	time.sleep(0.05)
 	velmex.write('F') #Enable On-Line mode with echo "off"
+	time.sleep(0.05)
 	velmex.write(command)
 	data_raw = ''
 	while(True):
-		time.sleep(0.1)
+		time.sleep(0.05)
 		bytesToRead = velmex.inWaiting()
 		data_raw += velmex.read()
 		if '^' in data_raw:
@@ -495,7 +501,7 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 #	VLMX_GoTo_A(ZMotor, surfaceDepth)
 #	VLMX_SetSpeed(ZMotor, ZSpeedSlow)
 	for i in list(range(nsteps)):
-		VLMX_GoTo_A(ZMotor, int(targetstartDepth - i*stepsize))
+		VLMX_GoTo_A(ZMotor, int(targetstartDepth + i*stepsize))
 		#blow
 		EZ_GoTo_A(currentDisplacement + int((i+1) * volume), targetSpeed) 
 	EZ_GoTo_A(currentDisplacement + int((i+1) * volume + airBuffer) + airgap, targetSpeed) 	

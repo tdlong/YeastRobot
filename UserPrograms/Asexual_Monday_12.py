@@ -44,13 +44,13 @@ for col in [2,3,4]:
 		position(row,col)
 		aspirate(2*myvol,depth=90,speed=50, mix=3)
 		position(col-2,8,position = OffsetDict[row])
-		dispense(2*myvol, depth=90, speed=50)
+		dispense(2*myvol, depth=40, speed=50)
 		
 		# From SW24 to SW96 with 140ul of glycerol
 		position(row,col)
 		aspirate(myvol,depth=90,speed=50, mix=3)
 		position(col-2,9,position = OffsetDict[row])
-		dispense(myvol, depth=90, speed=50)
+		moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)
 		
 		disposeTips()
 		

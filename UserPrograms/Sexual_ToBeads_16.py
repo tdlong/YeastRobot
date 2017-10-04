@@ -25,13 +25,13 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
 
-for col in [2,3,4]:
+for col in [2,3,4,5]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
 		# initial mix
 		position(row,col)
-		mix(300,90,100,25)
+		mix(300,90,100,5)
 
 		# from SW24 to DW96 loaded with beads
 		for i in [1,2]:

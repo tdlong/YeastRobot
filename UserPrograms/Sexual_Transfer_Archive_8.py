@@ -18,6 +18,9 @@ DW24P  DW24P  BLANK  SW24P  SW24P  BLANK  BLANK  BLANK
 ##################################
 
 myvol = 140
+myAdepth = 90
+myDdepth = 80
+my96depth = 50
 OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 #  read in deck, etc
 DefineDeck(deck)
@@ -31,21 +34,21 @@ for col in [2,3]:
 		
 		# initial mix
 		position(row,col)
-		mix(300,90,100,25)
+		mix(300,myAdepth,100,5)
 
 		# from DW24 to SW24
 		position(row,col)
-		aspirate(myvol, depth=80, speed=50, mix=3)
+		aspirate(myvol, depth=myAdepth, speed=50, mix=3)
 		position(row,col+3)
-		dispense(myvol, depth=80, speed=50)
+		dispense(myvol, depth=myDdepth, speed=50)
 		position(row,col)
-		aspirate(2*myvol, depth=80, speed=50, mix=3)
+		aspirate(2*myvol, depth=myAdepth, speed=50, mix=3)
 		position(col-2,8,OffsetDict[row])
-		dispense(2*myvol, depth=80, speed=50)
+		dispense(2*myvol, depth=my96depth, speed=50)
 		position(row,col)
-		aspirate(myvol, depth=80, speed=50, mix=3)
+		aspirate(myvol, depth=myAdepth, speed=50, mix=3)
 		position(col-2,9,OffsetDict[row])
-		dispense(myvol, depth=80, speed=50)
+		dispense(myvol, depth=my96depth, speed=50)
 		disposeTips()
 		
 position(0,0)

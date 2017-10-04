@@ -28,11 +28,12 @@ CurrentTipPosition = 1
 
 for col in [2,3,4]:
 	for row in [0,1,2,3]:
+		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
 		# initial mix
 		position(row,col)
-		mix(300,90,100,25)
+		mix(300,90,100,5)
 		
 		# from SW24 to SW24 with media
 		position(row,col)

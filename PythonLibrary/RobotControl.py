@@ -495,7 +495,7 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	targetendDepth = int(surfaceDepth + ((maxDepth - surfaceDepth) * enddepth/100))
 	targetSpeed = int(ezFast * speed/100)
 	volume = vol * stepsPerUL / nsteps
-	airgap = int(3 * stepsPerUL)
+	airgap = int(10 * stepsPerUL)
 	stepsize = (targetendDepth - targetstartDepth)/nsteps
 	
 #	VLMX_GoTo_A(ZMotor, surfaceDepth)
@@ -503,8 +503,8 @@ def moveDispense(vol, startdepth = 80, enddepth=20, speed = 50):
 	for i in list(range(nsteps)):
 		VLMX_GoTo_A(ZMotor, int(targetstartDepth + i*stepsize))
 		#blow
-		EZ_GoTo_A(currentDisplacement + int((i+1) * volume), targetSpeed) 
-	EZ_GoTo_A(currentDisplacement + int((i+1) * volume + airBuffer) + airgap, targetSpeed) 	
+		EZ_GoTo_A(currentDisplacement + int((i+1) * volume) + airgap, targetSpeed) 
+	EZ_GoTo_A(currentDisplacement + int((i+1) * volume) + airBuffer + airgap, targetSpeed) 	
 	time.sleep(0.1)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, safeDepth)

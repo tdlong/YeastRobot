@@ -1,0 +1,264 @@
+wget wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P006-CCGGAAT-CGGTCTAG-READ1-Sequences.txt.gz
+wget wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P006-CCGGAAT-CGGTCTAG-READ2-Sequences.txt.gz
+wget wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P007-TAGACCG-CGGTCTAG-READ1-Sequences.txt.gz
+wget wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P007-TAGACCG-CGGTCTAG-READ2-Sequences.txt.gz
+wget wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P008-GTATCTC-CGGTCTAG-READ1-Sequences.txt.gz
+wget wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P008-GTATCTC-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P009-GCTATAG-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P009-GCTATAG-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P010-TTCCGTC-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P010-TTCCGTC-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P011-CGTTCTT-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P011-CGTTCTT-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P012-TTCGACG-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P012-TTCGACG-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P013-ACCAGCA-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P013-ACCAGCA-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P014-GGAATGT-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P014-GGAATGT-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P015-CGATGGA-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P015-CGATGGA-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P016-AATCGAC-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P016-AATCGAC-CGGTCTAG-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P017-GATGACT-CGGTCTAG-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17061398/4R029-L8-P017-GATGACT-CGGTCTAG-READ2-Sequences.txt.gz
+
+
+
+
+4R029-L8-P006-CCGGAAT-CGGTCTAG	M014-1
+4R029-L8-P007-TAGACCG-CGGTCTAG	M014-2
+4R029-L8-P008-GTATCTC-CGGTCTAG	K014-1
+4R029-L8-P009-GCTATAG-CGGTCTAG	K014-2
+4R029-L8-P010-TTCCGTC-CGGTCTAG	M040-1
+4R029-L8-P011-CGTTCTT-CGGTCTAG	K040-3
+4R029-L8-P012-TTCGACG-CGGTCTAG	M052-1
+4R029-L8-P013-ACCAGCA-CGGTCTAG	M052-2
+4R029-L8-P014-GGAATGT-CGGTCTAG	K052-6
+4R029-L8-P015-CGATGGA-CGGTCTAG	TMSER_hAB
+4R029-L8-P016-AATCGAC-CGGTCTAG	A4
+4R029-L8-P017-GATGACT-CGGTCTAG	TMSER_hDE
+
+cut -f2,4,5,10-23 June13/merge.bam.pass.SNPs.vcf | grep -v "^#" > SNPs.txt
+
+perl -i -pe 's/\:.*?\t/\t/g' SNPs.txt
+perl -i -pe 's/\:.*?\n/\n/g' SNPs.txt
+
+####################################
+
+These are the results of the HiC libraries
+
+lib            index no       index seq         
+IS002	    130	            ATCATAA	 
+IS003	131	           TGATAAC 	
+
+wget http://hts.igb.uci.edu/tdlong17070316/4R030-L8-P1-ATCATAA-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17070316/4R030-L8-P1-ATCATAA-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17070316/4R030-L8-P2-TGATAAC-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17070316/4R030-L8-P2-TGATAAC-READ2-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17070316/4R030-L8-PrNotRecog-READ1-Sequences.txt.gz
+wget http://hts.igb.uci.edu/tdlong17070316/4R030-L8-PrNotRecog-READ2-Sequences.txt.gz
+
+#  lets trim and work with a little file
+zcat 4R030-L8-P1-ATCATAA-READ1-Sequences.txt.gz | head -n 100000 | perl Russ.trimmer.pl - | gzip -c > P1.25K.F.fq.gz
+zcat 4R030-L8-P1-ATCATAA-READ2-Sequences.txt.gz | head -n 100000 | perl Russ.trimmer.pl - | gzip -c > P1.25K.R.fq.gz
+
+#  align all the reads to the reference
+qsub align.sh
+###########################
+#!/bin/bash
+#$ -N HiC
+#$ -q bio,adl
+#$ -pe make 8 
+#$ -R y
+
+module load bwa/0.7.8
+module load samtools/1.3
+
+ref="/share/adl/tdlong/peromyscus/ref/peromyscus_assembly_polished_v1.fasta"
+bwa mem -t 8 -M $ref P1.25K.F.fq.gz | samtools view -b -F 4 -q 30 - > P1.25K.F.bam
+bwa mem -t 8 -M $ref P1.25K.R.fq.gz | samtools view -b -F 4 -q 30 - > P1.25K.R.bam
+############################
+
+#lets look at the sam file format
+#samtools view P1.25K.F.bam | head
+#K00339:52:HJVW2BBXX:8:1101:1184:1578	16	C0000000334	1749912	60	54S46M	*	0	0	ATGAAATTATGCTCAAGAGCCCAAGTATTTTCTCTGATAGCAAGTTTATGATCTAATCACATTTCCCTCCCACAGGCAACTACAGAGGTTATATTGNGTT	-JA--FJF-JJJJF--AF7---<<JJ-JJJJFFJJJ7JFF-7-JJJJAJF-JFJF7FFA<-JJJJF<FFJJAJAFJFAJJJFF<JFJJJJJJFJFF#FAA	NM:i:1	MD:Z:42T3	AS:i:44	XS:i:19	SA:Z:C0000000334,1834388,+,46S54M,54,3;
+#K00339:52:HJVW2BBXX:8:1101:1184:1578	16	C0000000334	1834539	60	4S96M	*	0	0	TCTTATTGTGAAGCAAATTCTAATTCCAATGGCCTCTCCTTCCATTTCCGCACACAGAAGAATAGAATAAAGGAAGGACATACATGGTCTGATTGCGATC	--7-FFJ<-7--F--7-JFF7-7F<A-7-7-A--AF7FFF<F<FF7<A-A7-F-FAF<<FF<JFF--F--7J<<-JA-<AF7FJJFJJJJF-FJ<F--AA	NM:i:1	MD:Z:44A51	AS:i:91	XS:i:0
+
+# merge the F and reverse sam file, sort by read name,
+# and only include reads mapping from both F and reverse reads (Lines with the read name twice)
+samtools view P1.25K.F.bam > hits.txt
+samtools view P1.25K.R.bam >> hits.txt
+sort -k1,1 hits.txt > hits.sort.txt
+awk '{print $1}' hits.sort.txt |sort | uniq -d | grep -F -f - hits.sort.txt  > dup.txt
+# change to the HiC format
+perl HiC.format.pl <dup.txt >dup.HC.txt
+# sort and remove dups
+sort -u -k1,1 -k2,2 -k3,3 -k5,5 -k6,6 -k7,7 dup.HC.txt  >dup.HC.rm.txt
+
+
+HiC.format.pl
+################
+my $sam1 = '';
+my $sam2 = '';
+while ($sam1 = <STDIN>) { 
+	my $sam2 = <STDIN> ; 
+	chomp $sam1 ; 
+	chomp $sam2 ; 
+	my @Sam1 = split("\t",$sam1);
+	my @Sam2 = split("\t",$sam2);
+	#  field 1 is the bitwise flag, has to be 0 or 16
+	if(($Sam1[1] == 0 or $Sam1[1] == 16) and ($Sam2[1] == 0 or $Sam2[1] == 16)){
+		print $Sam1[1],"\t",$Sam1[2],"\t",$Sam1[3],"\t1\t";
+		print $Sam2[1],"\t",$Sam2[2],"\t",$Sam2[3],"\t1\t";
+		print $Sam1[4],"\t",$Sam1[5],"\t",$Sam1[9],"\t",$Sam2[4],"\t",$Sam2[5],"\t",$Sam2[9],"\t";
+		print $Sam1[0],"\t",$Sam2[0],"\n";
+		}
+}
+#################
+
+
+
+
+
+1.  WGET them
+2.  Trim using Russ's script
+
+The way the libraries are made GATCGATC represents the point where molecules from two different locations
+in the genome join up.  So you have to trim everything after this motif to get the assembler to work
+
+use strict ; 
+use warnings ; 
+
+### pipe fastq file in
+### one at a time should be fine for paired reads 
+### will replace GATCGATC with GATC and cut the remainder of the read and quality score
+
+while (<STDIN>) { 
+
+	my $read = <STDIN> ; 
+	my $mid = <STDIN> ; 
+	my $qual = <STDIN> ; 
+
+	chomp $qual ; 
+	chomp $read ; 
+	
+	$read =~ s/GATCGATC.+/GATC/ ; 
+	while ( length( $read ) < length( $qual ) ) { 
+		chop $qual ; 
+	}		
+
+	print $_ ; 
+	print $read, "\n" ;
+	print $mid ; 
+	print $qual, "\n" ;
+}
+
+3.  Get Peromyscus
+# cp peromyscus_assembly_polished_v1.fasta.gz /pub/public-www/tdlong
+wget http://hpc.oit.uci.edu/~tdlong/peromyscus_assembly_polished_v1.fasta.gz
+
+4.   Install assembler (and test with their provided dataset!!)
+
+Paper:   http://science.sciencemag.org/content/early/2017/03/22/science.aal3327.full
+GitHub:  https://github.com/theaidenlab/3d-dna
+Install on HPC:  https://hpc.oit.uci.edu/compile-software
+a good habit to get into ... since many tasks are computationally heavy
+
+
+5.  create *.mnd.txt.gz file
+
+a.  head a set of paired reads so you can actually get this to work
+zcat 4R030-L8-P1-ATCATAA-READ1-Sequences.TRIMMED.txt.gz | head -n 100000 | gzip -c > P1.25K.F.fq.gz
+zcat 4R030-L8-P1-ATCATAA-READ2-Sequences.TRIMMED.txt.gz | head -n 100000 | gzip -c > P1.25K.R.fq.gz
+
+b.  align separately to reference, keep uniquely mapping HQ reads only
+
+module load ...
+ref=""    # indexed ref sequence
+bwa mem -t 8 -M $ref P1.25K.F.fq.gz | samtools view -b -F 4 -q 30 - > P1.25K.F.bam
+bwa mem -t 8 -M $ref P1.25K.F.fq.gz | samtools view -b -F 4 -q 30 - > P1.25K.F.bam
+
+c.  Rename so F&R are not part of the names (and F&R have the same “name”) and nix header
+		(you will have learn how to read the "*.SAM" format and write a python script)
+d.  merge and sort on name
+		(sort from the shell...)
+e.  keep reads seen exactly twice
+		(uniq -d)
+f.  write a parser to get to desired format
+		(see below)
+g.  Sort on chromosome_F, pos_F, strand_F, chromosome_R, pos_R, strand_R
+		(shell)
+h.  Remove dups
+		(another python script)
+
+
+5.  Run assembler
+
+#####################
+
+[tdlong@hpc-login-1-3 tdlong]$ zcat GSE95797_AaegL2.mnd.txt.gz | head
+0 CH477186.1 257 0 16 CH477186.1 554 1 0 85M ACCACCGAGTATAATTGAGAATGTAAACAAAGTTTAATCCGTCGTACTGAGAAAAAAAGCTTGTGCGCATCAATGTGTGCGCGAC 0 61M24S TTTTAAAGGAAATTAGTATATTGCATCATGCTGAAGGAATGGAGGGAGATGCCAGTAGATCGATCCCAGGTCAGTGGAAGAGGCC NS500589:66:H7WN7AFXX:4:11407:25599:14642/1 NS500589:66:H7WN7AFXX:4:11407:25599:14642/2 
+0 CH477186.1 270 0 16 CH477186.1 851 3 3 85M ATTGAGAATGTAAACAAAGTTTAATCCGTCGTACTGAGAAAAAAAGCTTGTGCGCATCAATGTGTGCGCGACGCTCGATGCAAAA 0 66M19S TGTTTGGCATCGGTTTGTGTCAGCATCATTCACTGCATACTGGGAAAATTGCAGTTCTCACTGATCGATCTCTAAGGGGATTCCT NS500589:70:H7VKLAFXX:4:21503:17965:13281/2 NS500589:70:H7VKLAFXX:4:21503:17965:13281/1
+
+Long format
+
+The long format is used by Juicer and takes in directly the merged_nodups.txt file.
+
+A whitespace separated file that contains, on each line
+
+<str1> <chr1> <pos1> <frag1> <str2> <chr2> <pos2> <frag2> 
+<mapq1> <cigar1> <sequence1> <mapq2> <cigar2> <sequence2>
+<readname1> <readname2>
+str = strand (0 for forward, anything else for reverse)
+chr = chromosome (must be a chromosome in the genome)
+pos = position
+frag = restriction site fragment
+mapq = mapping quality score
+cigar = cigar string as reported by aligner
+sequence = DNA sequence
+If not using the restriction site file option, frag will be ignored, but please see above note on dummy values. If not using mapping quality filter, mapq will be ignored. readname, strand, cigar, and sequence are also not currently stored within .hic files.
+
+
+http://hicexplorer.readthedocs.io/en/latest/content/example_usage.html
+bwa mem -A1 -B4  -E50 -L0  index_path -U mate_R1.fastq.gz 2>>mate_R1.log | samtools view -Shb - > mate_R1.bam
+bwa mem -A1 -B4  -E50 -L0  index_path -U mate_R2.fastq.gz 2>>mate_R2.log | samtools view -Shb - > mate_R2.bam
+http://homer.ucsd.edu/homer/interactions/HiCtagDirectory.html
+
+
+
+####################
+
+#!/bin/bash
+#$ -N ProgCactusY
+#$ -pe openmp 32
+#$ -R Y
+#$ -q adl
+module load progressiveCactus/0.0
+source /data/apps/progressiveCactus/environment
+runProgressiveCactus.sh --maxThreads 32 fly.txt FLYwork FLYwork/fly.hal
+hal2assemblyHub.py FLYwork/fly.hal AssHub --maxThreads 32 --lod
+
+*hg38	genomes/hg38.fa
+criGri1	genomes/criGri1.fa
+mouse	genomes/mouse_all.fasta
+rn5	genomes/rn5.fa
+Pleuco	genomes/peromyscus_assembly_polished_v1.fasta
+
+*dm6	genomes/dm6.fa
+A1	genomes/a1.scaffold.fasta
+A2	genomes/a2.scaffold.fasta
+A3	genomes/a3.scaffold.fasta
+A4	genomes/a4.scaffold.fasta
+A5	genomes/a5.scaffold.fasta
+A6	genomes/a6.scaffold.fasta
+A7	genomes/a7.scaffold.fasta
+AB8	genomes/ab8.scaffold.fasta
+B1	genomes/b1.scaffold.fasta
+B2	genomes/b2.scaffold.fasta
+B3	genomes/b3.scaffold.fasta
+B4	genomes/b4.scaffold.fasta
+B6	genomes/b6.scaffold.fasta
+OreR	genomes/ore.scaffold.fasta
+
+

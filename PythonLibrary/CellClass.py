@@ -73,7 +73,7 @@ plateInfo = {\
     'alignmentDepth': 2300,\
     'surfDepth': 2540,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 8780,\
+    'maxDepth': 8900,\
     'tipAttachDepth': None,\
     'ejectDepth': None,\
     'wellDist': None,\
@@ -97,7 +97,7 @@ plateInfo = {\
     'alignmentDepth': 2300,\
     'surfDepth': 2860,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 5580,\
+    'maxDepth': 5610,\
     'tipAttachDepth': None, \
     'ejectDepth': None, \
     'wellDist': None,\
@@ -106,6 +106,18 @@ plateInfo = {\
 'RES41': \
    {'x':480,\
     'y':480,\
+    'alignmentDepth': 2300,\
+    'surfDepth': 2860,\
+    'safeDepth':universalSafeHeight,\
+    'maxDepth': 9148,\
+    'tipAttachDepth': None,\
+    'ejectDepth': None,\
+    'wellDist': None, \
+    'deepWellOffset':True,\
+    'readdress': None},\
+'RES6C': \
+   {'x':640,\
+    'y':540,\
     'alignmentDepth': 2300,\
     'surfDepth': 2860,\
     'safeDepth':universalSafeHeight,\

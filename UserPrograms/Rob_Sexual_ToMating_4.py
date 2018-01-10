@@ -29,23 +29,47 @@ for col in [6]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
-		# no mixing step, as DW96 plates have beads
-		
-		# from DW96 to DW24
+		# from DW96 @ col 2 to DW24
 		position(col-6,2,OffsetDict[row])
-		moveAspirate(myvol, startdepth=20, enddepth=40, speed=50)
+		mix(myvol,70,25,5)
+		time.sleep(3)     # wait 3 seconds
+		position(col-6,2,OffsetDict[row])
+		aspirate(myvol,depth=70,speed=25, mix=0)		
 		position(row,col)
-		dispense(myvol,depth=80, speed=50)
-		for i in [0,1]:
-			position(col-6,3,OffsetDict[row])
-			moveAspirate(myvol, startdepth=(50 + (i*10)), enddepth=(80 + (i*10)), speed=50)
-			position(col-6,2,OffsetDict[row])
-			moveDispense(myvol,startdepth=50, enddepth=80, speed=50)
-			time.sleep(3)     # wait 3 seconds
-			position(col-6,2,OffsetDict[row])
-			moveAspirate(myvol, startdepth=20, enddepth=40, speed=50)
-			position(row,col)
-			dispense(myvol,depth=80, speed=50)
+		dispense(myvol,depth=95, speed=50)
+
+		# get 330ul from DW96 wide @ col 3 to DW96P at col 2
+		position(col-6,3,OffsetDict[row])
+		aspirate(myvol,depth=95,speed=50, mix=0)	
+		position(col-6,2,OffsetDict[row])
+		dispense(myvol,depth=70,speed=50)
+		
+		# from DW96 @ col 2 to DW24
+		position(col-6,2,OffsetDict[row])
+		mix(myvol,70,25,5)
+		time.sleep(3)     # wait 3 seconds
+		position(col-6,2,OffsetDict[row])
+		aspirate(myvol,depth=70,speed=25, mix=0)		
+		position(row,col)
+		dispense(myvol,depth=90, speed=50)
+
+		# 2nd round of 330ul
+		# get 330ul from DW96 wide @ col 3 to DW96P at col 2
+		position(col-6,3,OffsetDict[row])
+		aspirate(myvol,depth=95,speed=50, mix=0)	
+		position(col-6,2,OffsetDict[row])
+		dispense(myvol,depth=70,speed=50)
+		
+		# from DW96 @ col 2 to DW24
+		position(col-6,2,OffsetDict[row])
+		mix(myvol,70,25,5)
+		time.sleep(3)     # wait 3 seconds
+		position(col-6,2,OffsetDict[row])
+		aspirate(myvol,depth=70,speed=25, mix=0)		
+		position(row,col)
+		dispense(myvol,depth=90, speed=50)
+
+		# dispose tips
 		disposeTips()
 		
 position(0,0)

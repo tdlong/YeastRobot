@@ -8,10 +8,10 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
-DW24P  DW96W  BLANK  BLANK  BLANK
-DW24P  BLANK  BLANK  BLANK  BLANK
-DW24P  BLANK  BLANK  BLANK  BLANK
-DW24P  BLANK  BLANK  BLANK  BLANK
+DW96W  SW24P  SW24P  SW24P  SW24P
+DW96W  SW24P  SW24P  SW24P  SW24P
+DW96W  SW24P  SW24P  SW24P  SW24P
+DW96W  SW24P  SW24P  SW24P  SW24P
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
@@ -24,20 +24,19 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
 
-for col in [2]:
-	for row in [0,1,2,3]:
+for offset in [0,1,2,3]:
+	for row in [0]:                   # change to [0,1,2,3] for 4 plates
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
-		# initial mix
-		position(row,col)
-		mix(250,99,100,5)
+		# initial mix and aspirate for DW96 at C2
+		position(row,2,position = OffsetDict[offset])
+		mix(330,98,100,5)
+		aspirate(100, depth=98, speed=50, mix=0)
 
-		# 250 from DW24P to DW96W
-		position(row,col)
-		aspirate(250,depth=99,speed=50, mix=0)
-		position(col-2,3,position = OffsetDict[row])
-		dispense(250, depth=95, speed=50)
-				
+		# dispense to SW24 plate at C3 (offset 0), C4 (offset 1), etc.
+		position(offset,3 + row)
+		dispense(100, depth=96, speed=50)
+
 		disposeTips()
 		
 position(0,0)

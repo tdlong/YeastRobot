@@ -8,10 +8,10 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
-DW24P  DW96W  BLANK  BLANK  BLANK
-DW24P  BLANK  BLANK  BLANK  BLANK
-DW24P  BLANK  BLANK  BLANK  BLANK
-DW24P  BLANK  BLANK  BLANK  BLANK
+DW96W  DW96W  BLANK BLANK BLANK BLANK BLANK 
+DW96W  DW96W  BLANK BLANK BLANK BLANK BLANK 
+DW96W  DW96W  BLANK BLANK BLANK BLANK BLANK  
+DW96W  DW96W  BLANK BLANK BLANK BLANK BLANK  
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
@@ -24,20 +24,21 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
 
-for col in [2]:
-	for row in [0,1,2,3]:
-		CurrentTipPosition = retrieveTips(CurrentTipPosition)
-		
-		# initial mix
-		position(row,col)
-		mix(250,99,100,5)
 
-		# 250 from DW24P to DW96W
-		position(row,col)
+# eventually row in 0,1,2,3
+for row in [0]:
+	for offset in [0,1,2,3]:
+		# get tips
+		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+			
+		# pick up 250ul of selective media from C3, add to C2, mix
+		position(row,3,position = OffsetDict[offset])
 		aspirate(250,depth=99,speed=50, mix=0)
-		position(col-2,3,position = OffsetDict[row])
-		dispense(250, depth=95, speed=50)
-				
+		position(row,2,position = OffsetDict[offset])
+		dispense(250, depth=99, speed=100)
+		mix(330,98,100,5)
+		
+		# discard tips
 		disposeTips()
 		
 position(0,0)

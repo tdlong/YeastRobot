@@ -37,19 +37,19 @@ for col in [2]:
 		
 		# from SW24 to SW24 with media
 		position(row,col)
-		aspirate(myvol,depth=100,speed=50,mix=3)
+		aspirate(myvol,depth=99,speed=50,mix=3)
 		position(row,col+3)
 		dispense(myvol, depth=90, speed=50)
 		
 		# from SW24 to SW96 empty
 		position(row,col)
-		aspirate(myvol,depth=100,speed=50,mix=3)
+		aspirate(myvol,depth=99,speed=50,mix=3)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(myvol, depth=90, speed=50)
 		
 		# from SW24 to SW96 empty
 		position(row,col)
-		aspirate(myvol,depth=100,speed=50,mix=3)
+		aspirate(myvol,depth=99,speed=50,mix=3)
 		position(col-2,9,position = OffsetDict[row])
 		dispense(myvol, depth=90, speed=50)
 		

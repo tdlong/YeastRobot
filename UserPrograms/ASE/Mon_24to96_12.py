@@ -17,7 +17,7 @@ DW24P  DW24P  DW24P  BLANK  BLANK
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
 ##################################
 
-myvol = 250
+# Assume there is a Pellet PLUS 500 ul of SIS solution in each well
 OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 #  read in deck, etc
 DefineDeck(deck)
@@ -31,15 +31,18 @@ for col in [2,3,4]:
 		
 		# initial mix
 		position(row,col)
-		mix(300,99,100,5)
+		mix(300,99,100,10)
 
-		for i in [0,1]:
-			# 2 * 250 being careful of beads preloaded in 96 well plate
-			# from DW24 to DW96 loaded with beads
-			position(row,col)
-			aspirate(myvol,depth=99,speed=50, mix=3)
-			position(col-2,6,position = OffsetDict[row])
-			dispense(myvol, depth=60, speed=50)
+		# 2 * 250 being careful of beads preloaded in 96 well plate
+		# from DW24 to DW96 loaded with beads
+		position(row,col)
+		aspirate(250, depth=99,speed=50, mix=0)
+		position(col-2,6,position = OffsetDict[row])
+		dispense(250, depth=80, speed=50)
+		position(row,col)
+		aspirate(250, depth=99,speed=50, mix=0)
+		position(col-2,6,position = OffsetDict[row])
+		dispense(250, depth=60, speed=50)
 					
 		disposeTips()
 		

@@ -31,18 +31,17 @@ for col in [2,3,4]:
 		
 		# initial mix
 		position(row,col)
-		mix(300,99,100,10)
+		mix(300,100,100,10)
 
-		# 2 * 250 being careful of beads preloaded in 96 well plate
-		# from DW24 to DW96 loaded with beads
+		# from DW24 to empty DW96
 		position(row,col)
-		aspirate(250, depth=99,speed=50, mix=0)
+		aspirate(250, depth=100,speed=50, mix=0)
 		position(col-2,6,position = OffsetDict[row])
 		dispense(250, depth=80, speed=50)
 		position(row,col)
-		aspirate(250, depth=99,speed=50, mix=0)
+		aspirate(250, depth=100,speed=50, mix=0)
 		position(col-2,6,position = OffsetDict[row])
-		dispense(250, depth=60, speed=50)
+		dispense(250, depth=70, speed=50)
 					
 		disposeTips()
 		

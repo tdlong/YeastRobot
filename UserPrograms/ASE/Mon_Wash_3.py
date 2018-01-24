@@ -42,7 +42,7 @@ for row in [0,1,2]:
 		aspirate(330,depth=95,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(330, depth=99, speed=50)
-		mix(330,98,100,15)
+		mix(330,98,100,10)
 		
 		# discard tips
 		disposeTips()

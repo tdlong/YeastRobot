@@ -29,42 +29,24 @@ for col in [2,3,4,5]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
-		# transfer 3X 300 from DW24P to WASTE#1 at col 6
-		position(row,col)
-		aspirate(300, depth=95)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(300, depth=90)
-		position(row,col)
-		aspirate(300, depth=95)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(300, depth=75)
-		position(row,col)
-		aspirate(300, depth=95)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(300, depth=60)
-		
-		# add water from DW96W at 8 to DW24, then suck off water and discard at Column 7
-		for i in [25,40,55,70,85,99]:
-			position(col-2,8, position = OffsetDict[row])
-			aspirate(320,depth=i)
-			position(row, col)
-			dispense(320,depth=90)
-			aspirate(320,depth=90)
-			position(col-2,7, position = OffsetDict[row])
-			dispense(320,depth=110 - i)
+		# transfer 6X 330 from DW24P to WASTE#2 at col 7
+		for i in [95,85,75,65,55,35]:
+			position(row,col)
+			aspirate(330, depth=95)
+			position(col-2,6, position = OffsetDict[row])
+			dispense(330, depth=i)
 			
-		# add spor media at 9 to DW24 and mix
-			
+		# add spor media at 9 to DW24 and mix			
 		position(col-2,9, position = OffsetDict[row])
-		aspirate(330,depth=70)
+		aspirate(330,depth=75)
 		position(row, col)
 		dispense(330,depth=90)
 		position(col-2,9, position = OffsetDict[row])
-		aspirate(330,depth=80)
+		aspirate(330,depth=85)
 		position(row, col)
 		dispense(330,depth=90)
 		position(col-2,9, position = OffsetDict[row])
-		aspirate(330,depth=90)
+		aspirate(330,depth=98)
 		position(row, col)
 		dispense(330,depth=90)
 		

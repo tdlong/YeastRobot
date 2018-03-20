@@ -8,16 +8,16 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
-DW24P  DW24P  DW24P  BLANK  DW96W  DW96W  DW96P
-DW24P  DW24P  DW24P  BLANK  DW96W  DW96W  DW96P
-DW24P  DW24P  DW24P  BLANK  DW96W  DW96W  DW96P
-DW24P  DW24P  DW24P  BLANK  BLANK  BLANK  BLANK
+DW24P  DW24P  DW24P  DW24P  DW96P  DW96W
+DW24P  DW24P  DW24P  DW24P  DW96P  DW96W
+DW24P  DW24P  DW24P  DW24P  DW96P  DW96W
+BLANK  BLANK  BLANK  BLANK  BLANK  BLANK
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
 ##################################
 
-# Assume there is a Pellet PLUS 1 mL of spo solution in each well
+# Assume there is a Pellet PLUS 500 ul of SIS solution in each well
 OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 #  read in deck, etc
 DefineDeck(deck)
@@ -25,33 +25,17 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
 
-for col in [2,3,4]:
-	for row in [0,1,2,3]:
+for col in [2,3,4,5]:
+	for row in [0,1,2]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 
-		# transfer 3X 330 from DW24P to WASTE#1 at col 6
-		position(row,col)
-		aspirate(330, depth=95)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=95)
-		
-		position(row,col)
-		aspirate(330, depth=96)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=85)
-		
-		position(row,col)
-		aspirate(330, depth=96)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=75)
-
-		# pick up 2 * 250ul of SIS from C7, add to C2-5
-		position(col-2,7,position = OffsetDict[row])
+		# pick up 2 * 250ul of SDS from C7, add to C2-5
+		position(row,7,position = OffsetDict[offset])
 		aspirate(250,depth=97,speed=50, mix=0)
 		position(row,col)
 		dispense(250, depth=99, speed=100)
 
-		position(col-2,7,position = OffsetDict[row])
+		position(row,7,position = OffsetDict[offset])
 		aspirate(250,depth=99,speed=50, mix=0)
 		position(row,col)
 		dispense(250, depth=85, speed=100)
@@ -64,16 +48,16 @@ for col in [2,3,4]:
 		position(row,col)
 		mix(330,100,100,5)
 
-		# from DW24 to empty DW96P at c8
+		# from DW24 to empty DW96
 		position(row,col)
 		aspirate(300, depth=100,speed=75, mix=0)
-		position(col-2,8,position = OffsetDict[row])
+		position(row,6,position = OffsetDict[row])
 		dispense(300, depth=80, speed=50)
 		position(row,col)
-		mix(330,100,100,2)
+		mix(330,100,100,5)
 		position(row,col)
 		aspirate(300, depth=101,speed=75, mix=0)
-		position(col-2,8,position = OffsetDict[row])
+		position(row,6,position = OffsetDict[row])
 		dispense(300, depth=70, speed=50)
 					
 		disposeTips()

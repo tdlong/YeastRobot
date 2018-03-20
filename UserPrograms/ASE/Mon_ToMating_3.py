@@ -30,19 +30,19 @@ for row in [0,1,2]:
 	for offset in [0,1,2,3]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
-		
-		#aspirate of 330 ul of supernatant (C2) -> discard to DW96W at C4
+
+		#aspirate 330 ul of YPD (C2) -> discard to DW96W at C3 X2
 		position(row,2,position = OffsetDict[offset])
-		aspirate(330,depth=95,speed=50, mix=0)
-		position(row,4, position = OffsetDict[offset])
-		dispense(330, depth=95, speed=50)
+		aspirate(330,depth=96,speed=50, mix=0)
+		position(row,3, position = OffsetDict[offset])
+		dispense(330, depth=80, speed=50)
+		
 			
-		# pick up 250ul of YPD from C3, add to C2, mix
-		position(row,3,position = OffsetDict[offset])
+		# pick up 250ul of YPD from C4, add to C2, mix
+		position(row,4,position = OffsetDict[offset])
 		aspirate(250,depth=99,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(250, depth=99, speed=50)
-		mix(250,98,100,15)
 		
 		# discard tips
 		disposeTips()

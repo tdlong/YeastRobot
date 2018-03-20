@@ -8,10 +8,10 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
-DW96W  DW96W  DW96W BLANK BLANK BLANK BLANK
-DW96W  DW96W  DW96W BLANK BLANK BLANK BLANK
-DW96W  DW96W  DW96W BLANK BLANK BLANK BLANK 
-BLANK  BLANK  BLANK BLANK BLANK BLANK BLANK
+DW96W  DW96W  DW96W DW24P DW24P DW24P DW24P 
+DW96W  DW96W  DW96W DW24P DW24P DW24P DW24P 
+DW96W  DW96W  DW96W DW24P DW24P DW24P DW24P 
+DW96W  DW96W  DW96W DW24P DW24P DW24P DW24P 
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
@@ -26,26 +26,16 @@ CurrentTipPosition = 1
 
 
 # eventually row in 0,1,2,3
-for row in [0,1,2]:
+for row in [0]:
 	for offset in [0,1,2,3]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
-
-		#aspirate 2 x 200 ul of SDS (C2) -> discard to DW96W at C3 X2
-		position(row,2,position = OffsetDict[offset])
-		aspirate(200,depth=95,speed=50, mix=0)
-		position(row,3, position = OffsetDict[offset])
-		dispense(200, depth=97, speed=50)
-		position(row,2,position = OffsetDict[offset])
-		aspirate(200,depth=95,speed=50, mix=0)
-		position(row,3, position = OffsetDict[offset])
-		dispense(200, depth=90, speed=50)
 		
-		# pick up 300ul of YPD from C4, add to C2
-		position(row,4,position = OffsetDict[offset])
-		aspirate(300,depth=95,speed=50, mix=0)
+		#aspirate of 500 ul of supernatant (C2) -> discard to RES41 at C4
 		position(row,2,position = OffsetDict[offset])
-		dispense(300, depth=99, speed=50)
+		aspirate(330,depth=95,speed=50, mix=0)
+		position(row,4, position = OffsetDict[offset])
+		dispense(330, depth=95, speed=50)
 		
 		# discard tips
 		disposeTips()

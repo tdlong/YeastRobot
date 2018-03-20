@@ -331,9 +331,14 @@ def SendToEZ(command):
 #		print('			EZ CMD: ' + command)
 	EZ.write(command)
 	time.sleep(0.2)
-	while('`' not in EZ.readline()):
-		EZ.write("/1QR<CR>\r")
-		time.sleep(0.2)
+	while True:
+		temp = EZ.readline()
+		# print(temp)
+		if '`' not in temp:
+			EZ.write("/1QR<CR>\r")
+			time.sleep(0.2)
+		else:
+			break
 
 #############################################################################
 ##################### ROBOT ACTUATION/ACTION FUNCTIONS ######################
@@ -532,13 +537,13 @@ def mix(vol,depth,speed,mixcycles):
 	for i in range(mixcycles):
 		EZ_GoTo_A(plungerLimit - volume - airBuffer, targetSpeed)
 		EZ_GoTo_A(plungerLimit - airBuffer, targetSpeed)
+		time.sleep(0.5)
 
 	time.sleep(0.5)
 	#move head to safe depth
 	VLMX_GoTo_A(ZMotor, safeDepth)
-	#for safety draw some more air
 	#Update global variable for current syringe position
-	currentDisplacement = plungerLimit - volume
+	currentDisplacement = plungerLimit - airBuffer
 
 def liquidDisposal():
 	userPause()

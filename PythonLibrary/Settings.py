@@ -55,7 +55,7 @@ prate = 200 #steps per mm for P AXIS
 airBuffer = 10
 
 #depth limit - when the plunger is at the very bottom of the syringe
-plungerLimit = 5200
+plungerLimit = 5100
 maxUL = plungerLimit/stepsPerUL - 5
 
 #########Stuff you shouldnt have to touch#########

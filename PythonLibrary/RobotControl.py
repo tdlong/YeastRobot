@@ -330,13 +330,13 @@ def SendToEZ(command):
 #	if verbose:
 #		print('			EZ CMD: ' + command)
 	EZ.write(command)
-	time.sleep(0.2)
+	time.sleep(0.3)
 	while True:
 		temp = EZ.readline()
 		# print(temp)
 		if '`' not in temp:
 			EZ.write("/1QR<CR>\r")
-			time.sleep(0.2)
+			time.sleep(0.3)
 		else:
 			break
 

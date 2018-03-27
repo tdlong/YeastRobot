@@ -10,6 +10,7 @@ from multiprocessing import Process #for coordinating control between two contro
 import sys #for emergency terminate
 import traceback #for exception reporting
 import select
+import subprocess
 
 version = s.version #this string is displayed in text UI, please update in settings.py as you go
 
@@ -118,7 +119,7 @@ def initializeEZSerial():
 	global EZserialPort
 	#Create and initialize Velmex control object
 	try:
-		EZ = serial.Serial(port= EZserialPort, baudrate=BR, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
+		EZ = serial.Serial(port= EZserialPort, baudrate=BR, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS,timeout=2)
 	except:
 		print('YEASTBOT ERROR: SERIAL PORTS ARE NOT ACCESSIBLE. PLEASE CHECK CONNECTIONS AND TRY AGAIN')
 		print(' terminating...')
@@ -329,16 +330,23 @@ def SendToEZ(command):
 #	global verbose
 #	if verbose:
 #		print('			EZ CMD: ' + command)
+	temp = subprocess.Popen(["vcgencmd","measure_temp"],stdout=subprocess.PIPE)
+	print (temp.communicate())
 	EZ.write(command)
 	time.sleep(0.3)
 	while True:
-		temp = EZ.readline()
-		# print(temp)
-		if '`' not in temp:
-			EZ.write("/1QR<CR>\r")
-			time.sleep(0.3)
+		try:
+			temp = EZ.readline()
+		except serial.serialutil.SerialException:
+			# print(temp)
+			print("Serial Exception Detected")
+			return ""
 		else:
-			break
+			if '`' not in temp:
+				EZ.write("/1QR<CR>\r")
+				time.sleep(0.3)
+			else:
+				break
 
 #############################################################################
 ##################### ROBOT ACTUATION/ACTION FUNCTIONS ######################

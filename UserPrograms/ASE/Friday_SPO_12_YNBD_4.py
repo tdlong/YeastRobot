@@ -60,7 +60,7 @@ for col in [2,3,4,5]:
 		position(row, col)
 		dispense(330,depth=90, speed = 85)
 
-		mix(330,98,100,5)
+		mix(330,98,85,5)
 		
 		disposeTips()
 		

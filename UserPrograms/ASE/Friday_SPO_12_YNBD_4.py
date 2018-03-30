@@ -30,7 +30,7 @@ for col in [2,3,4,5]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 
-                # transfer 3X 330 from DW24P to WASTE#1 at col 6
+        # transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
 		aspirate(330, depth=95)
 		position(col-2,6, position = OffsetDict[row])
@@ -48,17 +48,17 @@ for col in [2,3,4,5]:
 		
 		# add spo or ynbd at c8 to DW24			
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=75)
+		aspirate(330,depth=75, speed = 85)
 		position(row, col)
-		dispense(330,depth=90)
+		dispense(330,depth=90, speed = 85)
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=85)
+		aspirate(330,depth=85, speed = 85)
 		position(row, col)
-		dispense(330,depth=90)
+		dispense(330,depth=90, speed = 85)
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=98)
+		aspirate(330,depth=98, speed = 85)
 		position(row, col)
-		dispense(330,depth=90)
+		dispense(330,depth=90, speed = 85)
 
 		mix(330,98,100,5)
 		

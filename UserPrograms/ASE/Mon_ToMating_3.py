@@ -31,7 +31,7 @@ for row in [0,1,2]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 
-		#aspirate 330 ul of YPD (C2) -> discard to DW96W at C3 X2
+		#aspirate 330 ul of YPD (C2) -> discard to DW96W at C3
 		position(row,2,position = OffsetDict[offset])
 		aspirate(330,depth=96,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])

@@ -44,7 +44,7 @@ for col in [2]:
 		position(col-2,4, position = OffsetDict[row])
 		dispense(330, depth=75)
 
-                # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
+        # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
 		position(col-2,5,position = OffsetDict[row])
 		aspirate(300,depth=99,speed=50, mix=0)
 		position(row,col)

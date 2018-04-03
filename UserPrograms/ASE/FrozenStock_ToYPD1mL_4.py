@@ -33,7 +33,7 @@ for row in [0,1,2,3]:
 		
 		#aspirate 300 ul of H2O (C3) -> discard to DW96W at C4
 		position(row,3, position = OffsetDict[offset])
-		aspirate(myvol,depth=85,speed=50,mix=0)
+		aspirate(myvol,depth=96,speed=50,mix=0)
 		position(row,4, position = OffsetDict[offset])
 		dispense(myvol, depth=95, speed=50)
 

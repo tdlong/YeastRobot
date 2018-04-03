@@ -64,7 +64,7 @@ for row in [0,1,2]:
 		dispense(200, depth=65, speed=50)
 		
 		position(row,2,position = OffsetDict[offset])
-		mix(300,97,100,5)
+		mix(300,99,100,5)
 		
 		position(row,2,position = OffsetDict[offset])
 		aspirate(200, depth=99,speed=50, mix=0)

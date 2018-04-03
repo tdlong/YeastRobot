@@ -33,18 +33,18 @@ for row in [0,1,2,3]:
 		
 		#aspirate 300 ul of H2O (C3) -> discard to DW96W at C4
 		position(row,3, position = OffsetDict[offset])
-		aspirate(myvol,depth=96,speed=50,mix=0)
+		aspirate(myvol,depth=85,speed=50,mix=0)
 		position(row,4, position = OffsetDict[offset])
 		dispense(myvol, depth=95, speed=50)
 
 		#transfer 3x330 ul of YPDa(C6) -> resuspend pellet (C3)
 		position(row,6, position = OffsetDict[offset])
-		aspirate(330,depth=99,speed=50,mix=0)
+		aspirate(330,depth=90,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(330, depth=99, speed=50)
 
 		position(row,6, position = OffsetDict[offset])
-		aspirate(330,depth=99,speed=50,mix=0)
+		aspirate(330,depth=98,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(330, depth=85, speed=50)
 

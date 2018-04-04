@@ -48,19 +48,19 @@ for col in [2,3,4,5]:
 		
 		# add spo or ynbd at c8 to DW24			
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=75, speed = 85)
+		aspirate(330,depth=75, speed = 50)
 		position(row, col)
-		dispense(330,depth=90, speed = 85)
+		dispense(330,depth=90, speed = 50)
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=85, speed = 85)
+		aspirate(330,depth=85, speed = 50)
 		position(row, col)
-		dispense(330,depth=90, speed = 85)
+		dispense(330,depth=90, speed = 50)
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=98, speed = 85)
+		aspirate(330,depth=98, speed = 50)
 		position(row, col)
-		dispense(330,depth=90, speed = 85)
+		dispense(330,depth=90, speed = 50)
 
-		mix(330,98,85,5)
+		mix(330,98,50,5)
 		
 		disposeTips()
 		

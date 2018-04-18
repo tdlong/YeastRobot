@@ -170,7 +170,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16080,\
+    'tipAttachDepth': 16980,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -182,7 +182,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16080,\
+    'tipAttachDepth': 16980,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -194,7 +194,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16080,\
+    'tipAttachDepth': 16980,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -206,7 +206,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16080,\
+    'tipAttachDepth': 16980,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\

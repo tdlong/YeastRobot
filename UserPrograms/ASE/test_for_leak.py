@@ -22,7 +22,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 1
+CurrentTipPosition = 13
 
 
 # eventually row in 0,1,2,3
@@ -37,6 +37,7 @@ while myexit=='n':
 	aspirate(250,depth=99,speed=50, mix=0)
 	position(0,2,position = OffsetDict[0])
 	myexit = raw_input('enter y to exit')
+	dispense(250,depth=99,speed=50)
 		
 disposeTips()	
 position(0,0)

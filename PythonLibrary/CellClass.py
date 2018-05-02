@@ -217,8 +217,9 @@ plateInfo = {\
     'alignmentDepth': 2300,\
     'surfDepth': 3800,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 10140,\
-    'tipAttachDepth': None, \
+ #   'maxDepth': 10140,\
+    'maxDepth': 10000,\
+   'tipAttachDepth': None, \
     'ejectDepth': 7630, \
     'wellDist': None,\
     'deepWellOffset':False,\

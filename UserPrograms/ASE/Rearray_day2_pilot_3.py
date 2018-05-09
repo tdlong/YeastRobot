@@ -26,23 +26,24 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1																	
 
-for row in [0,1,2,3]:
+for row in [0,1,2]:
+        for offset in [0,1,2,3]:
 		
-	CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		
-	# initial mix
-	position(row,2)
-	mix(300,98,100,5)
+		# initial mix
+		position(row,2, position = OffsetDict[offset])
+		mix(300,98,100,5)
 		
-	# From DW96W to SW96P with 140ul of glycerol
-	# 3 replicate glycerol stocks
-	for i in [0,1,2,3]:
-                    position(row,2)
-                    aspirate(myvol,depth=99,speed=50, mix=3)
-                    position(i, row + 3, position = OffsetDict[row])
-                    moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)
+		# From DW96W to SW96P with 140ul of glycerol
+		# 3 replicate glycerol stocks
+		for i in [0,1,2,3]:
+                    	position(row,2, position = OffsetDict[offset])
+                    	aspirate(myvol,depth=99,speed=50, mix=3)
+                    	position(i, row + 3, position = OffsetDict[offset])
+                    	moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)
 		
-	disposeTips()
+		disposeTips()
 		
 position(0,0)
 ShutDownRobot()

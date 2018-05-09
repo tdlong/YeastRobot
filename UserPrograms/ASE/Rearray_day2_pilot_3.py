@@ -37,7 +37,7 @@ for row in [0,1,2]:
 	# From DW96W to SW96P with 140ul of glycerol
 	# 3 replicate glycerol stocks
 	for i in [0,1,2,3]:
-                    position(row,col)
+                    position(row,2)
                     aspirate(myvol,depth=99,speed=50, mix=3)
                     position(i, row + 3, position = OffsetDict[i])
                     moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)

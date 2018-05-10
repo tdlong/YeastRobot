@@ -36,13 +36,13 @@ for offset in [0,1,2,3]:
 		
 	# From DW96W to SW96P with 140ul of glycerol
 	# 6 replicate glycerol stocks
-	for i in [range(3,9)]:
+	for i in [3,4,5,6,7,8]:
             position(0,2, position = OffsetDict[offset])
             aspirate(myvol,depth=99,speed=50, mix=3)
-            position(0, i, position = OffsetDict[offset])
+            position(0,i, position = OffsetDict[offset])
             moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)
 		
-disposeTips()
+	disposeTips()
 		
 position(0,0)
 ShutDownRobot()

@@ -33,7 +33,7 @@ for row in [0,1,2,3]:
 
 		# from SW96 to DW96
 		position(row,2, position = OffsetDict[offset])
-		aspirate(myvol,depth=80,speed=50,mix=0)
+		aspirate(200,depth=80,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(myvol, depth=96, speed=50)
 		
@@ -43,7 +43,7 @@ for row in [0,1,2,3]:
 		
 		# from SW96 to DW96
 		position(row,2, position = OffsetDict[offset])
-		aspirate(myvol,depth=96,speed=50,mix=0)
+		aspirate(myvol,depth=97,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(myvol, depth=96, speed=50)
 		

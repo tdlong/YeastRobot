@@ -30,19 +30,19 @@ for col in [2]:
 
 		# transfer 3X 330 from DW24P to WASTE at c4
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(330, depth=95)
+		dispense(320, depth=95)
 		
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(330, depth=85)
+		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(330, depth=75)
+		dispense(320, depth=75)
 
         # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
 		position(col-2,5,position = OffsetDict[row])

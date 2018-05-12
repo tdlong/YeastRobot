@@ -31,7 +31,7 @@ for row in [0,1,2,3]:
 		
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
-		mix(330,97,100,10)
+		mix(320,97,100,10)
 
 		# from DW96W to SW24P
 		position(row,2,position = OffsetDict[offset])

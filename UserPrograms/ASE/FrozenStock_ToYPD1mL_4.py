@@ -39,19 +39,19 @@ for row in [0,1,2,3]:
 
 		#transfer 3x330 ul of YPDa(C6) -> resuspend pellet (C3)
 		position(row,6, position = OffsetDict[offset])
-		aspirate(330,depth=90,speed=50,mix=0)
+		aspirate(320,depth=90,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(330, depth=99, speed=50)
+		dispense(320, depth=99, speed=50)
 
 		position(row,6, position = OffsetDict[offset])
-		aspirate(330,depth=98,speed=50,mix=0)
+		aspirate(320,depth=98,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(330, depth=85, speed=50)
+		dispense(320, depth=85, speed=50)
 
 		position(row,6, position = OffsetDict[offset])
-		aspirate(330,depth=99,speed=50,mix=0)
+		aspirate(320,depth=99,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(330, depth=80, speed=50)
+		dispense(320, depth=80, speed=50)
 
 		mix(300,98,100,5)
 		

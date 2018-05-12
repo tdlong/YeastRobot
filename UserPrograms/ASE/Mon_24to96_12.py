@@ -31,19 +31,19 @@ for col in [2,3,4]:
 
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=95)
+		dispense(320, depth=95)
 		
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=85)
+		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=75)
+		dispense(320, depth=75)
 
 		# pick up 2 * 250ul of SIS from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
@@ -58,11 +58,11 @@ for col in [2,3,4]:
 		
 		# initial mix
 		position(row,col)
-		aspirate(330, depth=97,speed=100, mix=0)
+		aspirate(320, depth=97,speed=100, mix=0)
 		position(row,col)
-		dispense(330, depth=100, speed=100)
+		dispense(320, depth=100, speed=100)
 		position(row,col)
-		mix(330,100,100,5)
+		mix(320,100,100,5)
 
 		# from DW24 to empty DW96P at c8
 		position(row,col)
@@ -70,7 +70,7 @@ for col in [2,3,4]:
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=80, speed=50)
 		position(row,col)
-		mix(330,100,100,2)
+		mix(320,100,100,2)
 		position(row,col)
 		aspirate(300, depth=101,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])

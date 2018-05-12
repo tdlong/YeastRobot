@@ -32,33 +32,33 @@ for col in [2,3,4,5]:
 
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=95)
+		dispense(320, depth=95)
 		
 		position(row,col)
-		aspirate(330, depth=96)
+		aspirate(320, depth=96)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=85)
+		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(330, depth=96)
+		aspirate(320, depth=96)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=75)
+		dispense(320, depth=75)
 
 		# add 3x330uL smqH2O at c7 to DW24			
 		position(col-2,7, position = OffsetDict[row])
-		aspirate(330,depth=75)
+		aspirate(320,depth=75)
 		position(row, col)
-		dispense(330,depth=90)
+		dispense(320,depth=90)
 		position(col-2,7, position = OffsetDict[row])
-		aspirate(330,depth=85)
+		aspirate(320,depth=85)
 		position(row, col)
-		dispense(330,depth=90)
+		dispense(320,depth=90)
 		position(col-2,7, position = OffsetDict[row])
-		aspirate(330,depth=98)
+		aspirate(320,depth=98)
 		position(row, col)
-		dispense(330,depth=90)
+		dispense(320,depth=90)
 		
 		disposeTips()
 		

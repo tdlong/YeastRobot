@@ -32,35 +32,35 @@ for col in [2,3,4,5]:
 
         # transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
-		aspirate(330, depth=95)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=65)
+		dispense(320, depth=65)
 		
 		position(row,col)
-		aspirate(330, depth=96)
+		aspirate(320, depth=96)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=60)
+		dispense(320, depth=60)
 		
 		position(row,col)
-		aspirate(330, depth=96)
+		aspirate(320, depth=96)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(330, depth=45)
+		dispense(320, depth=45)
 		
 		# add spo or ynbd at c8 to DW24			
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=75, speed = 50)
+		aspirate(320,depth=75, speed = 50)
 		position(row, col)
-		dispense(330,depth=90, speed = 50)
+		dispense(320,depth=90, speed = 50)
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=85, speed = 50)
+		aspirate(320,depth=85, speed = 50)
 		position(row, col)
-		dispense(330,depth=90, speed = 50)
+		dispense(320,depth=90, speed = 50)
 		position(col-2,8, position = OffsetDict[row])
-		aspirate(330,depth=98, speed = 50)
+		aspirate(320,depth=98, speed = 50)
 		position(row, col)
-		dispense(330,depth=90, speed = 50)
+		dispense(320,depth=90, speed = 50)
 
-		mix(330,98,50,5)
+		mix(320,98,50,5)
 		
 		disposeTips()
 		

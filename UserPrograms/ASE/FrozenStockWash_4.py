@@ -39,9 +39,9 @@ for row in [0,1,2,3]:
 
 		#transfer 330 ul of smqH2O(C5) -> resuspend pellet (C3)
 		position(row,5, position = OffsetDict[offset])
-		aspirate(330,depth=98,speed=50,mix=0)
+		aspirate(320,depth=98,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(330, depth=95, speed=50)
+		dispense(320, depth=95, speed=50)
 		mix(300,98,100,5)
 		
 		disposeTips()

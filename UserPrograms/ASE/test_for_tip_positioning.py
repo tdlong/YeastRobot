@@ -1,0 +1,39 @@
+import sys
+#  where RobotControl.py, etc lives
+sys.path.append('/home/pi/Desktop/ADL/YeastRobot/PythonLibrary')
+from RobotControl import *
+
+
+#################################
+###  Define Deck Layout
+#################################
+deck="""\
+SW96P  SW96P  BLANK BLANK BLANK BLANK BLANK 
+SW96P  SW96P  BLANK BLANK BLANK BLANK BLANK 
+SW96P  SW96P  BLANK BLANK BLANK BLANK BLANK  
+SW96P  SW96P  BLANK BLANK BLANK BLANK BLANK  
+"""
+#   2       3       4       5       6
+#   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
+##################################
+#  1 = UL of BoxA, 2 = UR of BoxA, 3 = LL of BoxA, etc.
+OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
+#  read in deck, etc
+DefineDeck(deck)
+printDeck()
+InitializeRobot()
+CurrentTipPosition = 4																	
+
+for row in [0,3]:		
+	CurrentTipPosition = retrieveTips(CurrentTipPosition)
+
+	position(row,2, position = OffsetDict[3])
+	mix(100,50,100,1)
+		
+	disposeTips()
+		
+position(0,0)
+ShutDownRobot()
+quit()
+
+

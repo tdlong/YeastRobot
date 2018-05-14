@@ -26,7 +26,7 @@ CurrentTipPosition = 4
 
 CurrentTipPosition = retrieveTips(CurrentTipPosition)
 
-for col in [6,7,8,9]:
+for col in [8,9]:
 	for row in [0,3]:		
 		position(row,col, position = OffsetDict[3])
 		mix(100,50,100,1)

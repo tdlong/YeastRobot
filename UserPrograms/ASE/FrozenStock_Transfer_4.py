@@ -28,7 +28,7 @@ CurrentTipPosition = 4
 
 ### change back to row in [0,1,2,3] and offset in [0,1,2,3] and currenttipposition 1
 for row in [3]:
-        for offset in [1]:
+        for offset in [4]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 

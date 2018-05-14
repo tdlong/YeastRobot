@@ -24,13 +24,13 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 4																	
 
-for row in [0,3]:		
-	CurrentTipPosition = retrieveTips(CurrentTipPosition)
+CurrentTipPosition = retrieveTips(CurrentTipPosition)
 
+for row in [0,3]:		
 	position(row,2, position = OffsetDict[3])
 	mix(100,50,100,1)
 		
-	disposeTips()
+CurrentTipPosition
 		
 position(0,0)
 ShutDownRobot()

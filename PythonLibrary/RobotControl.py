@@ -324,6 +324,16 @@ def SendToVelmex(command):
 		data_raw += velmex.read()
 		if '^' in data_raw:
 			break
+	#  extra check added	
+	velmex.write('V')
+	data_raw = ''
+	while(True):
+		time.sleep(0.05)
+		bytesToRead = velmex.inWaiting()
+		data_raw += velmex.read()
+		if 'R' in data_raw:
+			break
+
 	return
 
 def SendToEZ(command):

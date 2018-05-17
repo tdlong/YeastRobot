@@ -38,13 +38,16 @@ for row in [0,1,2,3]:
 		aspirate(140, depth=98, speed=50, mix=0)
 		position(offset,row+3)
 		dispense(140, depth=90, speed=50)
+        
+        position(row,2)
+        aspirate(140,depth=99,speed=50, mix=2)
+        position(row, 7, position = OffsetDict[offset])
+        moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
 
-
-		for i in [7,8]:
-            			position(row,2)
-            			aspirate(140,depth=99,speed=50, mix=2)
-            			position(row, i, position = OffsetDict[offset])
-            			moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
+        position(row,2)
+        aspirate(140,depth=99,speed=50, mix=2)
+        position(row, 8, position = OffsetDict[offset])
+        moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
 		disposeTips()
 		
 position(0,0)

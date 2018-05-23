@@ -198,6 +198,9 @@ def DefineDeck(deck): #assigns plate to each position, sets up objects for each 
 ############################ HOMING FUNCTIONS ###############################
 
 def home_Velmex():
+
+	setVelmexToOnlineMode()
+	
 	#Go to Home Position (Slow)
 	#Clear, index to negative limit, set speed to 200steps/sec, zero motor position, run
 	
@@ -308,13 +311,21 @@ def EZ_GoTo_A(index, speed): #Absolute with speed
 	#example: EZ.write('/1A10000R\r') moves to absolute position of 10000
 	SendToEZ('/1V' + str(speed) + 'A' + str(index) + 'R<CR>\r')
 
+def setVelmexToOnlineMode():
+	velmex.flushInput()
+	time.sleep(0.05)
+	velmex.flushOutput()
+	time.sleep(0.05)
+	velmex.write('F') #Enable On-Line mode with echo "off"
+	time.sleep(0.05)
+
 def SendToVelmex(command):
 	# an attempt to make sure there is not a caret in the serial buffer
 	velmex.flushInput()
 	time.sleep(0.05)
 	velmex.flushOutput()
 	time.sleep(0.05)
-	velmex.write('F') #Enable On-Line mode with echo "off"
+	velmex.write('C')
 	time.sleep(0.05)
 	velmex.write(command)
 	data_raw = ''
@@ -324,7 +335,11 @@ def SendToVelmex(command):
 		data_raw += velmex.read()
 		if '^' in data_raw:
 			break
-	#  extra check added	
+	#  extra check added
+	velmex.flushInput()
+	time.sleep(0.05)
+	velmex.flushOutput()
+	time.sleep(0.05)
 	velmex.write('V')
 	data_raw = ''
 	while(True):
@@ -333,15 +348,15 @@ def SendToVelmex(command):
 		data_raw += velmex.read()
 		if 'R' in data_raw:
 			break
-
-	return
+	print(command + '\t' + data_raw)
 
 def SendToEZ(command):
 #	global verbose
 #	if verbose:
 #		print('			EZ CMD: ' + command)
-	temp = subprocess.Popen(["vcgencmd","measure_temp"],stdout=subprocess.PIPE)
-	print (temp.communicate())
+	# get the temperature of the Raspberry PI board and print it out
+	# temp = subprocess.Popen(["vcgencmd","measure_temp"],stdout=subprocess.PIPE)
+	# print (temp.communicate())
 	EZ.write(command)
 	time.sleep(0.3)
 	while True:

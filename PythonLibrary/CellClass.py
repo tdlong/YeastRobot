@@ -146,7 +146,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17110,\
+    'tipAttachDepth': 17140,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\

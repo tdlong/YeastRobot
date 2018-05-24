@@ -37,8 +37,8 @@ for tip in [4,8,12,16]:
 		position(tip-tip+counter-1,3,position = OffsetDict[3])
 		myexit = raw_input('enter y to exit')
 		dispense(250,depth=99,speed=50)
-		
-disposeTips()	
+	disposeTips()	
+
 position(0,0)
 ShutDownRobot()
 quit()

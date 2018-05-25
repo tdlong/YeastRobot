@@ -23,7 +23,7 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 
-counter = 0
+counter = 2
 for tip in [12,16]:
 	counter += 1
 	CurrentTipPosition = tip

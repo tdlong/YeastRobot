@@ -980,6 +980,30 @@ def userPause():
       print('The program has detected a USER pause')
       myraw = raw_input('press <ENTER> to continue')
 
-
-
+def extraSeatTips():
+	userPause()
+	global verbose
+	global currentx
+	global currenty
+	global currentDisplacement
+	#  position "F" 1st offset
+	InternalTipPosition = 21
+	# thickness of glued on thing in mm * 159 = 5.6 mm * 159 = 890
+	extraHeightOffset = 890
+	BoxDict = {1:'A', 2:'B', 3:'C', 4:'D', 5:'E', 6:'F'}
+	OffsetDict = {1: 'UL', 2: 'UR', 3: 'LL', 4: 'LR'}
+	BoxLocation = {'A':[0,0],'B':[0,1],'C':[1,0],'D':[1,1],'E':[2,0],'F':[2,1]}
+	tiplookuptable = 	{1:[1,1],2:[1,2],3:[1,3],4:[1,4], 5:[2,1],6:[2,2],7:[2,3],8:[2,4], 9:[3,1],10:[3,2],11:[3,3],12:[3,4], 13:[4,1],14:[4,2],15:[4,3],16:[4,4], 17:[5,1],18:[5,2],19:[5,3],20:[5,4], 21:[6,1],22:[6,2],23:[6,3],24:[6,4]}
+	Box = BoxDict[tiplookuptable[InternalTipPosition][0]]
+	offset = OffsetDict[tiplookuptable[InternalTipPosition][1]]
+	row = BoxLocation[Box][0]
+	col = BoxLocation[Box][1]
+	print('Extra seating of tips at box F')
+	position(row, col, offset)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].surfaceDepth - extraHeightOffset) #depth to go before slowing down
+	VLMX_SetSpeed(ZMotor, 4*ZSpeedSlow)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth - extraHeightOffset)
+	VLMX_SetSpeed(ZMotor, ZSpeedFast)
+	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)		
 

@@ -29,6 +29,7 @@ for tip in [12,16]:
 	CurrentTipPosition = tip
 
 	CurrentTipPosition = retrieveTips(CurrentTipPosition)
+	extraSeatTips()
 			
 	myexit='n'
 	while myexit=='n':

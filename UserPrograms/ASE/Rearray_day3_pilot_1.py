@@ -29,6 +29,7 @@ CurrentTipPosition = 1
 for offset in [0,1,2,3]:
 		
 	CurrentTipPosition = retrieveTips(CurrentTipPosition)
+	extraSeatTips()
 		
 	# initial mix
 	position(0,2, position = OffsetDict[offset])

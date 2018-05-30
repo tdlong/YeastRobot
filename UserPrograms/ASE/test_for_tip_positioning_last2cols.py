@@ -25,6 +25,7 @@ InitializeRobot()
 CurrentTipPosition = 1																	
 
 CurrentTipPosition = retrieveTips(CurrentTipPosition)
+extraSeatTips()
 
 for col in [2,3,4,5,6,7]:
 	for row in [1,2]:		

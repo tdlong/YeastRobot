@@ -29,6 +29,7 @@ CurrentTipPosition = 13
 
 # get tips
 CurrentTipPosition = retrieveTips(CurrentTipPosition)
+extraSeatTips()
 			
 # pick up 250ul of selective media from C3, add to C2, mix
 myexit='n'

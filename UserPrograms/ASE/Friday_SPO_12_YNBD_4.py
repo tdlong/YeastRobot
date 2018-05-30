@@ -29,6 +29,7 @@ CurrentTipPosition = 1
 for col in [2,3,4,5]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		extraSeatTips()
 
         # transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)

@@ -30,6 +30,7 @@ for row in [0,1,2]:
 	for offset in [0,1,2,3]:
 		#get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		extraSeatTips()
 
 		#aspirate 2 x 250 ul of Tween20 (C2) -> discard to DW96W at C4 X2
 		position(row,2,position = OffsetDict[offset])

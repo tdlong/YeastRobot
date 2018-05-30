@@ -30,6 +30,7 @@ for col in [2,3]:
 	for row in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		extraSeatTips()
 		
 		# initial mix
 		position(row,col)

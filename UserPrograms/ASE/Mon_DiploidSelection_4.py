@@ -30,6 +30,7 @@ for row in [0,1,2,3]:
 	for offset in [0,1,2,3]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		extraSeatTips()
 			
 		# pick up 250ul of selective media from C3, add to C2, mix
 		position(row,3,position = OffsetDict[offset])

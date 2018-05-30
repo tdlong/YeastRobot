@@ -30,6 +30,7 @@ for row in [0,1,2]:
         for offset in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		extraSeatTips()
 
 		# from SW96 to DW96
 		position(row,2, position = OffsetDict[offset])

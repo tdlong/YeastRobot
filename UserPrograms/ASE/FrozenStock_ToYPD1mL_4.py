@@ -30,6 +30,7 @@ for row in [0,1,2,3]:
         for offset in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
+		extraSeatTips()
 		
 		#aspirate 300 ul of H2O (C3) -> discard to DW96W at C4
 		position(row,3, position = OffsetDict[offset])

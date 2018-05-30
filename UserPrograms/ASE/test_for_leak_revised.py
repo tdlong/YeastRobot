@@ -24,7 +24,7 @@ printDeck()
 InitializeRobot()
 
 counter = 2
-for tip in [12,16]:
+for tip in [4,8,12,16]:
 	counter += 1
 	CurrentTipPosition = tip
 

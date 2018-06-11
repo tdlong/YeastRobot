@@ -655,6 +655,21 @@ def position(row, col, position = 'UL'):
 			position_internal(2, destcol)
 	position_internal(destrow, destcol, position)
 
+def position2(row, col, position = 'UL'):
+	userPause()
+	global verbose
+	global currentx
+	global currenty
+	destrow = row
+	destcol = col
+	currrow = currentx
+	currcol = currenty
+	if not (currrow == destrow and currcol == destcol):
+		if currrow == 3 and destcol == 0:
+			position_internal(2, currcol)
+		if destrow == 3 and currcol == 0:
+			position_internal(currrow, 1)
+	position_internal(destrow, destcol, position)
 
 def position_internal(row, col, position = 'UL'):
 	global verbose

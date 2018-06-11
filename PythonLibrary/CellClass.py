@@ -41,6 +41,7 @@ STDalignmentDepth = s.STDalignmentDepth
 STDtipAttach = s.STDtipAttach
 universalSafeHeight = s.universalSafeHeight; #update to optimize speed, minimizing travel distance
 wellDist = 350
+UniversalTipAttachDepth=17100
 
 plateInfo = {\
 'DW96P': \
@@ -146,7 +147,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17160,\
+    'tipAttachDepth': UniversalTipAttachDepth,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -158,7 +159,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17225,\
+    'tipAttachDepth': UniversalTipAttachDepth,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -170,7 +171,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17115,\
+    'tipAttachDepth': UniversalTipAttachDepth,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -182,7 +183,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 17165,\
+    'tipAttachDepth': UniversalTipAttachDepth,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -194,7 +195,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16980,\
+    'tipAttachDepth': UniversalTipAttachDepth,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\
@@ -206,7 +207,7 @@ plateInfo = {\
     'surfDepth': 14200,\
     'safeDepth':universalSafeHeight,\
     'maxDepth': None,\
-    'tipAttachDepth': 16980,\
+    'tipAttachDepth': UniversalTipAttachDepth,\
     'ejectDepth': None,\
     'wellDist': wellDist, \
     'deepWellOffset':False,\

@@ -822,6 +822,10 @@ def retrieveTips(CurrentTipPosition, align="False"):
 	else:
 		VLMX_SetSpeed(ZMotor, 4*ZSpeedSlow)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth - 400)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth - 400)
+		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].tipAttachDepth)
 		VLMX_SetSpeed(ZMotor, ZSpeedFast)
 		VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)
 	

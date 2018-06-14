@@ -37,7 +37,7 @@ zrate = 159 #steps per mm for Z AXIS
 
 ################Head Index Settings###############
 STDalignmentDepth = 1000 #standard depth for traversing close to plates for alignment
-STDtipAttach = 17200      #standard depth to seat tips (dont go too low)
+STDtipAttach = 17275      #standard depth to seat tips (dont go too low)
 universalSafeHeight = 300 #height at which it is safe for the head to traverse in X/Y. This variable can be optimized for minimizing travel
 
 

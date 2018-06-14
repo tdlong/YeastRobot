@@ -32,15 +32,15 @@ for col in [2,3,4,5]:
 		extraSeatTips()
 		
 		# initial mix
-		position(row,col)
+		position2(row,col)
 		mix(300,95,100,5)
 		
 		# from SW24 to DW24  320 ul X3 = 990ul
 		# this is the most we can get from a plate when we start with 1.4ml
 		for i in [1,2,3]:
-			position(row,col)
+			position2(row,col)
 			aspirate(320,depth=99,speed=50, mix=0)
-			position(row,col+4,position = OffsetDict[row])
+			position2(row,col+4,position = OffsetDict[row])
 			dispense(320, depth=92, speed=50)
 		disposeTips()
 		

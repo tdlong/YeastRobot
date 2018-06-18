@@ -639,7 +639,7 @@ def oldposition(row, col, position = 'UL'):
 		position_internal(2, currcol)
 	position_internal(destrow, destcol, position)
 
-def position(row, col, position = 'UL'):
+def positionOld(row, col, position = 'UL'):
 	userPause()
 	global verbose
 	global currentx
@@ -655,7 +655,10 @@ def position(row, col, position = 'UL'):
 			position_internal(2, destcol)
 	position_internal(destrow, destcol, position)
 
-def position2(row, col, position = 'UL'):
+def position2(row, col, position = "UL"):
+	position(row, col, position)
+
+def position(row, col, position = 'UL'):
 	userPause()
 	global verbose
 	global currentx

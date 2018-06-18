@@ -33,15 +33,15 @@ for row in [0,1,2,3]:
 		extraSeatTips()
 		
 		#aspirate 200 ul of freezing solution (C3) -> discard to DW96W at C4
-		position2(row,3, position = OffsetDict[offset])
+		position(row,3, position = OffsetDict[offset])
 		aspirate(myvol,depth=96,speed=50,mix=0)
-		position2(row,4, position = OffsetDict[offset])
+		position(row,4, position = OffsetDict[offset])
 		dispense(myvol, depth=98, speed=50)
 
 		#transfer 330 ul of smqH2O(C5) -> resuspend pellet (C3)
-		position2(row,5, position = OffsetDict[offset])
+		position(row,5, position = OffsetDict[offset])
 		aspirate(320,depth=98,speed=50,mix=0)
-		position2(row,3, position = OffsetDict[offset])
+		position(row,3, position = OffsetDict[offset])
 		dispense(320, depth=95, speed=50)
 		mix(300,98,100,5)
 		

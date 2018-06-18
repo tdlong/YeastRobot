@@ -31,13 +31,13 @@ for row in [0,1,2,3]:
 		extraSeatTips()
 		
 		# initial mix
-		position2(row,2,position = OffsetDict[offset])
+		position(row,2,position = OffsetDict[offset])
 		mix(320,97,100,10)
 
 		# from DW96W to SW24P
-		position2(row,2,position = OffsetDict[offset])
+		position(row,2,position = OffsetDict[offset])
 		aspirate(140, depth=98, speed=50, mix=0)
-		position2(offset,row+3)
+		position(offset,row+3)
 		dispense(140, depth=90, speed=50)
 		disposeTips()
 		

@@ -214,7 +214,7 @@ plateInfo = {\
     'readdress':{'UL':[0, 0],'UR': [1, 0], 'LL':[0, 1], 'LR':[1, 1]}},\
 'TDISP': \
    {'x':75,\
-    'y':2150,\
+    'y':2240,\
     'alignmentDepth': 2300,\
     'surfDepth': 3800,\
     'safeDepth':universalSafeHeight,\

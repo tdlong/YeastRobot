@@ -655,10 +655,7 @@ def positionOld(row, col, position = 'UL'):
 			position_internal(2, destcol)
 	position_internal(destrow, destcol, position)
 
-def position2(row, col, pos = "UL"):
-	position(row, col, pos = pos)
-
-def position(row, col, pos = 'UL'):
+def position(row, col, position = 'UL'):
 	userPause()
 	global verbose
 	global currentx
@@ -672,19 +669,19 @@ def position(row, col, pos = 'UL'):
 			position_internal(2, currcol)
 		if destrow == 3 and currcol == 0:
 			position_internal(currrow, 1)
-	position_internal(destrow, destcol, pos)
+	position_internal(destrow, destcol, position)
 
-def position_internal(row, col, pos = 'UL'):
+def position_internal(row, col, position = 'UL'):
 	global verbose
 	global currentx
 	global currenty
 	updateCurrentPos(row,col)
 	try:
-		if (pos == None or matrix[row][col].sequence == None):
+		if (position == None or matrix[row][col].sequence == None):
 			pass
 		else:
 			try:
-				matrix[row][col].reconfig(pos)
+				matrix[row][col].reconfig(position)
 			except Exception as e:
 				print('Error - perhaps readdress is not permitted for this plate')
 				print(e)

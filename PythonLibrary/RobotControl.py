@@ -327,6 +327,7 @@ def SendToVelmex(command):
 	time.sleep(0.05)
 	velmex.write('C')
 	time.sleep(0.05)
+	print(command+'\t')
 	velmex.write(command)
 	data_raw = ''
 	while(True):
@@ -336,6 +337,18 @@ def SendToVelmex(command):
 		if '^' in data_raw:
 			break
 	#  extra check added
+	velmex.flushInput()
+	time.sleep(0.05)
+	velmex.flushOutput()
+	time.sleep(0.05)
+	velmex.write('V')
+	data_raw = ''
+	while(True):
+		time.sleep(0.05)
+		bytesToRead = velmex.inWaiting()
+		data_raw += velmex.read()
+		if 'R' in data_raw:
+			break
 	velmex.flushInput()
 	time.sleep(0.05)
 	velmex.flushOutput()

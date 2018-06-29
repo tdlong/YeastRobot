@@ -38,12 +38,12 @@ for col in [2,3,4,5]:
 		dispense(320, depth=95)
 		
 		position(row,col)
-		aspirate(320, depth=96)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(320, depth=96)
+		aspirate(320, depth=95)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=75)
 

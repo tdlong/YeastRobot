@@ -52,7 +52,7 @@ for col in [2,3,4,5]:
 		position(col-2,7, position = OffsetDict[row])
 		aspirate(320,depth=75)
 		position(row, col)
-		dispense(320,depth=90)
+		dispense(320,depth=95)
 		position(col-2,7, position = OffsetDict[row])
 		aspirate(320,depth=85)
 		position(row, col)

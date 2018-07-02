@@ -24,6 +24,7 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
+adjusted_depth = 95 + row
 
 for col in [2,3,4]:
 	for row in [0,1,2,3]:
@@ -32,17 +33,17 @@ for col in [2,3,4]:
 
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
-		aspirate(320, depth=94)
+		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=95)
 		
 		position(row,col)
-		aspirate(320, depth=94)
+		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(320, depth=94)
+		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=75)
 
@@ -67,13 +68,13 @@ for col in [2,3,4]:
 
 		# from DW24 to empty DW96P at c8
 		position(row,col)
-		aspirate(300, depth=98,speed=75, mix=0)
+		aspirate(300, depth=adjusted_depth + 3,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=80, speed=50)
 		position(row,col)
 		mix(320,98,100,2)
 		position(row,col)
-		aspirate(300, depth=99,speed=75, mix=0)
+		aspirate(300, depth=adjusted_depth + 4,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=70, speed=50)
 					

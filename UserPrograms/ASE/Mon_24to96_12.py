@@ -24,12 +24,12 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
-adjusted_depth = 95 + row
 
 for col in [2,3,4]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
+		adjusted_depth = 95 + row
 
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)

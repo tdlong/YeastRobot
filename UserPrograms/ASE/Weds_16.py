@@ -31,14 +31,15 @@ for col in [2,3,4,5]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		
+		adjusted_depth = 92 + row*2
+
 		# initial mix
 		position(row,col)
 		mix(300,90,100,5)
 		
 		# from SW24 to SW24 with media
 		position(row,col)
-		aspirate(myvol,depth=99,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth + 2,speed=50,mix=0)
 		position(row,col+4)
 		dispense(myvol, depth=90, speed=50)
 		 		

@@ -49,7 +49,7 @@ for row in [0,1,2]:
 		dispense(200, depth=99, speed=100)
 
 		position(row,5,position = OffsetDict[offset])
-		aspirate(200,depth=99,speed=50, mix=0)
+		aspirate(200,depth=97,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(200, depth=85, speed=100)
 		

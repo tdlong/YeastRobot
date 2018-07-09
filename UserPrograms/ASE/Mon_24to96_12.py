@@ -49,32 +49,32 @@ for col in [2,3,4]:
 
 		# pick up 2 * 250ul of SIS from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(250,depth=97,speed=50, mix=0)
+		aspirate(250,depth=95,speed=50, mix=0)
 		position(row,col)
-		dispense(250, depth=99, speed=100)
+		dispense(250, depth=96, speed=100)
 
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(250,depth=99,speed=50, mix=0)
+		aspirate(250,depth=97,speed=50, mix=0)
 		position(row,col)
 		dispense(250, depth=85, speed=100)
 		
 		# initial mix
 		position(row,col)
-		aspirate(320, depth=97,speed=100, mix=0)
+		aspirate(320, depth=95,speed=100, mix=0)
 		position(row,col)
-		dispense(320, depth=100, speed=100)
+		dispense(320, depth=96, speed=100)
 		position(row,col)
-		mix(320,100,100,5)
+		mix(320,97,100,5)
 
 		# from DW24 to empty DW96P at c8
 		position(row,col)
-		aspirate(300, depth=adjusted_depth + 3,speed=75, mix=0)
+		aspirate(300, depth=adjusted_depth + 2,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=80, speed=50)
 		position(row,col)
-		mix(320,98,100,2)
+		mix(320,97,100,2)
 		position(row,col)
-		aspirate(300, depth=adjusted_depth + 4,speed=75, mix=0)
+		aspirate(300, depth=adjusted_depth + 3,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=70, speed=50)
 					

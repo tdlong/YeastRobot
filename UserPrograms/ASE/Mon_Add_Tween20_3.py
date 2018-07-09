@@ -46,10 +46,10 @@ for row in [0,1,2]:
 		position(row,4,position = OffsetDict[offset])
 		aspirate(250,depth=97,speed=40, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(250, depth=99, speed=90)
+		dispense(250, depth=97, speed=90)
 
 		position(row,4,position = OffsetDict[offset])
-		aspirate(250,depth=97,speed=40, mix=0)
+		aspirate(250,depth=97	,speed=40, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(250, depth=85, speed=90)
 		

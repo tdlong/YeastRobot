@@ -42,7 +42,7 @@ STDtipAttach = s.STDtipAttach
 universalSafeHeight = s.universalSafeHeight; #update to optimize speed, minimizing travel distance
 wellDist = 350
 #UniversalTipAttachDepth=17225
-UniversalTipAttachDepth=17175
+UniversalTipAttachDepth=17200
 
 plateInfo = {\
 'DW96P': \

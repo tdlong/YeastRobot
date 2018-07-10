@@ -8,10 +8,10 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
+DW96W DW96W DW96W DW96W DW96W DW96P DW96P DW96P
 DW96W DW96W DW96W DW96W DW96W DW96W DW96W DW96W
 DW96W DW96W DW96W DW96W DW96W DW96W DW96W DW96W
-DW96W DW96W DW96W DW96W DW96W DW96W DW96W DW96W
-DW96W DW96W DW96W DW96W DW96W DW96W DW96W DW96W
+DW96W DW96W DW96W DW96W DW96W DW96P DW96P DW96P
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
@@ -27,7 +27,7 @@ CurrentTipPosition = 1
 CurrentTipPosition = retrieveTips(CurrentTipPosition)
 extraSeatTips()
 
-for col in [2,3,4,5,6,7,8,9]:
+for col in [7,8,9]:
 	for row in [0,3]:		
 		position(row,col, position = OffsetDict[3])
 		mix(100,95,100,1)

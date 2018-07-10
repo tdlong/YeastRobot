@@ -30,7 +30,7 @@ extraSeatTips()
 for col in [2,3,4,5,6,7,8,9]:
 	for row in [0,3]:		
 		position(row,col, position = OffsetDict[3])
-		mix(100,90,100,1)
+		mix(100,95,100,1)
 		
 position(0,0)
 ShutDownRobot()

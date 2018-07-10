@@ -31,6 +31,7 @@ for row in [0,1,2]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
+		adjusted_depth = 94 + row
 
 		#aspirate 2 x 200 ul of SDS (C2) -> discard to DW96W at C3 X2
 		position(row,2,position = OffsetDict[offset])
@@ -38,13 +39,13 @@ for row in [0,1,2]:
 		position(row,3, position = OffsetDict[offset])
 		dispense(200, depth=97, speed=50)
 		position(row,2,position = OffsetDict[offset])
-		aspirate(200,depth=95,speed=50, mix=0)
+		aspirate(200,depth=adjusted_depth + 5,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(200, depth=90, speed=50)
 		
 		# pick up 300ul of YPD from C4, add to C2
 		position(row,4,position = OffsetDict[offset])
-		aspirate(300,depth=95,speed=50, mix=0)
+		aspirate(300,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(300, depth=97, speed=50)
 		

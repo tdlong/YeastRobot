@@ -28,6 +28,7 @@ for col in [2]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
+		adjusted_depth = 94 + row
 
 		# transfer 3X 330 from DW24P to WASTE at c4
 		position(row,col)
@@ -41,13 +42,13 @@ for col in [2]:
 		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(320, depth=95)
+		aspirate(320, depth=adjusted_depth + 3)
 		position(col-2,4, position = OffsetDict[row])
 		dispense(320, depth=75)
 
         # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
 		position(col-2,5,position = OffsetDict[row])
-		aspirate(300,depth=99,speed=50, mix=0)
+		aspirate(300,depth=adjusted_depth + 5,speed=50, mix=0)
 		position(row,col)
 		dispense(300, depth=98, speed=50)
 
@@ -57,7 +58,7 @@ for col in [2]:
 
 		# 250 from DW24P at c2 to DW96W at c3
 		position(row,col)
-		aspirate(250,depth=99,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth + 5,speed=50, mix=0)
 		position(col-2,3,position = OffsetDict[row])
 		dispense(250, depth=97, speed=50)
 				

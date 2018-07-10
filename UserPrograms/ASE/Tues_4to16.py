@@ -23,6 +23,7 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
+adjusted_depth = 95 + row
 
 for row in [0,1,2,3]:
 	for offset in [0,1,2,3]:
@@ -32,11 +33,11 @@ for row in [0,1,2,3]:
 		
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
-		mix(320,97,100,10)
+		mix(320,adjusted_depth + 3,100,10)
 
 		# from DW96W to SW24P
 		position(row,2,position = OffsetDict[offset])
-		aspirate(140, depth=98, speed=50, mix=0)
+		aspirate(140, depth=adjusted_depth + 3, speed=50, mix=0)
 		position(offset,row+3)
 		dispense(140, depth=90, speed=50)
 		disposeTips()

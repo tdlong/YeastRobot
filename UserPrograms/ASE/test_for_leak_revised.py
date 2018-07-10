@@ -30,11 +30,12 @@ for tip in [4,8,12,16]:
 
 	CurrentTipPosition = retrieveTips(CurrentTipPosition)
 	extraSeatTips()
-			
+	adjusted_depth = 94 + counter
+
 	myexit='n'
 	while myexit=='n':
 		position(tip-tip+counter-1,2,position = OffsetDict[3])
-		aspirate(250,depth=99,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth + 4,speed=50, mix=0)
 		position(tip-tip+counter-1,3,position = OffsetDict[3])
 		myexit = raw_input('enter y to exit')
 		dispense(250,depth=99,speed=50)

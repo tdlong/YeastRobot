@@ -605,7 +605,7 @@ def disposeTips():
 	userPause()
 	print('Disposing Tips')
 #	distance = 780
-	distance = 780   
+	distance = 740   
 	# #mm to move * 39.5 steps/mm
 	# height of hook entrance = hookEntrance
 	# height of tip dispense = tipDispenseDepth

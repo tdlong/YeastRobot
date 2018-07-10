@@ -23,14 +23,14 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
-adjusted_depth = 95 + row
 
 for row in [0,1,2,3]:
 	for offset in [0,1,2,3]:
 
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		
+		adjusted_depth = 95 + row
+
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
 		mix(320,adjusted_depth + 3,100,10)

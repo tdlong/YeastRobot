@@ -39,7 +39,7 @@ for col in [2,3]:
 		
 		# from SW24 to SW24 with media
 		position(row,col)
-		aspirate(myvol,depth=adjusted_depth + 4,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth + 5,speed=50,mix=0)
 		position(row,col+3)
 		dispense(myvol, depth=90, speed=50)
 				

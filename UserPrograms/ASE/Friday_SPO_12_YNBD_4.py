@@ -36,17 +36,17 @@ for col in [2,3,4,5]:
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
+		dispense(320, depth=75)
+		
+		position(row,col)
+		aspirate(320, depth=adjusted_depth)
+		position(col-2,6, position = OffsetDict[row])
+		dispense(320, depth=70)
+		
+		position(row,col)
+		aspirate(320, depth=adjusted_depth)
+		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=65)
-		
-		position(row,col)
-		aspirate(320, depth=adjusted_depth)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(320, depth=60)
-		
-		position(row,col)
-		aspirate(320, depth=adjusted_depth)
-		position(col-2,6, position = OffsetDict[row])
-		dispense(320, depth=45)
 		
 		# add spo or ynbd at c8 to DW24			
 		position(col-2,8, position = OffsetDict[row])

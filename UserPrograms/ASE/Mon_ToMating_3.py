@@ -42,7 +42,7 @@ for row in [0,1,2]:
 			
 		# pick up 250ul of YPD from C4, add to C2, mix
 		position(row,4,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth + 3,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth + 5,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(250, depth=97, speed=50)
 		

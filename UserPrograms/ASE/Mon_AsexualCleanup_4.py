@@ -48,7 +48,7 @@ for col in [2]:
 
         # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
 		position(col-2,5,position = OffsetDict[row])
-		aspirate(300,depth=99,speed=50, mix=0)
+		aspirate(300,depth=adjusted_depth + 6,speed=50, mix=0)
 		position(row,col)
 		dispense(300, depth=98, speed=50)
 
@@ -58,7 +58,7 @@ for col in [2]:
 
 		# 250 from DW24P at c2 to DW96W at c3
 		position(row,col)
-		aspirate(250,depth=adjusted_depth + 5,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth + 6,speed=50, mix=0)
 		position(col-2,3,position = OffsetDict[row])
 		dispense(250, depth=97, speed=50)
 				

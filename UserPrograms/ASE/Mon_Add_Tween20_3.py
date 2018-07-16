@@ -44,12 +44,12 @@ for row in [0,1,2]:
 			
 		# pick up 2 x 250ul of Tween20 from C4, add to C2
 		position(row,4,position = OffsetDict[offset])
-		aspirate(250,depth=96,speed=40, mix=0)
+		aspirate(250,depth=adjusted_depth + 4,speed=40, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(250, depth=96, speed=90)
 
 		position(row,4,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth + 5,speed=40, mix=0)
+		aspirate(250,depth=adjusted_depth + 6,speed=40, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(250, depth=85, speed=90)
 		

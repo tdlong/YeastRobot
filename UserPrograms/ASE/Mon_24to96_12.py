@@ -29,7 +29,7 @@ for col in [2,3,4]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 94 + row
+		adjusted_depth = 97 + row*2
 
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
@@ -64,17 +64,17 @@ for col in [2,3,4]:
 		position(row,col)
 		dispense(320, depth=96, speed=100)
 		position(row,col)
-		mix(320,97,100,5)
+		mix(320,adjusted_depth,100,5)
 
 		# from DW24 to empty DW96P at c8
 		position(row,col)
-		aspirate(300, depth=adjusted_depth + 2,speed=75, mix=0)
+		aspirate(300, depth=adjusted_depth,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=80, speed=50)
 		position(row,col)
-		mix(320,97,100,2)
+		mix(320,adjusted_depth,100,2)
 		position(row,col)
-		aspirate(300, depth=adjusted_depth + 3,speed=75, mix=0)
+		aspirate(300, depth=adjusted_depth,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
 		dispense(300, depth=70, speed=50)
 					

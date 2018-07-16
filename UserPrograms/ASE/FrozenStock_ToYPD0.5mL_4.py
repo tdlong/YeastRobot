@@ -31,10 +31,10 @@ for row in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		
+		adjusted_depth = 98 + row
 		#aspirate 300 ul of H2O (C3) -> discard to DW96W at C4
 		position(row,3, position = OffsetDict[offset])
-		aspirate(myvol,depth=96,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth,speed=50,mix=0)
 		position(row,4, position = OffsetDict[offset])
 		dispense(myvol, depth=95, speed=50)
 
@@ -45,11 +45,11 @@ for row in [0,1,2,3]:
 		dispense(250, depth=99, speed=50)
 
 		position(row,6, position = OffsetDict[offset])
-		aspirate(250,depth=99,speed=50,mix=0)
+		aspirate(250,depth=adjusted_depth + 2,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(250, depth=85, speed=50)
 
-		mix(300,98,100,5)
+		mix(300,adjusted_depth,100,5)
 		
 		disposeTips()
 		

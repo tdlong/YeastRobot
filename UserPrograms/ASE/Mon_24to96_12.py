@@ -51,7 +51,7 @@ for col in [2,3,4]:
 		position(col-2,7,position = OffsetDict[row])
 		aspirate(250,depth=95,speed=50, mix=0)
 		position(row,col)
-		dispense(250, depth=96, speed=100)
+		dispense(250, depth=adjusted_depth, speed=100)
 
 		position(col-2,7,position = OffsetDict[row])
 		aspirate(250,depth=97,speed=50, mix=0)

@@ -229,6 +229,13 @@ def home_Velmex():
 	VLMX_SetSpeed(YMotor, YSpeedFast)
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 
+	SendToVelmex('C,A1M1,R')
+	SendToVelmex('C,A2M1,R')
+	SendToVelmex('C,A3M1,R')
+
+
+
+
 	print('--------------------------------------------------------------------------------')
 	print('')
 	print('	 VLMX: INTIALIZING/HOMING COMPLETE')

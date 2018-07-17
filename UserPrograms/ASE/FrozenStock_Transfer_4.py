@@ -31,6 +31,7 @@ for row in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
+		adjusted_depth = 98 + row
 
 		# from SW96 to DW96
 		position(row,2, position = OffsetDict[offset])
@@ -44,7 +45,7 @@ for row in [0,1,2,3]:
 		
 		# from SW96 to DW96
 		position(row,2, position = OffsetDict[offset])
-		aspirate(75,depth=97,speed=50,mix=0)
+		aspirate(75,depth=adjusted_depth,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(75, depth=98, speed=50)
 		

@@ -286,7 +286,9 @@ def VLMX_GoTo_Coordinated_A(motor1,	 index1, motor2,	index2):
 	if verbose:
 		print(' Sending MOTOR[' + str(motor1) + '] to INDEX[' + str(index1) + ']')
 		print(' Sending MOTOR[' + str(motor2) + '] to INDEX[' + str(index2) + ']')
-	SendToVelmex('C, (IA' + str(motor1) + 'M' + str(index1) + ', IA' + str(motor2) + 'M' + str(index2) + ',) R')
+#	SendToVelmex('C, (IA' + str(motor1) + 'M' + str(index1) + ', IA' + str(motor2) + 'M' + str(index2) + ',) R')
+	SendToVelmex('C, IA' + str(motor1) + 'M' + str(index1) + ', IA' + str(motor2) + 'M' + str(index2) + ', R')
+
 
 def VLMX_GoTo_A(motor, index): #ABSOLUTE
 	global verbose

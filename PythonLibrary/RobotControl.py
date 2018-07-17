@@ -1037,3 +1037,11 @@ def extraSeatTips():
 	VLMX_SetSpeed(ZMotor, ZSpeedFast)
 	VLMX_GoTo_A(ZMotor, matrix[currentx][currenty].safeDepth)		
 
+def manualDisposeTips():
+	userPause()
+	print('Disposing Tips')
+	position(2, 0)
+	position_internal(3, 0)	
+	guess = raw_input("Manually Eject Tips, then press return")
+	position(2,0)
+

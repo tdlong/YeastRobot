@@ -48,8 +48,9 @@ for row in [0,1,2,3]:
 		position(row,3, position = OffsetDict[offset])
 		dispense(75, depth=98, speed=50)
 		
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

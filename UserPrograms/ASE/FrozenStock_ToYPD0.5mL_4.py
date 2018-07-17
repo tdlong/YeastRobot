@@ -51,8 +51,9 @@ for row in [0,1,2,3]:
 
 		mix(300,adjusted_depth,100,5)
 		
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

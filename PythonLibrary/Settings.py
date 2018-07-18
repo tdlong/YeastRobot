@@ -18,7 +18,7 @@ BR = 9600
 ##################Speed Settings##################
 #string assignemnt for MOTOR SPEED value
 XSpeedFast = 3500 #fast speeds for velmex
-YSpeedFast = 2000 
+YSpeedFast = 1750 
 ZSpeedFast = 4000
 XSpeedSlowP = 1000 #slow speeds for velemx for position when specified
 YSpeedSlowP = 1000

@@ -29,29 +29,30 @@ for row in [0,1,2,3]:
 
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		
+		adjusted_depth = 99 + row
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
 		mix(320,97,100,10)
 
 		# from DW96W to SW24P
 		position(row,2,position = OffsetDict[offset])
-		aspirate(140, depth=98, speed=50, mix=0)
+		aspirate(140, depth=adjusted_depth, speed=50, mix=0)
 		position(offset,row+3)
-		dispense(140, depth=90, speed=50)
+		dispense(140, depth=adjusted_depth, speed=50)
         
         	position(row,2,position = OffsetDict[offset])
-        	aspirate(140,depth=99,speed=50, mix=2)
+        	aspirate(140,depth=adjusted_depth,speed=50, mix=2)
         	position(row, 7, position = OffsetDict[offset])
         	moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
 
         	position(row,2,position = OffsetDict[offset])
-        	aspirate(140,depth=99,speed=50, mix=2)
+        	aspirate(140,depth=adjusted_depth + 1,speed=50, mix=2)
         	position(row, 8, position = OffsetDict[offset])
         	moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
 		
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

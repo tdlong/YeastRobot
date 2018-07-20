@@ -62,7 +62,7 @@ for col in [2]:
 		position(counter-1, col)
 		dispense(320,depth=adjusted_depth)
 		position(counter-1,7, position = OffsetDict[0])
-		aspirate(320,depth=98)
+		aspirate(320,depth=95)
 		position(counter-1, col)
 		dispense(320,depth=adjusted_depth)
 		

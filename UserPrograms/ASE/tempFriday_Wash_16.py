@@ -28,7 +28,7 @@ CurrentTipPosition = 1
 
 for col in [2]:
 	counter = 2
-	for tip in [19,13]:
+	for tip in [9,13]:
 		counter += 1
 		CurrentTipPosition = tip
 

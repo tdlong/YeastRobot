@@ -64,8 +64,9 @@ for col in [2,3,4,5]:
 
 		mix(320,adjusted_depth,100,5)
 		
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

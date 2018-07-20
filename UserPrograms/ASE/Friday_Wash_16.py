@@ -62,8 +62,9 @@ for col in [2,3,4,5]:
 		position(row, col)
 		dispense(320,depth=adjusted_depth)
 		
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

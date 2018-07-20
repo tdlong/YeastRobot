@@ -43,8 +43,8 @@ for col in [2,3,4,5]:
 			aspirate(320,depth=adjusted_depth + 8,speed=50, mix=0)
 			position(row,col+4,position = OffsetDict[row])
 			dispense(320, depth=92, speed=50)
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
 position(0,0)
 ShutDownRobot()
 quit()

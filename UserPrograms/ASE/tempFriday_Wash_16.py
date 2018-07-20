@@ -27,8 +27,8 @@ InitializeRobot()
 CurrentTipPosition = 1																	
 
 for col in [2]:
-	counter = 0
-	for tip in [1,5,19,13]:
+	counter = 2
+	for tip in [19,13]:
 		counter += 1
 		CurrentTipPosition = tip
 
@@ -39,29 +39,29 @@ for col in [2]:
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(counter-1,col)
 		aspirate(320, depth=adjusted_depth)
-		position(col-2,6, position = OffsetDict[0])
+		position(counter-1,6, position = OffsetDict[0])
 		dispense(320, depth=95)
 		
 		position(counter-1,col)
 		aspirate(320, depth=adjusted_depth)
-		position(col-1,6, position = OffsetDict[0])
+		position(counter-1,6, position = OffsetDict[0])
 		dispense(320, depth=85)
 		
 		position(counter-1,col)
 		aspirate(320, depth=adjusted_depth)
-		position(col,6, position = OffsetDict[0])
+		position(counter-1,6, position = OffsetDict[0])
 		dispense(320, depth=75)
 
 		# add 3x330uL smqH2O at c7 to DW24			
-		position(col-2,7, position = OffsetDict[0])
+		position(counter-1,7, position = OffsetDict[0])
 		aspirate(320,depth=75)
 		position(counter-1, col)
 		dispense(320,depth=adjusted_depth)
-		position(col-1,7, position = OffsetDict[0])
+		position(counter-1,7, position = OffsetDict[0])
 		aspirate(320,depth=85)
 		position(counter-1, col)
 		dispense(320,depth=adjusted_depth)
-		position(col,7, position = OffsetDict[0])
+		position(counter-1,7, position = OffsetDict[0])
 		aspirate(320,depth=98)
 		position(counter-1, col)
 		dispense(320,depth=adjusted_depth)

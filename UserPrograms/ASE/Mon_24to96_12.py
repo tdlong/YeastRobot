@@ -49,12 +49,12 @@ for col in [2,3,4]:
 
 		# pick up 2 * 250ul of SIS from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(250,depth= 95 + row,speed=50, mix=0)
+		aspirate(250,depth= 95 + col - 2,speed=50, mix=0)
 		position(row,col)
 		dispense(250, depth=adjusted_depth, speed=100)
 
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(250,depth= 95 + row,speed=50, mix=0)
+		aspirate(250,depth= 95 + col - 2,speed=50, mix=0)
 		position(row,col)
 		dispense(250, depth=85, speed=100)
 		

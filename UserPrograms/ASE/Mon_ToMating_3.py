@@ -35,20 +35,21 @@ for row in [0,1,2]:
 
 		#aspirate 330 ul of YPD (C2) -> discard to DW96W at C3
 		position(row,2,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth + 4,speed=50, mix=0)
+		aspirate(320,depth=adjusted_depth,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(320, depth=80, speed=50)
 		
 			
-		# pick up 250ul of YPD from C4, add to C2, mix
+		# pick up 250ul of YPD from C4, add to C2
 		position(row,4,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth + 5,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(250, depth=97, speed=50)
+		dispense(250, depth=adjusted_depth, speed=50)
 		
 		# discard tips
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

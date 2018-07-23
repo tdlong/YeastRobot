@@ -45,12 +45,12 @@ for row in [0,1,2]:
 
 		# pick up 2 * 200ul of SDS from C5, add to C2
 		position(row,5,position = OffsetDict[offset])
-		aspirate(200,depth=adjusted_depth + 4,speed=50, mix=0)
+		aspirate(200,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(200, depth=99, speed=100)
 
 		position(row,5,position = OffsetDict[offset])
-		aspirate(200,depth=adjusted_depth + 6,speed=50, mix=0)
+		aspirate(200,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(200, depth=85, speed=100)
 		
@@ -66,15 +66,16 @@ for row in [0,1,2]:
 		dispense(200, depth=65, speed=50)
 		
 		position(row,2,position = OffsetDict[offset])
-		mix(300,99,100,5)
+		mix(300,adjusted_depth + 5,100,5)
 		
 		position(row,2,position = OffsetDict[offset])
 		aspirate(200, depth=adjusted_depth + 6,speed=50, mix=0)
 		position(row,3,position = OffsetDict[offset])
 		dispense(200, depth=55, speed=50)
 					
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

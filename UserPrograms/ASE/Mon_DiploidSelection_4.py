@@ -35,14 +35,15 @@ for row in [0,1,2,3]:
 
 		# pick up 250ul of selective media from C3, add to C2, mix
 		position(row,3,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth + 5,speed=100, mix=0)
+		aspirate(250,depth=adjusted_depth,speed=100, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth + 3, speed=100)
-		mix(320,adjusted_depth + 3,100,10)
+		dispense(250, depth=adjusted_depth, speed=100)
+		mix(320,adjusted_depth,100,10)
 		
 		# discard tips
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

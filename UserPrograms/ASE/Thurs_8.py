@@ -62,8 +62,9 @@ for col in [2,3]:
                         position(i, col + 6, position = OffsetDict[row])
                         moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)
 		
-		disposeTips()
-		
+		#disposeTips()
+		manualDisposeTips()
+
 position(0,0)
 ShutDownRobot()
 quit()

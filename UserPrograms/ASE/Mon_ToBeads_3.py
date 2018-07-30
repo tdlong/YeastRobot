@@ -47,12 +47,12 @@ for row in [0,1,2]:
 		position(row,5,position = OffsetDict[offset])
 		aspirate(200,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(200, depth=adjusted_depth + 2, speed=100)
+		dispense(200, depth=adjusted_depth + 3, speed=100)
 
 		position(row,5,position = OffsetDict[offset])
 		aspirate(200,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(200, depth=adjusted_depth - 4, speed=100)
+		dispense(200, depth=adjusted_depth - 2, speed=100)
 		
 		# initial mix
 		position(row,2,position = OffsetDict[offset])

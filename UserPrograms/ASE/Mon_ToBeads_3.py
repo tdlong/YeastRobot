@@ -35,7 +35,7 @@ for row in [0,1,2]:
 
 		#aspirate 2 x 250 ul of Tween20 (C2) -> discard to DW96W at C4 X2
 		position(row,2,position = OffsetDict[offset])
-		aspirate(300,depth=90,speed=50, mix=0)
+		aspirate(300,depth=adj - 4,speed=50, mix=0)
 		position(row,4, position = OffsetDict[offset])
 		dispense(300, depth=80, speed=50)
 		position(row,2,position = OffsetDict[offset])
@@ -47,12 +47,12 @@ for row in [0,1,2]:
 		position(row,5,position = OffsetDict[offset])
 		aspirate(200,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(200, depth=99, speed=100)
+		dispense(200, depth=adjusted_depth + 5, speed=100)
 
 		position(row,5,position = OffsetDict[offset])
 		aspirate(200,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(200, depth=85, speed=100)
+		dispense(200, depth=adjusted_depth - 4, speed=100)
 		
 		# initial mix
 		position(row,2,position = OffsetDict[offset])

@@ -33,17 +33,17 @@ for col in [2,3,4]:
 
 		# transfer 3X 330 from DW24P to WASTE#1 at col 6
 		position(row,col)
-		aspirate(320, depth=adjusted_depth)
+		aspirate(320, depth=adjusted_depth - 1)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=95)
 		
 		position(row,col)
-		aspirate(320, depth=adjusted_depth)
+		aspirate(320, depth=adjusted_depth - 1)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=85)
 		
 		position(row,col)
-		aspirate(320, depth=adjusted_depth)
+		aspirate(320, depth=adjusted_depth - 1)
 		position(col-2,6, position = OffsetDict[row])
 		dispense(320, depth=75)
 

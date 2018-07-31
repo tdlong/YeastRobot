@@ -30,6 +30,7 @@ for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		adjusted_depth = 96 + row
+		adjusted_depth2 = 98 + offset
 
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
@@ -39,7 +40,7 @@ for row in [0,1,2,3]:
 		position(row,2,position = OffsetDict[offset])
 		aspirate(140, depth=adjusted_depth, speed=50, mix=0)
 		position(offset,row+3)
-		dispense(140, depth=adjusted_depth + offset + 2, speed=50)
+		dispense(140, depth=adjusted_depth2, speed=50)
 		#disposeTips()
 		manualDisposeTips()
 

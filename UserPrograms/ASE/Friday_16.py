@@ -40,7 +40,7 @@ for col in [2,3,4,5]:
 		# this is the most we can get from a plate when we start with 1.4ml
 		for i in [1,2,3]:
 			position(row,col)
-			aspirate(320,depth=adjusted_depth + 10,speed=50, mix=0)
+			aspirate(320,depth=adjusted_depth + 9,speed=50, mix=0)
 			position(row,col+4,position = OffsetDict[row])
 			dispense(320, depth=adjusted_depth + 3, speed=50)
 		#disposeTips()

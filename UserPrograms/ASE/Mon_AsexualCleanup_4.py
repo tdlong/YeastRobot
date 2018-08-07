@@ -28,37 +28,37 @@ for col in [2]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 94 + row
+		adjusted_depth = 95 + row*2
 
 		# transfer 3X 330 from DW24P to WASTE at c4
 		position(row,col)
-		aspirate(320, depth=adjusted_depth + 3)
+		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])
 		dispense(320, depth=adjusted_depth + 1)
 		
 		position(row,col)
-		aspirate(320, depth=95)
+		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth - 9)
+		dispense(320, depth=adjusted_depth - 5)
 		
 		position(row,col)
-		aspirate(320, depth=adjusted_depth + 4)
+		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth - 14)
+		dispense(320, depth=adjusted_depth - 10)
 
         # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
 		position(col-2,5,position = OffsetDict[row])
 		aspirate(300,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,col)
-		dispense(300, depth=adjusted_depth + 5, speed=50)
+		dispense(300, depth=adjusted_depth, speed=50)
 
 		# mix
 		position(row,col)
-		mix(250,adjusted_depth + 5,100,5)
+		mix(250,adjusted_depth,100,5)
 
 		# 250 from DW24P at c2 to DW96W at c3
 		position(row,col)
-		aspirate(250,depth=adjusted_depth + 6,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth,speed=50, mix=0)
 		position(col-2,3,position = OffsetDict[row])
 		dispense(250, depth=adjusted_depth + 1, speed=50)
 				

@@ -34,21 +34,21 @@ for col in [2]:
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth + 1)
+		dispense(320, depth=95)
 		
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth - 5)
+		dispense(320, depth=85)
 		
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth - 10)
+		dispense(320, depth=80)
 
         # transfer 300uL YPDa from DW96W reservoir at c5 to DW24P at c2
 		position(col-2,5,position = OffsetDict[row])
-		aspirate(300,depth=adjusted_depth + 1,speed=50, mix=0)
+		aspirate(300,depth=95,speed=50, mix=0)
 		position(row,col)
 		dispense(300, depth=adjusted_depth, speed=50)
 
@@ -60,7 +60,7 @@ for col in [2]:
 		position(row,col)
 		aspirate(250,depth=adjusted_depth,speed=50, mix=0)
 		position(col-2,3,position = OffsetDict[row])
-		dispense(250, depth=adjusted_depth + 1, speed=50)
+		dispense(250, depth=95, speed=50)
 				
 		#disposeTips()
 		manualDisposeTips()

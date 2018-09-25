@@ -26,7 +26,7 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1																	
 
-for row in [3]:
+for row in [1]:
         for offset in [1]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)

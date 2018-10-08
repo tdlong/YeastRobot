@@ -31,13 +31,13 @@ for row in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 100 + row
+		adjusted_depth = 99 + row
 
 		#aspirate 200 ul of freezing solution (C3) -> discard to DW96W at C4
 		position(row,3, position = OffsetDict[offset])
 		aspirate(myvol,depth=adjusted_depth,speed=50,mix=0)
 		position(row,4, position = OffsetDict[offset])
-		dispense(myvol, depth=adjusted_depth, speed=50)
+		dispense(myvol, depth=adjusted_depth + 1, speed=50)
 
 		#transfer 330 ul of smqH2O(C5) -> resuspend pellet (C3)
 		position(row,5, position = OffsetDict[offset])

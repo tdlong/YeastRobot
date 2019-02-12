@@ -25,8 +25,8 @@ InitializeRobot()
 CurrentTipPosition = 1
 
 for row in [0,1,2,3]:
-		for offset in [0,1,2,3]:
-		
+	for offset in [0,1,2,3]:
+
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		adjusted_depth = 96 + row

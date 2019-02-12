@@ -25,7 +25,7 @@ InitializeRobot()
 CurrentTipPosition = 1
 
 for row in [0,1,2,3]:
-	for offset in [0,1,2,3]:
+		for offset in [0,1,2,3]:
 
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
@@ -45,8 +45,8 @@ for row in [0,1,2,3]:
         position(row, 4, position = OffsetDict[offset])
         moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
 		
-	#disposeTips()
-	manualDisposeTips()
+		#disposeTips()
+		manualDisposeTips()
 
 position(0,0)
 ShutDownRobot()

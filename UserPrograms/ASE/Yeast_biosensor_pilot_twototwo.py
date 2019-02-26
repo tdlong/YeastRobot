@@ -26,8 +26,8 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1																	
 
-for col in [2]:
-	for row in [0]:
+for row in [0,1]:
+	for col in [2]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
@@ -41,6 +41,12 @@ for col in [2]:
 		position(row,col)
 		aspirate(myvol,depth=adjusted_depth,speed=50,mix=0)
 		position(row,col+1)
+		dispense(myvol, depth=adjusted_depth, speed=50)
+
+		# from SW24 to SW24 with media
+		position(row,col)
+		aspirate(myvol,depth=adjusted_depth + 1,speed=50,mix=0)
+		position(row,col+2)
 		dispense(myvol, depth=adjusted_depth, speed=50)
 		 		
 		#disposeTips()

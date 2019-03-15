@@ -8,10 +8,10 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
-DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK  BLANK
-DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK  BLANK
-DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK  BLANK
-DW24P  DW24P  DW24P  BLANK  BLANK  BLANK  BLANK  BLANK
+DW24P  DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK
+DW24P  DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK
+DW24P  DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK
+DW24P  DW24P  DW24P  DW24P  SW96P  SW96P  BLANK  BLANK
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1

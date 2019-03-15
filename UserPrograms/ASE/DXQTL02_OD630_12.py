@@ -45,12 +45,12 @@ for col in [2,3,4]:
 		# from DW24P to empty SW96P
 		position(row,col)
 		aspirate(myvol,depth=adjusted_depth,speed=50,mix=3)
-		position(row-row_counter+col_counter,5, position = OffsetDict[row])
+		position(row-row_counter+col_counter,6, position = OffsetDict[row])
 		dispense(myvol, depth=adjusted_depth-15, speed=50)
 
 		position(row,col)
 		aspirate(myvol,depth=adjusted_depth,speed=50,mix=3)
-		position(row-row_counter+col_counter,6, position = OffsetDict[row])
+		position(row-row_counter+col_counter,7, position = OffsetDict[row])
 		dispense(myvol, depth=adjusted_depth-15, speed=50)
 		
 		#disposeTips()

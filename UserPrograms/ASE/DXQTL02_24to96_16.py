@@ -23,9 +23,9 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 3
+CurrentTipPosition = 5
 
-for col in [3,4,5]:
+for col in [4,5]:
 	for row in [0,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()

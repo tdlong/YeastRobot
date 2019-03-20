@@ -23,54 +23,55 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 5
+CurrentTipPosition = 6
 
 for col in [4,5]:
 	for row in [0,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 95 + row*2
+		adjusted_depth_row = 95 + row*2
+		adjusted_depth_column = 95 + (col - 2)*2
 
 		# pick up 3 * 320ul of 1xTE from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(320,depth= adjusted_depth-35,speed=75, mix=0)
+		aspirate(320,depth= adjusted_depthT_column-35,speed=75, mix=0)
 		position(row,col)
-		dispense(320, depth=adjusted_depth, speed=100)
+		dispense(320, depth=adjusted_depth_row, speed=100)
 
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(320,depth= adjusted_depth-15,speed=75, mix=0)
+		aspirate(320,depth= adjusted_depth_column-15,speed=75, mix=0)
 		position(row,col)
-		dispense(320, depth=adjusted_depth, speed=100)
+		dispense(320, depth=adjusted_depth_row, speed=100)
 
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(320,depth= adjusted_depth-5,speed=75, mix=0)
+		aspirate(320,depth= adjusted_depth_column-5,speed=75, mix=0)
 		position(row,col)
-		dispense(320, depth=adjusted_depth, speed=100)
+		dispense(320, depth=adjusted_depth_row, speed=100)
 		
 		# initial mix
 		position(row,col)
-		aspirate(320, depth=adjusted_depth+2,speed=100, mix=0)
+		aspirate(320, depth=adjusted_depth_row+2,speed=100, mix=0)
 		position(row,col)
-		dispense(320, depth=adjusted_depth+2, speed=100)
+		dispense(320, depth=adjusted_depth_row+2, speed=100)
 		position(row,col)
-		mix(320,adjusted_depth+6,100,5)
+		mix(320,adjusted_depth_row+6,100,5)
 
 		# from DW24 to empty DW96W at c6
 		position(row,col)
-		aspirate(320, depth=adjusted_depth+6,speed=75, mix=0)
+		aspirate(320, depth=adjusted_depth_row+6,speed=75, mix=0)
 		position(col-2,6,position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth-2-row, speed=50)
+		dispense(320, depth=adjusted_depth_column-2-(col - 2), speed=50)
 		position(row,col)
-		mix(320,adjusted_depth+6,100,2)
+		mix(320,adjusted_depth_row+6,100,2)
 		position(row,col)
-		aspirate(320, depth=adjusted_depth + 6,speed=75, mix=0)
+		aspirate(320, depth=adjusted_depth_row + 6,speed=75, mix=0)
 		position(col-2,6,position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth-2-row, speed=50)
+		dispense(320, depth=adjusted_depth_column-2-(col - 2), speed=50)
 		position(row,col)
-		mix(320,adjusted_depth+7,100,2)
-		aspirate(320, depth=adjusted_depth + 7,speed=75, mix=0)
+		mix(320,adjusted_depth_row+7,100,2)
+		aspirate(320, depth=adjusted_depth_row + 7,speed=75, mix=0)
 		position(col-2,6,position = OffsetDict[row])
-		dispense(320, depth=adjusted_depth-2-row, speed=50)
+		dispense(320, depth=adjusted_depth_column-2-(col - 2), speed=50)
 					
 		#disposeTips()
 		manualDisposeTips()

@@ -26,7 +26,7 @@ InitializeRobot()
 CurrentTipPosition = 1
 
 for col in [2,3,4,5]:
-	for row in [0,1,2,3]:
+	for row in [1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		adjusted_depth = 95 + row*2
@@ -53,22 +53,22 @@ for col in [2,3,4,5]:
 		position(row,col)
 		dispense(320, depth=adjusted_depth+2, speed=100)
 		position(row,col)
-		mix(320,adjusted_depth+4,100,5)
+		mix(320,adjusted_depth+6,100,5)
 
 		# from DW24 to empty DW96W at c6
 		position(row,col)
-		aspirate(320, depth=adjusted_depth+4,speed=75, mix=0)
+		aspirate(320, depth=adjusted_depth+6,speed=75, mix=0)
 		position(col-2,6,position = OffsetDict[row])
 		dispense(320, depth=adjusted_depth+1, speed=50)
 		position(row,col)
-		mix(320,adjusted_depth+5,100,2)
-		position(row,col)
-		aspirate(320, depth=adjusted_depth + 5,speed=75, mix=0)
-		position(col-2,6,position = OffsetDict[row])
-		dispense(300, depth=adjusted_depth+1, speed=50)
-		position(row,col)
 		mix(320,adjusted_depth+6,100,2)
+		position(row,col)
 		aspirate(320, depth=adjusted_depth + 6,speed=75, mix=0)
+		position(col-2,6,position = OffsetDict[row])
+		dispense(320, depth=adjusted_depth+1, speed=50)
+		position(row,col)
+		mix(320,adjusted_depth+7,100,2)
+		aspirate(320, depth=adjusted_depth + 7,speed=75, mix=0)
 		position(col-2,6,position = OffsetDict[row])
 		dispense(320, depth=adjusted_depth+1, speed=50)
 					

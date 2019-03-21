@@ -22,7 +22,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 2
+CurrentTipPosition = 3
 
 
 # eventually row in 0,1,2,3
@@ -35,15 +35,15 @@ for row in [0,3]:
 
 		#aspirate 3 x 320 ul of 1xTE (C2) -> discard to DW96W at C3 X3
 		position(row,2,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth-4,speed=50, mix=0)
+		aspirate(320,depth=adjusted_depth-5,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(320, depth=adjusted_depth + 1, speed=50)
 		position(row,2,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth-4,speed=50, mix=0)
+		aspirate(320,depth=adjusted_depth-5,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(320, depth=adjusted_depth - 4, speed=50)
 		position(row,2,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth-4,speed=50, mix=0)
+		aspirate(320,depth=adjusted_depth-5,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(320, depth=adjusted_depth - 9, speed=50)
 		# pick up 320ul of 1xTE from C4, add to C2 X3

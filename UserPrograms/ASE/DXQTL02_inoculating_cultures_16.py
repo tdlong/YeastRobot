@@ -23,7 +23,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 1
+CurrentTipPosition = 3
 myvol = 100
 for col in [3,4,5,6]:
 	for row in [0,1,2,3]:
@@ -33,7 +33,7 @@ for col in [3,4,5,6]:
 
 		#Transfer 100uL from master DW24P at C2 to treatment DW24P at c3-6
 		position(0,2)
-		aspirate(myvol, depth=98,speed=75, mix=7)
+		aspirate(myvol, depth=100,speed=100, mix=7)
 		position(row,col)
 		dispense(myvol, depth=adjusted_depth_row - 10, speed=50)
 					

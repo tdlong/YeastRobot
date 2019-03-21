@@ -33,9 +33,9 @@ for col in [3,4,5,6]:
 
 		#Transfer 100uL from master DW24P at C2 to treatment DW24P at c3-6
 		position(0,2)
-		aspirate(myvol, depth=95,speed=75, mix=5)
+		aspirate(myvol, depth=98,speed=75, mix=7)
 		position(row,col)
-		dispense(myvol, depth=adjusted_depth_row, speed=50)
+		dispense(myvol, depth=adjusted_depth_row - 10, speed=50)
 					
 		#disposeTips()
 		manualDisposeTips()

@@ -23,7 +23,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 4
+CurrentTipPosition = 1
 myvol = 100
 for col in [3,4,5,6]:
 	for row in [0,1,2,3]:

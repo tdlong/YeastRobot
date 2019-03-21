@@ -34,7 +34,7 @@ for col in [4,5]:
 
 		# pick up 3 * 320ul of 1xTE from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(320,depth= adjusted_depthT_column-35,speed=75, mix=0)
+		aspirate(320,depth= adjusted_depth_column-35,speed=75, mix=0)
 		position(row,col)
 		dispense(320, depth=adjusted_depth_row, speed=100)
 

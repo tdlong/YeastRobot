@@ -22,12 +22,12 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 3
+CurrentTipPosition = 1
 
 
 # eventually row in 0,1,2,3
-for row in [3]:
-	for offset in [0]:
+for row in [0,1,2,3]:
+	for offset in [0,1,2,3]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
@@ -62,7 +62,7 @@ for row in [3]:
 
 		# mix
 		position(row,2,position = OffsetDict[offset])
-		mix(320,adjusted_depth+1,100,5)
+		mix(320,adjusted_depth+3,100,5)
 		
 		# discard tips
 		#disposeTips()

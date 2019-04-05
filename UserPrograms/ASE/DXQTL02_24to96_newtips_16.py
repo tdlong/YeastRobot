@@ -25,8 +25,8 @@ printDeck()
 InitializeRobot()
 CurrentTipPosition = 1
 
-for col in [2]:
-	for row in [0]:
+for col in [2,3,4,5]:
+	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		adjusted_depth_row = 95 + row*2

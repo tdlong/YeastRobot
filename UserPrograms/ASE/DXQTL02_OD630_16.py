@@ -27,7 +27,7 @@ InitializeRobot()
 CurrentTipPosition = 1																
 col_counter = -1
 
-for col in [2,3,4]:
+for col in [2,3,4,5]:
 	col_counter += 1
 	row_counter = -1	
 

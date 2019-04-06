@@ -31,17 +31,17 @@ for row in [0,1,2]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 94 + row
+		adjusted_depth = 92 + row
 
 		#aspirate 2 x 250 ul of 1xTE (C2) -> discard to DW96W at C3 X2
 		position(row,2,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth-4,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth - 20, speed=50)
+		dispense(250, depth=adjusted_depth - 12, speed=50)
 		position(row,2,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth-4,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth - 27, speed=50)
+		dispense(250, depth=adjusted_depth - 15, speed=50)
 		# discard tips
 		#disposeTips()
 		manualDisposeTips()

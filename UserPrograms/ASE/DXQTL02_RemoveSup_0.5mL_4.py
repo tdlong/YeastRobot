@@ -39,7 +39,7 @@ for row in [0,1,2]:
 		position(row,3, position = OffsetDict[offset])
 		dispense(250, depth=adjusted_depth - 10, speed=50)
 		position(row,2,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(250, depth=adjusted_depth - 14, speed=50)
 		# discard tips

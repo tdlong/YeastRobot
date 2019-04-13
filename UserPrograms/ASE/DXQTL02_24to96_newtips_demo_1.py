@@ -34,17 +34,13 @@ for col in [2]:
 
 		# pick up 1 * 320ul of 1xTE from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
-		aspirate(320,depth= adjusted_depth_column-35,speed=75, mix=0)
+		aspirate(320,depth= adjusted_depth_column-8,speed=75, mix=0)
 		position(row,col)
 		dispense(320, depth=adjusted_depth_row, speed=100)
 		
 		# initial mix
 		position(row,col)
-		aspirate(320, depth=adjusted_depth_row+2,speed=100, mix=0)
-		position(row,col)
-		dispense(320, depth=adjusted_depth_row+2, speed=100)
-		position(row,col)
-		mix(320,adjusted_depth_row+5-(col-2),100,5)
+		mix(320,adjusted_depth_row+5-(col-2),100,3)
 
 		# from DW24 to empty DW96W at c6
 		position(row,col)

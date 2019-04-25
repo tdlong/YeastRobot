@@ -38,16 +38,16 @@ for row in [0,1,2,3]:
 		position(row,4, position = OffsetDict[offset])
 		dispense(myvol, depth=adjusted_depth, speed=50)
 
-		#transfer 2x250 ul of YPDa(C6) -> resuspend pellet (C3)
+		#transfer 2x300 ul of YPDa(C6) -> resuspend pellet (C3)
 		position(row,6, position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth, speed=50)
+		dispense(myvol, depth=adjusted_depth, speed=50)
 
 		position(row,6, position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth + 1,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth + 1,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth, speed=50)
+		dispense(myvol, depth=adjusted_depth, speed=50)
 
 		mix(300,adjusted_depth,100,5)
 		

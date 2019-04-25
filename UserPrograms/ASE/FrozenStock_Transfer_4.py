@@ -31,7 +31,7 @@ for row in [0,1,2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 98 + row
+		adjusted_depth = 96 + row
 
 		# from SW96 to DW96
 		position(row,2, position = OffsetDict[offset])

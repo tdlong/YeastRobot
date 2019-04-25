@@ -8,10 +8,10 @@ from RobotControl import *
 ###  Define Deck Layout
 #################################
 deck="""\
-DW96W  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK  BLANK
-DW96W  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK  BLANK
-DW96W  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK  BLANK
-DW96W  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK  BLANK
+DW96W  SW96P  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK
+DW96W  SW96P  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK
+DW96W  SW96P  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK
+DW96W  SW96P  SW96P  SW96P  BLANK  BLANK  BLANK  BLANK
 """
 #   2       3       4       5       6
 #   note the 1st user defined column is "2" not zero or one, since tips are at 0 & 1
@@ -46,6 +46,11 @@ for row in [0,1,2,3]:
 		position(row,2, position = OffsetDict[offset])
 		aspirate(140,depth=adjusted_depth,speed=50,mix=2)
 		position(row,4, position = OffsetDict[offset])
+		moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
+
+		position(row,2, position = OffsetDict[offset])
+		aspirate(140,depth=adjusted_depth,speed=50,mix=2)
+		position(row,5, position = OffsetDict[offset])
 		moveDispense(140, startdepth = 95, enddepth=60, speed = 50)
 		#disposeTips()
 		manualDisposeTips()

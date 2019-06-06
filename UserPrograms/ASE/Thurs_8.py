@@ -35,13 +35,13 @@ for col in [2,3]:
 
 		# initial mix
 		position(row,col)
-		mix(300,90,100,5)
+		mix(300,adjusted_depth,100,5)
 		
 		# from SW24 to SW24 with media
 		position(row,col)
 		aspirate(myvol,depth=adjusted_depth + 4,speed=50,mix=0)
 		position(row,col+3)
-		dispense(myvol, depth=90, speed=50)
+		dispense(myvol, depth=adjusted_depth, speed=50)
 				
 		# col 2 of 24 well plate maps to col 8
 		# col 3 of 24 well plate maps to col 9

@@ -34,7 +34,7 @@ for col in [2,3,4,5]:
 		
 		# initial mix
 		position(row,col)
-		mix(300,adjusted_depth,100,5)
+		mix(300,adjusted_depth + 3,100,5)
 		
 		# from SW24 to DW24  320 ul X3 = 990ul
 		# this is the most we can get from a plate when we start with 1.4ml

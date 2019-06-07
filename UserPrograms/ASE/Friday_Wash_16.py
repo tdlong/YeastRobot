@@ -50,15 +50,15 @@ for col in [2,3,4,5]:
 
 		# add 3x330uL smqH2O at c7 to DW24			
 		position(col-2,7, position = OffsetDict[row])
-		aspirate(320,depth=75)
+		aspirate(320,depth=75+row)
 		position(row, col)
 		dispense(320,depth=adjusted_depth)
 		position(col-2,7, position = OffsetDict[row])
-		aspirate(320,depth=85)
+		aspirate(320,depth=85+row)
 		position(row, col)
 		dispense(320,depth=adjusted_depth)
 		position(col-2,7, position = OffsetDict[row])
-		aspirate(320,depth=95)
+		aspirate(320,depth=95+row)
 		position(row, col)
 		dispense(320,depth=adjusted_depth)
 		

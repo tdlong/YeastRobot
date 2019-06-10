@@ -37,15 +37,15 @@ for row in [0,1,2]:
 		position(row,2,position = OffsetDict[offset])
 		aspirate(300,depth=adjusted_depth - 4,speed=50, mix=0)
 		position(row,4, position = OffsetDict[offset])
-		dispense(300, depth=adjusted_depth - 20, speed=50)
+		dispense(300, depth=adjusted_depth - 18, speed=50)
 		position(row,2,position = OffsetDict[offset])
 		aspirate(250,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,4, position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth - 30, speed=50)
+		dispense(250, depth=adjusted_depth - 28, speed=50)
 
 		# pick up 2 * 200ul of SDS from C5, add to C2
 		position(row,5,position = OffsetDict[offset])
-		aspirate(200,depth=adjusted_depth + 1,speed=50, mix=0)
+		aspirate(200,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
 		dispense(200, depth=adjusted_depth + 3, speed=100)
 

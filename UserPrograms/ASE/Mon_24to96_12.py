@@ -35,17 +35,17 @@ for col in [2,3,4]:
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(320, depth=95)
+		dispense(320, depth=95+row)
 		
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(320, depth=85)
+		dispense(320, depth=85+row)
 		
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(320, depth=75)
+		dispense(320, depth=75+row)
 
 		# pick up 2 * 250ul of SIS from C7, add to C2-5
 		position(col-2,7,position = OffsetDict[row])
@@ -70,13 +70,13 @@ for col in [2,3,4]:
 		position(row,col)
 		aspirate(300, depth=adjusted_depth,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
-		dispense(300, depth=80, speed=50)
+		dispense(300, depth=80+row, speed=50)
 		position(row,col)
 		mix(320,adjusted_depth,100,2)
 		position(row,col)
 		aspirate(300, depth=adjusted_depth + 1,speed=75, mix=0)
 		position(col-2,8,position = OffsetDict[row])
-		dispense(300, depth=70, speed=50)
+		dispense(300, depth=70+row, speed=50)
 					
 		#disposeTips()
 		manualDisposeTips()

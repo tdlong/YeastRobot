@@ -31,7 +31,7 @@ for row in [0,1,2,3]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 95 + row
+		adjusted_depth = 96 + row
 
 		# pick up 250ul of selective media from C3, add to C2, mix
 		position(row,3,position = OffsetDict[offset])

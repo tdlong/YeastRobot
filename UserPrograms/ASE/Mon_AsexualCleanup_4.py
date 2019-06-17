@@ -30,7 +30,7 @@ for col in [2]:
 		extraSeatTips()
 		adjusted_depth = 95 + row*2
 
-		# transfer 3X 330 from DW24P to WASTE at c4
+		# transfer 3X 320 from DW24P to WASTE at c4
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,4, position = OffsetDict[row])

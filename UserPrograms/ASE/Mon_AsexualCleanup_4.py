@@ -28,7 +28,7 @@ for col in [2]:
 	for row in [0,1,2,3]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 95 + row*2
+		adjusted_depth = 93 + row*2
 
 		# transfer 3X 320 from DW24P to WASTE at c4
 		position(row,col)

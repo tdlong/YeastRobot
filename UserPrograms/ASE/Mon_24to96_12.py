@@ -35,7 +35,7 @@ for col in [2,3,4]:
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)
 		position(col-2,6, position = OffsetDict[row])
-		dispense(320, depth=95+row)
+		dispense(320, depth=96+row)
 		
 		position(row,col)
 		aspirate(320, depth=adjusted_depth)

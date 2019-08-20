@@ -22,19 +22,15 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 5
+CurrentTipPosition = 1
 
-for row in [1,2,3]:
+for row in [0]:
 	for offset in [0,1,2,3]:
 
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		adjusted_depth = 96 + row
 		adjusted_depth2 = 98 + offset
-
-		# initial mix
-		position(row,2,position = OffsetDict[offset])
-		mix(320,adjusted_depth,100,10)
 
 		# from DW96W to SW24P
 		position(row,2,position = OffsetDict[offset])

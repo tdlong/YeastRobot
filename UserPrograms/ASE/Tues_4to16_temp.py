@@ -33,10 +33,9 @@ for row in [0]:
 		adjusted_depth2 = 98 + offset
 
 		# from DW96W to SW24P
-		position(row,2,position = OffsetDict[offset])
-		aspirate(140, depth=adjusted_depth, speed=50, mix=0)
 		position(offset,row+3)
 		dispense(140, depth=adjusted_depth2, speed=50)
+		aspirate(140, depth=adjusted_depth2, speed=50, mix = 5)
 		#disposeTips()
 		manualDisposeTips()
 

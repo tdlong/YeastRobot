@@ -34,8 +34,8 @@ for row in [0]:
 
 		# from DW96W to SW24P
 		position(offset,row+3)
-		dispense(140, depth=adjusted_depth2, speed=50)
 		aspirate(140, depth=adjusted_depth2, speed=50, mix = 5)
+		dispense(140, depth=adjusted_depth2, speed=50)
 		#disposeTips()
 		manualDisposeTips()
 

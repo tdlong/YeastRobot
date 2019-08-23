@@ -31,7 +31,7 @@ for col in [2,3,4,5]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		if row in [0,1]:
-			adjusted_depth24SWP = 92 + row
+			adjusted_depth24SWP = 91 + row
 		elif row == 2:
 			adjusted_depth24SWP = 95 + row
 		else:

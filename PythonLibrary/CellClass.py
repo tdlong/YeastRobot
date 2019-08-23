@@ -98,7 +98,7 @@ plateInfo = {\
     'alignmentDepth': 2300,\
     'surfDepth': 2860,\
     'safeDepth':universalSafeHeight,\
-    'maxDepth': 5600,\
+    'maxDepth': 5700,\
     'tipAttachDepth': None, \
     'ejectDepth': None, \
     'wellDist': None,\

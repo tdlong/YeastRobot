@@ -31,17 +31,22 @@ for col in [2,3,4,5]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 92 + row
+		if row in [0,1]:
+			adjusted_depth24SWP = 92 + row
+		elif row == 2:
+			adjusted_depth24SWP = 95 + row
+		else:
+			adjusted_depth24SWP = 97 + row
 
 		# initial mix
 		position(row,col)
-		mix(300,adjusted_depth,100,5)
+		mix(300,adjusted_depth24SWP + 4,100,5)
 		
 		# from SW24 to SW24 with media
 		position(row,col)
-		aspirate(myvol,depth=adjusted_depth,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth24SWP + 4,speed=50,mix=0)
 		position(row,col+4)
-		dispense(myvol, depth=adjusted_depth, speed=50)
+		dispense(myvol, depth=adjusted_depth24SWP + 4, speed=50)
 		 		
 		#disposeTips()
 		manualDisposeTips()

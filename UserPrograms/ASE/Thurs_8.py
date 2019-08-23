@@ -31,17 +31,22 @@ for col in [2,3]:
 		
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 92 + row*2
+		if row in [0,1]:
+			adjusted_depth24SWP = 92 + row
+		elif row == 2:
+			adjusted_depth24SWP = 95 + row
+		else:
+			adjusted_depth24SWP = 97 + row
 
 		# initial mix
 		position(row,col)
-		mix(300,adjusted_depth,100,5)
+		mix(300,adjusted_depth24SWP + 4,100,5)
 		
 		# from SW24 to SW24 with media
 		position(row,col)
-		aspirate(myvol,depth=adjusted_depth + 4,speed=50,mix=0)
+		aspirate(myvol,depth=adjusted_depth24SWP + 4,speed=50,mix=0)
 		position(row,col+3)
-		dispense(myvol, depth=adjusted_depth, speed=50)
+		dispense(myvol, depth=adjusted_depth24SWP + 4, speed=50)
 				
 		# col 2 of 24 well plate maps to col 8
 		# col 3 of 24 well plate maps to col 9
@@ -50,7 +55,7 @@ for col in [2,3]:
 
         # From SW24 to SW96 empty for OD
 		position(row,col)
-		aspirate(myvol,depth=adjusted_depth + 4,speed=50, mix=3)
+		aspirate(myvol,depth=adjusted_depth24SWP + 4,speed=50, mix=3)
 		position(0, col + 6, position = OffsetDict[row])
 		dispense(myvol, depth=80, speed=50)
 		
@@ -58,7 +63,7 @@ for col in [2,3]:
 		# 3 replicate glycerol stocks
 		for i in [1,2,3]:
                         position(row,col)
-                        aspirate(myvol,depth=adjusted_depth + 9,speed=50, mix=3)
+                        aspirate(myvol,depth=adjusted_depth24SWP + 4,speed=50, mix=3)
                         position(i, col + 6, position = OffsetDict[row])
                         moveDispense(myvol, startdepth = 95, enddepth=60, speed = 50)
 		

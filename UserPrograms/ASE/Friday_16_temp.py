@@ -30,7 +30,9 @@ extraSeatTips()
 
 for row in [2,3]:
 	if row in [0,1]:
-		adjusted_depth = 92 + row
+		adjusted_depth = 91 + row
+	elif: row == 1:
+		adjusted_depth = 93 + row
 	elif row == 2:
 		adjusted_depth = 95 + row
 	else:

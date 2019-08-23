@@ -25,16 +25,16 @@ DefineDeck(deck)
 printDeck()
 InitializeRobot()
 CurrentTipPosition = 1																	
+CurrentTipPosition = retrieveTips(CurrentTipPosition)
+extraSeatTips()
+adjusted_depth = 92 + row*2
 
-for col in [2,4]:
-	for row in [0]:
-		CurrentTipPosition = retrieveTips(CurrentTipPosition)
-		extraSeatTips()
-		adjusted_depth = 92 + row*2
-		
+for row in [0,1,2,3]:
+	for col in [2,4]:
 		# initial mix
 		position(row,col)
 		mix(300,adjusted_depth + 3,100,3)
+		userPause()
 manualDisposeTips()
 position(0,0)
 ShutDownRobot()

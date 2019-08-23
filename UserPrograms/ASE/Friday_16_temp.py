@@ -27,9 +27,9 @@ InitializeRobot()
 CurrentTipPosition = 1																	
 CurrentTipPosition = retrieveTips(CurrentTipPosition)
 extraSeatTips()
-adjusted_depth = 92 + row*2
 
 for row in [0,1,2,3]:
+	adjusted_depth = 92 + row*2
 	for col in [2,4]:
 		# initial mix
 		position(row,col)

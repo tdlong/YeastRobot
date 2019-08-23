@@ -30,12 +30,10 @@ for col in [2]:
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
 		adjusted_depth = 95 + row*2
-		
 		# initial mix
 		position(row,col)
 		mix(320,adjusted_depth,100,3)					
-		#disposeTips()
-		manualDisposeTips()
+manualDisposeTips()
 position(0,0)
 ShutDownRobot()
 quit()

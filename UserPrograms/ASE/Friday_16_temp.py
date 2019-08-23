@@ -29,10 +29,8 @@ CurrentTipPosition = retrieveTips(CurrentTipPosition)
 extraSeatTips()
 
 for row in [1]:
-	if row == 0:
+	if row in [0,1]:
 		adjusted_depth = 91 + row
-	elif row == 1:
-		adjusted_depth = 92 + row
 	elif row == 2:
 		adjusted_depth = 95 + row
 	else:

@@ -29,7 +29,10 @@ CurrentTipPosition = retrieveTips(CurrentTipPosition)
 extraSeatTips()
 
 for row in [0,1,2,3]:
-	adjusted_depth = 92 + row
+	if row in [0,1]:
+		adjusted_depth = 92 + row
+	else:
+		adjusted_depth = 93 + row
 	for col in [2,5]:
 		# initial mix
 		position(row,col)

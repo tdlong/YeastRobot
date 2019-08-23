@@ -34,7 +34,7 @@ for row in [3]:
 	elif row == 2:
 		adjusted_depth = 94 + row
 	else:
-		adjusted_depth = 95 + row
+		adjusted_depth = 96 + row
 	for col in [2,5]:
 		# initial mix
 		position(row,col)

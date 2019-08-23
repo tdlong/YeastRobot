@@ -32,9 +32,8 @@ for row in [0,1,2,3]:
 	adjusted_depth = 92 + row*2
 	for col in [2,4]:
 		# initial mix
-		userPause()
 		position(row,col)
-		mix(300,adjusted_depth + 3,100,3)
+		mix(300,adjusted_depth + 4,100,3)
 manualDisposeTips()
 position(0,0)
 ShutDownRobot()

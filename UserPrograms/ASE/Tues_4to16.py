@@ -29,18 +29,24 @@ for row in [0,1,2,3]:
 
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
 		extraSeatTips()
-		adjusted_depth = 96 + row
-		adjusted_depth2 = 98 + offset
+		if row in [0,1]:
+			adjusted_depth24SWP = 91 + row
+		elif row == 2:
+			adjusted_depth24SWP = 95 + row
+		else:
+			adjusted_depth24SWP = 97 + row
+		
+		adjusted_depth96DWPS = 96 + row
 
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
-		mix(320,adjusted_depth,100,10)
+		mix(320,adjusted_depth96DWPS,100,10)
 
 		# from DW96W to SW24P
 		position(row,2,position = OffsetDict[offset])
-		aspirate(140, depth=adjusted_depth, speed=50, mix=0)
+		aspirate(140, depth=adjusted_depth96DWPS, speed=50, mix=0)
 		position(offset,row+3)
-		dispense(140, depth=adjusted_depth2, speed=50)
+		dispense(140, depth=adjusted_depth24SWP + 4, speed=50)
 		#disposeTips()
 		manualDisposeTips()
 

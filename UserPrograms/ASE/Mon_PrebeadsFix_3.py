@@ -43,29 +43,24 @@ for row in [0,1,2]:
 		position(row,3, position = OffsetDict[offset])
 		dispense(250, depth=adjusted_depth - 28, speed=50)
 
-		# pick up 3 * 320ul of 70% Ethanol from C4, add to C2 while mixing
+		# pick up 2 * 300ul of 70% Ethanol from C4, add to C2 while mixing
 		position(row,4,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth + 2,speed=50, mix=0)
+		aspirate(300,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(320, depth=adjusted_depth + 5, speed=100)
+		dispense(300, depth=adjusted_depth + 5, speed=100)
 
 		# initial mix
 		position(row,2,position = OffsetDict[offset])
-		mix(320,adjusted_depth + 5,100,5)
+		mix(300,adjusted_depth + 5,100,5)
 
 		position(row,4,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth + 2,speed=50, mix=0)
+		aspirate(300,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(320, depth=adjusted_depth - 5, speed=100)
+		dispense(300, depth=adjusted_depth - 5, speed=100)
 
 		# second mix
 		position(row,2,position = OffsetDict[offset])
-		mix(320,adjusted_depth - 5,100,5)
-
-		position(row,4,position = OffsetDict[offset])
-		aspirate(320,depth=adjusted_depth + 2,speed=50, mix=0)
-		position(row,2,position = OffsetDict[offset])
-		dispense(320, depth=adjusted_depth - 45, speed=100)
+		mix(300,adjusted_depth - 5,100,5)
 					
 		#disposeTips()
 		manualDisposeTips()

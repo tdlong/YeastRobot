@@ -34,11 +34,11 @@ for row in [0,1,2]:
 		adjusted_depth = 94 + row
 		#aspirate 2 x 250 ul of SIS (C2) -> discard to DW96W at C3 X2
 		position(row,2,position = OffsetDict[offset])
-		aspirate(300,depth=adjusted_depth - 6,speed=50, mix=0)
+		aspirate(300,depth=adjusted_depth - 4,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(300, depth=adjusted_depth, speed=50)
 		position(row,2,position = OffsetDict[offset])
-		aspirate(250,depth=adjusted_depth - 6,speed=50, mix=0)
+		aspirate(250,depth=adjusted_depth + 1,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
 		dispense(250, depth=adjusted_depth - 8, speed=50)
 			

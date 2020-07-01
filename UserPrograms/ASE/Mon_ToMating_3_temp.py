@@ -22,7 +22,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 1
+CurrentTipPosition = 2
 
 
 # eventually row in 0,1,2,3
@@ -44,7 +44,7 @@ for row in [0,1]:
 		position(row,4,position = OffsetDict[offset])
 		aspirate(250,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(250, depth=adjus6ted_depth, speed=50)
+		dispense(250, depth=adjusted_depth, speed=50)
 
 		# resuspend the pellet in the mating solution
 		position(row,2,position = OffsetDict[offset])

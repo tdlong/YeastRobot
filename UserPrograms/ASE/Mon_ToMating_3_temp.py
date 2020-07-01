@@ -26,7 +26,7 @@ CurrentTipPosition = 9
 
 
 # eventually row in 0,1,2,3
-for row in [2]:
+for row in [0,1]:
 	for offset in [0,1,2,3]:
 		# get tips
 		CurrentTipPosition = retrieveTips(CurrentTipPosition)
@@ -37,14 +37,18 @@ for row in [2]:
 		position(row,2,position = OffsetDict[offset])
 		aspirate(320,depth=adjusted_depth,speed=50, mix=0)
 		position(row,3, position = OffsetDict[offset])
-		dispense(320, depth=adjusted_depth - 8, speed=50)
+		dispense(320, depth=adjusted_depth + 2, speed=50)
 		
 			
-		# pick up 250ul of YPD from C4, add to C2
+		# pick up 250ul of YPD + amp from C4, add to C2
 		position(row,4,position = OffsetDict[offset])
 		aspirate(250,depth=adjusted_depth + 2,speed=50, mix=0)
 		position(row,2,position = OffsetDict[offset])
-		dispense(250, depth=adjusted_depth, speed=50)
+		dispense(250, depth=adjus6ted_depth, speed=50)
+
+		# resuspend the pellet in the mating solution
+		position(row,2,position = OffsetDict[offset])
+		mix(250,adjusted_depth,100,5)
 		
 		# discard tips
 		#disposeTips()

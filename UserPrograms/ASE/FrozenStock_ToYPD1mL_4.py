@@ -24,7 +24,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 1																	
+CurrentTipPosition = 3																	
 
 for row in [0,1,2,3]:
     for offset in [0,1,2,3]:
@@ -39,7 +39,7 @@ for row in [0,1,2,3]:
 		position(row,4, position = OffsetDict[offset])
 		dispense(myvol, depth=adjusted_depth-1, speed=50)
 
-		#transfer 3x330 ul of YPDa(C6) -> resuspend pellet (C3)
+		#transfer 3x320 ul of YPDa(C6) -> resuspend pellet (C3)
 		position(row,6, position = OffsetDict[offset])
 		aspirate(320,depth=adjusted_depth-1,speed=50,mix=0)
 		position(row,3, position = OffsetDict[offset])

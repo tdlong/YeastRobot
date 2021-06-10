@@ -43,18 +43,6 @@ for row in [0]:
 		position(row,col+1)
 		dispense(myvol, depth=adjusted_depth-1, speed=50)
 
-		# from SW24 to SW24 with media (70uL transfer)
-		position(row,col)
-		aspirate(myvol-70,depth=adjusted_depth,speed=50,mix=3)
-		position(row,col+2)
-		dispense(myvol-70, depth=adjusted_depth-1, speed=50)
-
-		# From SW24 to SW96 empty for OD
-		position(row,col)
-		aspirate(myvol,depth=adjusted_depth,speed=50, mix=3)
-		position(row, col+3, position = OffsetDict[row])
-		dispense(myvol, depth=80, speed=50)
-		 		
 		#disposeTips()
 		manualDisposeTips()
 position(0,0)

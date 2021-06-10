@@ -24,7 +24,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 1																	
+CurrentTipPosition = 2																	
 
 for row in [0]:
 	for col in [2]:
@@ -37,16 +37,22 @@ for row in [0]:
 		position(row,col)
 		mix(300,adjusted_depth,100,5)
 		
-		# from SW24 to SW24 with media
+		# from SW24 to SW24 with media (140uL transfer)
 		position(row,col)
 		aspirate(myvol,depth=adjusted_depth,speed=50,mix=3)
 		position(row,col+1)
 		dispense(myvol, depth=adjusted_depth-1, speed=50)
 
+		# from SW24 to SW24 with media (70uL transfer)
+		position(row,col)
+		aspirate(myvol-70,depth=adjusted_depth,speed=50,mix=3)
+		position(row,col+2)
+		dispense(myvol-70, depth=adjusted_depth-1, speed=50)
+
 		# From SW24 to SW96 empty for OD
 		position(row,col)
 		aspirate(myvol,depth=adjusted_depth,speed=50, mix=3)
-		position(row, col+2, position = OffsetDict[row])
+		position(row, col+3, position = OffsetDict[row])
 		dispense(myvol, depth=80, speed=50)
 		 		
 		#disposeTips()

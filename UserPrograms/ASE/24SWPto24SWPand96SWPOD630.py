@@ -24,7 +24,7 @@ OffsetDict={0: 'UL', 1: 'UR', 2: 'LL', 3: 'LR'}
 DefineDeck(deck)
 printDeck()
 InitializeRobot()
-CurrentTipPosition = 2																	
+CurrentTipPosition = 1																	
 
 for row in [0]:
 	for col in [2]:
